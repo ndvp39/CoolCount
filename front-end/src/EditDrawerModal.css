@@ -1,0 +1,102 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* On top */
+}
+
+.modal-content {
+    background-color: #333; /* Dark background for modern look */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding */
+    width: 400px; /* Adjusted width */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    transition: transform 0.3s ease; /* Animation */
+    animation: zoomIn 0.3s; /* Zoom animation */
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center; /* Center the title */
+    color: #ffffff; /* White color for the title */
+    font-family: 'Arial', sans-serif; /* Modern font */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Space between fields */
+    display: flex; /* Flex layout */
+    align-items: center; /* Align items */
+}
+
+.form-group label {
+    margin-right: 10px; /* Space between label and input */
+    color: #ffffff; /* White color for labels */
+    font-weight: bold; /* Bold labels */
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px; /* Smaller padding */
+    margin: 5px 0;
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 5px; /* Rounded edges */
+    transition: border-color 0.3s; /* Animation */
+}
+
+.modal-content input:focus {
+    border-color: #0056b3; /* Dark blue when active */
+    outline: none; /* Remove default outline */
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin-top: 20px; /* Space above buttons */
+}
+
+.modal-buttons button {
+    padding: 10px 15px; /* Larger padding */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff; /* Blue */
+    color: white;
+    font-weight: bold; /* Bold text */
+    transition: background-color 0.3s, transform 0.3s; /* Animation */
+    margin-left: 10px; /* Space between buttons */
+}
+
+.modal-buttons button:hover {
+    background-color: #0056b3; /* Dark blue on hover */
+    transform: scale(1.05); /* Slight enlargement */
+}
+
+.close-button {
+    position: Center; /* Position it absolutely */
+    top: 120px; /* Position from the top */
+    left: 10px; /* Position from the left */
+    background: none; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Change cursor on hover */
+    color: #fafafa; /* Icon color */
+    font-size: 1.5rem; /* Size of the icon */
+}
+
+.close-icon {
+    color: #f7f7f7; /* Set color for the close icon */
+}
