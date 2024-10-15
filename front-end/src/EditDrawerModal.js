@@ -22,6 +22,17 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose }) =
                         />
                     </div>
                     <div className="form-group">
+                        <label htmlFor="weightperitem">Weight Per Item:</label>
+                        <input
+                            id="weightperitem"
+                            type="number"
+                            placeholder="Enter Weight Per Item"
+                            value={drawerDetails.weightperitem}
+                            onChange={(e) => setDrawerDetails({ ...drawerDetails, weightperitem: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="weight">Weight:</label>
                         <input
                             id="weight"

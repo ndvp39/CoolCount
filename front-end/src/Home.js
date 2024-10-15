@@ -11,10 +11,13 @@ function Home() {
         new Drawer('Drawer 2', 0, 0, new Date().toLocaleDateString()),
         new Drawer('Drawer 3', 0, 0, new Date().toLocaleDateString()),
         new Drawer('Drawer 4', 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 5', 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 6', 0, 0, new Date().toLocaleDateString()),
+
     ]);
 
     const [editingIndex, setEditingIndex] = useState(null);
-    const [drawerDetails, setDrawerDetails] = useState({ name: '', weight: 0, quantity: 0, lastAddedDate: '' });
+    const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, quantity: 0, lastAddedDate: '' });
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
     const toggleFridge = () => {
@@ -25,6 +28,7 @@ function Home() {
         const drawer = drawers[index];
         setDrawerDetails({
             name: drawer.name,
+            weightperitem: drawer.weightperitem,
             weight: drawer.weight,
             quantity: drawer.quantity,
             lastAddedDate: drawer.lastAddedDate,
@@ -36,7 +40,7 @@ function Home() {
     const handleEditSubmit = (event) => {
         event.preventDefault();
         const updatedDrawers = [...drawers];
-        updatedDrawers[editingIndex].updateDetails(drawerDetails.name, drawerDetails.weight, drawerDetails.quantity, drawerDetails.lastAddedDate);
+        updatedDrawers[editingIndex].updateDetails(drawerDetails.name, drawerDetails.weightperitem, drawerDetails.weight, drawerDetails.quantity, drawerDetails.lastAddedDate);
         setDrawers(updatedDrawers);
         setIsModalOpen(false); // Close the modal
         setEditingIndex(null);
