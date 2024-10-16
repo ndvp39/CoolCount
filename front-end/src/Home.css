@@ -120,6 +120,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: black; /* Text color in drawers */
   cursor: pointer;
+  position: relative; /* וודא שהמגירות לא יזוזו */
   transition: transform 0.2s ease, height 0.3s ease;
 }
 

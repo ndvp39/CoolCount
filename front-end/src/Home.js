@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import './Home.css';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
-import Drawer from './Drawer'; // Ensure this import is correct
+import Drawer from './Drawer'; 
 import EditDrawerModal from './EditDrawerModal'; 
 import Toolbar from './Toolbar'; 
-import Draggable from 'react-draggable'; // Import react-draggable
-import { ResizableBox } from 'react-resizable'; // Import ResizableBox
-import 'react-resizable/css/styles.css'; // Import styles
+import Draggable from 'react-draggable'; 
+import { ResizableBox } from 'react-resizable'; 
+import 'react-resizable/css/styles.css'; 
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
     const [drawers, setDrawers] = useState([
-        new Drawer('Drawer 1', 0, 0, new Date().toLocaleDateString()),
-        new Drawer('Drawer 2', 0, 0, new Date().toLocaleDateString()),
-        new Drawer('Drawer 3', 0, 0, new Date().toLocaleDateString()),
-        new Drawer('Drawer 4', 0, 0, new Date().toLocaleDateString()),
-        new Drawer('Drawer 5', 0, 0, new Date().toLocaleDateString()),
-        new Drawer('Drawer 6', 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 1', 0, 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 2', 0, 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 3', 0, 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 4', 0, 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 5', 0, 0, 0, new Date().toLocaleDateString()),
+        new Drawer('Drawer 6', 0, 0, 0, new Date().toLocaleDateString()),
     ]);
 
     const [editingIndex, setEditingIndex] = useState(null);
     const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, quantity: 0, lastAddedDate: '' });
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [isEditing, setIsEditing] = useState(false); 
-    const [isMoving, setIsMoving] = useState(false); // Add isMoving state
+    const [isMoving, setIsMoving] = useState(false); 
 
     const toggleFridge = () => {
         setIsOpen(!isOpen);
@@ -52,11 +52,14 @@ function Home() {
         setIsEditing(false); 
     };
 
-    const handleDeleteDrawer = () => {
-        const updatedDrawers = drawers.filter((_, index) => index !== editingIndex);
-        setDrawers(updatedDrawers);
-        setIsModalOpen(false); 
-        setEditingIndex(null);
+    const deleteDrawer = () => {
+        if (editingIndex !== null) {
+            const updatedDrawers = drawers.filter((_, index) => index !== editingIndex);
+            setDrawers(updatedDrawers);
+            setIsModalOpen(false);
+            setEditingIndex(null);
+            setDrawerDetails({ name: '' });
+        }
     };
 
     const toggleEditing = () => {
@@ -64,7 +67,14 @@ function Home() {
     };
 
     const toggleMoving = () => {
-        setIsMoving(!isMoving); // Toggle the moving state
+        setIsMoving(!isMoving);
+    };
+
+    // Function to add a new drawer
+    const addDrawer = () => {
+        const newDrawerIndex = drawers.length + 1; // Determine the next drawer index
+        const newDrawer = new Drawer(`Drawer ${newDrawerIndex}`, 0, 0, 0, new Date().toLocaleDateString());
+        setDrawers([...drawers, newDrawer]);
     };
 
     return (
@@ -72,9 +82,10 @@ function Home() {
             <h1 className="fridge-title">My Fridge</h1>
             <Toolbar 
                 onEditToggle={toggleEditing} 
-                onMoveToggle={toggleMoving} // Update the function to handle moving
+                onMoveToggle={toggleMoving}
                 isEditing={isEditing} 
-                isMoving={isMoving} // Pass isMoving state to Toolbar
+                isMoving={isMoving} 
+                onAddDrawer={addDrawer} // Pass the addDrawer function
             />
             
             <div className={`fridge ${isOpen ? 'open' : 'closed'}`}>
@@ -92,13 +103,12 @@ function Home() {
                     {drawers.map((drawer, index) => (
                         <Draggable key={index} disabled={!isMoving} onStop={(e, data) => console.log('Moved', data)}>
                             <ResizableBox
-                                width={200} // Set initial width
-                                height={100} // Set initial height
-                                minConstraints={[100, 50]} // Minimum size
-                                maxConstraints={[300, 150]} // Maximum size
+                                width={200} 
+                                height={100} 
+                                minConstraints={[100, 50]} 
+                                maxConstraints={[300, 150]} 
                                 className="drawer" 
                                 onResizeStop={(e, { size }) => {
-                                    // Handle the size change if necessary
                                     console.log('Resized to:', size);
                                 }}
                             >
@@ -121,8 +131,8 @@ function Home() {
                     drawerDetails={drawerDetails}
                     setDrawerDetails={setDrawerDetails}
                     onSave={handleEditSubmit}
-                    onClose={() =>  setIsModalOpen(false)}
-                    onDelete={handleDeleteDrawer} // Pass the onDelete function
+                    onClose={() => setIsModalOpen(false)}
+                    onDelete={deleteDrawer} // Pass the delete function
                 />
             )}
         </div>
@@ -130,5 +140,3 @@ function Home() {
 }
 
 export default Home;
-
-
