@@ -1,0 +1,12 @@
+/* Toolbar.css */
+.toolbar {
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+    padding: 10px;
+}
+
+.toolbar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
