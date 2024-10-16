@@ -100,3 +100,16 @@
 .close-icon {
     color: #f7f7f7; /* Set color for the close icon */
 }
+
+.delete-button {
+    background-color: red !important; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding */
+    cursor: pointer; /* Pointer cursor */
+    margin-left: 10px; /* Space between buttons */
+}
+
+.delete-button:hover {
+    background-color: darkred; /* Darker red on hover */
+}

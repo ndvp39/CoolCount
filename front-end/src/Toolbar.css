@@ -1,12 +1,63 @@
-/* Toolbar.css */
-.toolbar {
-    display: flex;
-    justify-content: flex-end; /* Align the button to the right */
-    padding: 10px;
+.toolbar-container {
+    position: fixed; /* Fix position to the right side */
+    top: 50%; /* Center vertically */
+    right: 50px; /* Space from the right edge */
+    transform: translateY(-50%); /* Adjust position */
+    z-index: 1000; /* Ensure it stays above other elements */
+    display: flex; /* Use flex to align items */
+    flex-direction: column; /* Stack items vertically */
 }
 
-.toolbar button {
-    padding: 10px 20px;
+.toolbar {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-end; /* Align buttons to the right */
+    background-color: #e6e6e6; /* Light gray background for the toolbar */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for the toolbar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+.toggle-button {
+    background-color: #007bff; /* Button color */
+    color: white; /* Text color */
+    padding: 10px; /* Button padding */
+    font-size: 20px; /* Font size */
+    border: none; /* No border */
+    border-radius: 50%; /* Round button */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.toggle-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly increase button size */
+}
+
+.toolbar-button {
+    display: flex;
+    align-items: center; /* Center icons and text vertically */
+    padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    margin: 5px 0; /* Space between buttons */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.toolbar-button i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.toolbar-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly increase button size */
+}
+
+.toolbar-button:active {
+    transform: scale(0.95); /* Pressed effect */
 }

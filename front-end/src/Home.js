@@ -5,6 +5,8 @@ import Drawer from './Drawer'; // Ensure this import is correct
 import EditDrawerModal from './EditDrawerModal'; 
 import Toolbar from './Toolbar'; 
 import Draggable from 'react-draggable'; // Import react-draggable
+import { ResizableBox } from 'react-resizable'; // Import ResizableBox
+import 'react-resizable/css/styles.css'; // Import styles
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +52,13 @@ function Home() {
         setIsEditing(false); 
     };
 
+    const handleDeleteDrawer = () => {
+        const updatedDrawers = drawers.filter((_, index) => index !== editingIndex);
+        setDrawers(updatedDrawers);
+        setIsModalOpen(false); 
+        setEditingIndex(null);
+    };
+
     const toggleEditing = () => {
         setIsEditing(!isEditing);
     };
@@ -57,15 +66,6 @@ function Home() {
     const toggleMoving = () => {
         setIsMoving(!isMoving); // Toggle the moving state
     };
-
-    const moveDrawer = (index, position) => {
-        if (!isMoving) return; // Only move if isMoving is true
-        const updatedDrawers = [...drawers];
-        const [removed] = updatedDrawers.splice(index, 1); // Remove the drawer from its original position
-        updatedDrawers.splice(position, 0, removed); // Add it back at the new position
-        setDrawers(updatedDrawers); // Update the state with the new drawer order
-    };
-    
 
     return (
         <div className="home-container">
@@ -90,13 +90,24 @@ function Home() {
                 <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
                     <div className="drawer-container">
                     {drawers.map((drawer, index) => (
-    <Draggable key={index} disabled={!isMoving} onStop={(e, data) => console.log('Moved', data)}>
-        <div className="drawer" onClick={() => isEditing && editDrawer(index)}>
-            {drawer.name}
-        </div>
-    </Draggable>
-))}
-
+                        <Draggable key={index} disabled={!isMoving} onStop={(e, data) => console.log('Moved', data)}>
+                            <ResizableBox
+                                width={200} // Set initial width
+                                height={100} // Set initial height
+                                minConstraints={[100, 50]} // Minimum size
+                                maxConstraints={[300, 150]} // Maximum size
+                                className="drawer" 
+                                onResizeStop={(e, { size }) => {
+                                    // Handle the size change if necessary
+                                    console.log('Resized to:', size);
+                                }}
+                            >
+                                <div onClick={() => isEditing && editDrawer(index)}>
+                                    {drawer.name}
+                                </div>
+                            </ResizableBox>
+                        </Draggable>
+                    ))}
                     </div>
                 </div>
 
@@ -110,7 +121,8 @@ function Home() {
                     drawerDetails={drawerDetails}
                     setDrawerDetails={setDrawerDetails}
                     onSave={handleEditSubmit}
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() =>  setIsModalOpen(false)}
+                    onDelete={handleDeleteDrawer} // Pass the onDelete function
                 />
             )}
         </div>
@@ -118,3 +130,5 @@ function Home() {
 }
 
 export default Home;
+
+

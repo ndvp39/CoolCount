@@ -2,7 +2,7 @@ import React from 'react';
 import './EditDrawerModal.css'; 
 import { FaTimes } from 'react-icons/fa'; // Import the close icon
 
-const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose }) => {
+const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onDelete }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -61,11 +61,13 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose }) =
                             type="date"
                             value={drawerDetails.lastAddedDate}
                             onChange={(e) => setDrawerDetails({ ...drawerDetails, lastAddedDate: e.target.value })}
-                            // Removed required attribute here
                         />
                     </div>
                     <div className="modal-buttons">
                         <button type="submit" className="save-button">Save</button>
+                        <button type="button" className="delete-button" onClick={onDelete}>
+                            Delete Drawer
+                        </button>
                     </div>
                 </form>
             </div>
