@@ -87,13 +87,16 @@
 
 /* Fridge interior */
 .fridge-interior {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 20px;
-  background-color: #ffffff;
+  position: relative;
+  width: 100%; /* או ערך ספציפי אם אתה רוצה רוחב קבוע */
+  height: 500px; /* ערך לדוגמה, תוכל לשנות לפי הצורך */
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: relative;
   visibility: hidden;
-  z-index: 1;
+  overflow: hidden;
 }
 
 .fridge-interior.visible {
@@ -113,14 +116,14 @@
   background-color: #e0e0e0; /* Darker color for drawers */
   border: 2px solid #ccc;
   border-radius: 10px;
-  display: flex;
+
   justify-content: center;
   align-items: center;
   height: 80px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: black; /* Text color in drawers */
   cursor: pointer;
-  position: relative; /* וודא שהמגירות לא יזוזו */
+  position: absolute;
   transition: transform 0.2s ease, height 0.3s ease;
 }
 

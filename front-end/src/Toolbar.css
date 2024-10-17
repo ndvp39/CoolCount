@@ -75,3 +75,30 @@
     background-color: darkred; /* Darker red on hover */
 }
 
+.toolbar-button {
+    /* Default button styles */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff; /* Blue color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toolbar-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.toolbar-button.disabled {
+    /* Styles for the disabled button */
+    background-color: #c0c0c0; /* Gray color */
+    color: #7d7d7d; /* Darker gray text */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+}
+
+.toolbar-button.disabled:hover {
+    background-color: #c0c0c0; /* Keep the same color when hovering */
+}
+
