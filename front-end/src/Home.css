@@ -94,7 +94,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  position: relative;
   visibility: hidden;
   overflow: hidden;
 }
@@ -172,6 +171,9 @@
   cursor: pointer;
   z-index: 4; /* Ensure handle is above the doors */
 }
+
+
+
 
 /* White line connecting the handles */
 .fridge.closed .fridge-handle::before {

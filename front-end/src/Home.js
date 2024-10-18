@@ -16,6 +16,7 @@ function Home() {
         //new Drawer(generateUniqueId(), 'New Drawer', 0, 0, 0, new Date().toLocaleDateString()),
     ]);
 
+
     const [editingDrawerId, setEditingDrawerId] = useState(null);
     const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, quantity: 0, lastAddedDate: '' });
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -79,11 +80,12 @@ function Home() {
     const toggleMoving = () => {
         setIsMoving(!isMoving);
     };
-
     const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 0, 0, 100, new Date().toLocaleDateString(),0,0,100,100); // מיקום התחלתי קבוע
-        setDrawers([...drawers, newDrawer]); // שמירת המיקום של כל מגירה כפי שהוא והוספת מגירה חדשה בסוף
-    };
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 50, 50, 100, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
+        setDrawers([...drawers, newDrawer]);
+      };
+      
+      
 
 
     return (
@@ -115,6 +117,7 @@ function Home() {
                             <Draggable 
                                 key={drawer.id} 
                                 disabled={!isMoving} 
+                                bounds=".fridge-interior"
                                 onStop={(e, data) => {
                                     const updatedDrawers = drawers.map(d => 
                                         d.id === drawer.id 
@@ -141,6 +144,9 @@ function Home() {
                                 >
                                     <div onClick={() => isEditing && editDrawer(drawer.id)}>
                                         {drawer.name}
+                                        <br>
+                                        </br>
+                                        {"amount: "  +  drawer.quantity}
                                     </div>
                                 </ResizableBox>
                             </Draggable>

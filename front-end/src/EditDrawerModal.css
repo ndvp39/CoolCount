@@ -2,114 +2,114 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 1000; /* On top */
+    align-items: center;
+    z-index: 999;
 }
 
 .modal-content {
-    background-color: #333; /* Dark background for modern look */
-    border-radius: 15px; /* Rounded corners */
-    padding: 20px; /* Padding */
-    width: 400px; /* Adjusted width */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow */
-    transition: transform 0.3s ease; /* Animation */
-    animation: zoomIn 0.3s; /* Zoom animation */
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: modalFadeIn 0.3s ease-in-out;
 }
 
-@keyframes zoomIn {
+@keyframes modalFadeIn {
     from {
-        transform: scale(0);
+        opacity: 0;
+        transform: scale(0.8);
     }
     to {
+        opacity: 1;
         transform: scale(1);
     }
 }
 
-.modal-content h2 {
-    margin-bottom: 20px;
-    text-align: center; /* Center the title */
-    color: #ffffff; /* White color for the title */
-    font-family: 'Arial', sans-serif; /* Modern font */
+.close-button {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease;
+}
+
+.close-button:hover {
+    background: #ff5252;
 }
 
 .form-group {
-    margin-bottom: 20px; /* Space between fields */
-    display: flex; /* Flex layout */
-    align-items: center; /* Align items */
+    margin-bottom: 20px;
 }
 
-.form-group label {
-    margin-right: 10px; /* Space between label and input */
-    color: #ffffff; /* White color for labels */
-    font-weight: bold; /* Bold labels */
+label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
 }
 
-.modal-content input {
+input {
     width: 100%;
-    padding: 8px; /* Smaller padding */
-    margin: 5px 0;
-    border: 2px solid #007bff; /* Blue border */
-    border-radius: 5px; /* Rounded edges */
-    transition: border-color 0.3s; /* Animation */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.modal-content input:focus {
-    border-color: #0056b3; /* Dark blue when active */
-    outline: none; /* Remove default outline */
+input:focus {
+    outline: none;
+    border-color: #009688;
 }
 
 .modal-buttons {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    margin-top: 20px; /* Space above buttons */
+    justify-content: space-between;
 }
 
-.modal-buttons button {
-    padding: 10px 15px; /* Larger padding */
+.save-button, .delete-button {
+    width: 48%;
+    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: #007bff; /* Blue */
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.save-button {
+    background: linear-gradient(135deg, #009688, #35a79c);
     color: white;
-    font-weight: bold; /* Bold text */
-    transition: background-color 0.3s, transform 0.3s; /* Animation */
-    margin-left: 10px; /* Space between buttons */
 }
 
-.modal-buttons button:hover {
-    background-color: #0056b3; /* Dark blue on hover */
-    transform: scale(1.05); /* Slight enlargement */
-}
-
-.close-button {
-    position: Center; /* Position it absolutely */
-    top: 120px; /* Position from the top */
-    left: 10px; /* Position from the left */
-    background: none; /* No background */
-    border: none; /* No border */
-    cursor: pointer; /* Change cursor on hover */
-    color: #fafafa; /* Icon color */
-    font-size: 1.5rem; /* Size of the icon */
-}
-
-.close-icon {
-    color: #f7f7f7; /* Set color for the close icon */
+.save-button:hover {
+    background: #00796b;
 }
 
 .delete-button {
-    background-color: red !important; /* Red background */
-    color: white; /* White text */
-    border: none; /* No border */
-    padding: 10px 15px; /* Padding */
-    cursor: pointer; /* Pointer cursor */
-    margin-left: 10px; /* Space between buttons */
+    background: linear-gradient(135deg, #ff5252, #ff6b6b);
+    color: white;
 }
 
 .delete-button:hover {
-    background-color: darkred !important; /* Darker red on hover */
+    background: #ff3d3d;
 }
