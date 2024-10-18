@@ -114,8 +114,10 @@ function Home() {
                 <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
 
                         {drawers.map((drawer) => (
-                            <Draggable 
+                            <Draggable
+                                ClassName = "Drawer"
                                 key={drawer.id} 
+                                style={{ position: 'absolute', top: `${drawer.y}px`, left: `${drawer.x}px` }} // הוספת top ו-left
                                 disabled={!isMoving} 
                                 bounds=".fridge-interior"
                                 onStop={(e, data) => {
@@ -127,7 +129,9 @@ function Home() {
                                     setDrawers(updatedDrawers);
                                 }}
                             >
-                                <ResizableBox
+                                <ResizableBox 
+                                    onClick={() => isEditing && editDrawer(drawer.id)}
+                                    style={{ position: 'absolute'}}
                                     width={200} 
                                     height={100} 
                                     minConstraints={[100, 50]} 
@@ -142,7 +146,7 @@ function Home() {
                                         setDrawers(updatedDrawers);
                                     }}
                                 >
-                                    <div onClick={() => isEditing && editDrawer(drawer.id)}>
+                                    <div>
                                         {drawer.name}
                                         <br>
                                         </br>
