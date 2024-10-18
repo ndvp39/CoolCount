@@ -7,8 +7,12 @@ import Toolbar from './Toolbar';
 import Draggable from 'react-draggable';
 import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
+import apiService from './apiService';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
+
+const userId = '123';
+const fridgeId = '1';
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,14 +29,32 @@ function Home() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
     useEffect(() => {
+        const fetchDrawers = async () => {
+            try {
+                const data = await apiService.getDrawers(userId, fridgeId); // קריאת הפונקציה לקבלת המגירות מהשרת
+                setDrawers(data);
+            } catch (error) {
+                console.error('Failed to load drawers:', error);
+            }
+        };    
+        fetchDrawers();
+    }, []);
+
+    useEffect(() => {
         console.log("Drawers updated:", drawers);
         setHasUnsavedChanges(true);
     }, [drawers]);
 
-    const saveChanges = () => {
-        console.log("Saving changes to server...", drawers);
-        setHasUnsavedChanges(false);
+    const saveChanges = async () => {
+        try {
+            const data = await apiService.saveDrawers(userId, fridgeId, drawers); // קריאת הפונקציה לשמירת המגירות
+            console.log("Changes saved successfully:", data);
+            setHasUnsavedChanges(false);
+        } catch (error) {
+            console.error('Failed to save drawers:', error);
+        }
     };
+    
 
     const toggleFridge = () => {
         setIsOpen(!isOpen);
