@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './Toolbar.css';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
-const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer ,onSaveChanges, isSaveDisabled}) => {
-    const [isVisible, setIsVisible] = useState(false); // State to manage visibility of the toolbar
+const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer, onSaveChanges, isSaveDisabled, isLoading }) => {
+    const [isVisible, setIsVisible] = useState(false);
 
     const handleToggle = () => {
-        setIsVisible(!isVisible); // Toggle the visibility
+        setIsVisible(!isVisible);
     };
 
     return (
@@ -24,7 +24,6 @@ const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer 
                         <i className={`fa ${isMoving ? 'fa-lock' : 'fa-arrows-alt'}`}></i>
                         {isMoving ? ' Disable Moving' : ' Enable Moving'}
                     </button>
-                    {/* כפתור להוספת מגירה */}
                     <button className="toolbar-button" onClick={onAddDrawer}>
                         <i className="fa fa-plus"></i>
                         Add Drawer
@@ -34,8 +33,12 @@ const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer 
                         onClick={onSaveChanges}
                         disabled={isSaveDisabled}
                     >
-                        <i className="fa fa-save"></i>
-                        Save changes
+                        {isLoading ? (
+                            <i className="fa fa-spinner fa-spin"></i> // עיגול טעינה
+                        ) : (
+                            <i className="fa fa-save"></i>
+                        )}
+                        {isLoading ? ' Saving...' : ' Save changes'}
                     </button>
                 </div>
             )}

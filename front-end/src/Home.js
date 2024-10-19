@@ -16,22 +16,19 @@ const fridgeId = '1';
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
-    const [drawers, setDrawers] = useState([
-        //new Drawer(generateUniqueId(), 'New Drawer', 0, 0, 0, new Date().toLocaleDateString()),
-    ]);
-
-
+    const [drawers, setDrawers] = useState([]);
     const [editingDrawerId, setEditingDrawerId] = useState(null);
     const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, lastAddedDate: '' });
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [isEditing, setIsEditing] = useState(false); 
     const [isMoving, setIsMoving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // מצב טעינה
 
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
-                const data = await apiService.getDrawers(userId, fridgeId); // קריאת הפונקציה לקבלת המגירות מהשרת
+                const data = await apiService.getDrawers(userId, fridgeId);
                 setDrawers(data);
             } catch (error) {
                 console.error('Failed to load drawers:', error);
@@ -46,15 +43,16 @@ function Home() {
     }, [drawers]);
 
     const saveChanges = async () => {
+        setIsLoading(true); // התחלת טעינה
         try {
-            const data = await apiService.saveDrawers(userId, fridgeId, drawers); // קריאת הפונקציה לשמירת המגירות
+            const data = await apiService.saveDrawers(userId, fridgeId, drawers);
             console.log("Changes saved successfully:", data);
             setHasUnsavedChanges(false);
         } catch (error) {
             console.error('Failed to save drawers:', error);
         }
+        setIsLoading(false); // סיום טעינה
     };
-    
 
     const toggleFridge = () => {
         setIsOpen(!isOpen);
@@ -101,13 +99,11 @@ function Home() {
     const toggleMoving = () => {
         setIsMoving(!isMoving);
     };
-    const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
-        setDrawers([...drawers, newDrawer]);
-      };
-      
-      
 
+    const addDrawer = () => {
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100); 
+        setDrawers([...drawers, newDrawer]);
+    };
 
     return (
         <div className="home-container">
@@ -119,9 +115,9 @@ function Home() {
                 isMoving={isMoving} 
                 onAddDrawer={addDrawer} 
                 onSaveChanges={saveChanges} 
-                isSaveDisabled={!hasUnsavedChanges} 
+                isSaveDisabled={!hasUnsavedChanges || isLoading} 
+                isLoading={isLoading} // מצב טעינה מועבר ל-Toolbar
             />
-            
             <div className={`fridge ${isOpen ? 'open' : 'closed'}`}>
                 <div className="fridge-header">
                     <button className="toggle-btn" onClick={toggleFridge}>
@@ -183,7 +179,7 @@ function Home() {
                     <div className="fridge-handle" onClick={toggleFridge}></div>
                 )}
             </div>
-
+            
             {isModalOpen && (
                 <EditDrawerModal
                     drawerDetails={drawerDetails}
