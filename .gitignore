@@ -1,2 +1,3 @@
 node_modules/
-back-end/firebase-key.json.json
+back-end/firebase-key.json
+back-end/.env
