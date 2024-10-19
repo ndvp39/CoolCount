@@ -44,6 +44,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             id="weight"
                             type="number"
                             value={drawerDetails.weight}
+                            readOnly
                         />
                     </div>
                     <div className="form-group">
@@ -52,6 +53,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             id="quantity"
                             type="number"
                             value={Math.floor(drawerDetails.weight / drawerDetails.weightperitem)}
+                            readOnly
                         />
                     </div>
                     <div className="form-group">

@@ -22,7 +22,7 @@ function Home() {
 
 
     const [editingDrawerId, setEditingDrawerId] = useState(null);
-    const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, quantity: 0, lastAddedDate: '' });
+    const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, lastAddedDate: '' });
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [isEditing, setIsEditing] = useState(false); 
     const [isMoving, setIsMoving] = useState(false);
@@ -66,7 +66,6 @@ function Home() {
             name: drawer.name,
             weightperitem: drawer.weightperitem,
             weight: drawer.weight,
-            quantity: drawer.quantity,
             lastAddedDate: drawer.lastAddedDate,
         });
         setEditingDrawerId(drawerId);
@@ -103,7 +102,7 @@ function Home() {
         setIsMoving(!isMoving);
     };
     const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, 100, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
         setDrawers([...drawers, newDrawer]);
       };
       
