@@ -11,7 +11,7 @@ import apiService from './apiService';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
-const userId = '123';
+const userId = 'user';
 const fridgeId = '1';
 
 function Home() {
@@ -103,7 +103,7 @@ function Home() {
         setIsMoving(!isMoving);
     };
     const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 50, 50, 100, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, 100, new Date().toLocaleDateString(), 50, 50, 100, 100); // מיקום קבוע בפינה העליונה
         setDrawers([...drawers, newDrawer]);
       };
       
@@ -137,9 +137,9 @@ function Home() {
 
                         {drawers.map((drawer) => (
                             <Draggable
-                                ClassName = "Drawer"
-                                key={drawer.id} 
-                                style={{ position: 'absolute', top: `${drawer.y}px`, left: `${drawer.x}px` }} // הוספת top ו-left
+                                className = "drawer"
+                                key={drawer.id}
+                                defaultPosition={{ x: drawer.x, y: drawer.y }} // הגדרת מיקום ראשוני
                                 disabled={!isMoving} 
                                 bounds=".fridge-interior"
                                 onStop={(e, data) => {
@@ -154,8 +154,8 @@ function Home() {
                                 <ResizableBox 
                                     onClick={() => isEditing && editDrawer(drawer.id)}
                                     style={{ position: 'absolute'}}
-                                    width={200} 
-                                    height={100} 
+                                    width={drawer.width} // הוספת width מהדאטה
+                                    height={drawer.height} // הוספת height מהדאטה
                                     minConstraints={[100, 50]} 
                                     maxConstraints={[300, 150]} 
                                     className="drawer" 
@@ -172,7 +172,7 @@ function Home() {
                                         {drawer.name}
                                         <br>
                                         </br>
-                                        {"amount: "  +  drawer.quantity}
+                                        {"amount: "  +  Math.floor(drawer.weight / drawer.weightperitem)}
                                     </div>
                                 </ResizableBox>
                             </Draggable>

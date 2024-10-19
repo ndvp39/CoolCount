@@ -1,10 +1,10 @@
 // apiService.js
 
 
-// פונקציה לשמירת המגירות של המשתמש
+// פונקציה לשמירת המגירות של המשתמש במקרר מסוים
 const saveDrawers = async (userId, fridgeId, drawers) => {
     try {
-        const response = await fetch(`api/users/${userId}/${fridgeId}`, {
+        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,10 +24,10 @@ const saveDrawers = async (userId, fridgeId, drawers) => {
     }
 };
 
-// פונקציה לקבלת המגירות של המשתמש מהשרת
+// פונקציה לקבלת המגירות של המשתמש ממקרר מסוים
 const getDrawers = async (userId, fridgeId) => {
     try {
-        const response = await fetch(`api/users/${userId}/${fridgeId}`, {
+        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

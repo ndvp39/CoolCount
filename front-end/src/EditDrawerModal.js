@@ -34,7 +34,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             type="number"
                             placeholder="Enter Weight Per Item"
                             value={drawerDetails.weightperitem}
-                            onChange={(e) => setDrawerDetails({ ...drawerDetails, weightperitem: e.target.value })}
+                            onChange={(e) => setDrawerDetails({ ...drawerDetails, weightperitem: parseFloat(e.target.value) })}
                             required
                         />
                     </div>
@@ -43,10 +43,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                         <input
                             id="weight"
                             type="number"
-                            placeholder="Enter weight"
                             value={drawerDetails.weight}
-                            onChange={(e) => setDrawerDetails({ ...drawerDetails, weight: e.target.value })}
-                            required
                         />
                     </div>
                     <div className="form-group">
@@ -54,10 +51,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                         <input
                             id="quantity"
                             type="number"
-                            placeholder="Enter quantity"
-                            value={drawerDetails.quantity}
-                            onChange={(e) => setDrawerDetails({ ...drawerDetails, quantity: e.target.value })}
-                            required
+                            value={Math.floor(drawerDetails.weight / drawerDetails.weightperitem)}
                         />
                     </div>
                     <div className="form-group">
