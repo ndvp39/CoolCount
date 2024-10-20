@@ -215,7 +215,7 @@
   top: 40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 20px;
+  width: 30px;
   height: 250px;
   background-color: #555;
   border-radius: 20px;
@@ -314,10 +314,10 @@
 /* Tablet screen styling */
 .tablet-screen {
   width: 180px; /* רוחב המסך */
-  height: 240px; /* גובה המסך */
+  height: 300px; /* גובה המסך */
   background-color: #1b263b; /* צבע כחול כהה */
   border: 5px solid #2e2e2e; /* גבול כהה כדי לתת מראה מסך */
-  border-radius: 20px; /* פינות מעוגלות יותר */
+  border-radius: 10px; /* פינות מעוגלות יותר */
   position: absolute;
   top: 75px; /* מיקום מלמעלה */
   right: 27px; /* מיקום מימין */
@@ -325,5 +325,35 @@
   display: block; /* מציג את המסך תמיד */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* הוספת צל להעמקה */
 }
+
+/* Tab styling */
+.tab-container {
+  display: flex;
+  justify-content: space-around; /* מרווחים בין הטאבים */
+  background-color: #2e2e2e; /* רקע כהה לטאבים */
+  border-bottom: 30px solid #1b263b; /* גבול תחתון */
+}
+
+.tab {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #fff; /* צבע טקסט לבן */
+  flex: 1;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+  background-color: #1b263b; /* רקע כהה יותר בעת מעבר עכבר */
+}
+
+.tab-content {
+  padding: 50px;
+  background-color: #999bb0; /* רקע לבן לתוכן */
+  color: #000; /* צבע טקסט שחור */
+  border-radius: 15px 15px ; /* פינות מעוגלות מעל */
+
+}
+
 
 

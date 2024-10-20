@@ -24,7 +24,8 @@ function Home() {
     const [isMoving, setIsMoving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
-
+    const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
+    
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
@@ -165,13 +166,25 @@ function Home() {
                         </Draggable>
                     ))}
                 </div>
-                 {!isOpen && (
-                 <>
-                  <div className="fridge-handle" onClick={toggleFridge}></div>
-                  <div className="tablet-screen">
+                {!isOpen && (
+                <>
+                    <div className="fridge-handle" onClick={toggleFridge}></div>
+                    <div className="tablet-screen">
+                    <div className="tab-container">
+                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>Statistic</div>
+                        <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>Notification</div>
+                    </div>
+                    <div className="tab-content">
+                        {activeTab === 'statistics' ? (
+                        <div>Statistics ...</div>
+                        ) : (
+                        <div>Notifications ...</div>
+                        )}
+                    </div>
                     </div> {/* הוספת הטאבלט */}
-                 </>
+                </>
                 )}
+
             </div>
             {isModalOpen && (
                 <EditDrawerModal
