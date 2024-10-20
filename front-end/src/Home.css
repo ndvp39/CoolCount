@@ -5,53 +5,77 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #1a1a1a;
-  color: white; /* Change text color to white for better contrast */
+  background-color: #1b263b;
+  color: white;
   text-align: center;
   padding: 20px;
 }
 
 /* Title styling */
 .fridge-title {
-  font-size: 2rem; /* Font size */
-  color: white; /* Text color */
-  margin-bottom: 20px; /* Space below the title */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect for the title */
-  text-align: center; /* Center the text */
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 /* Fridge styling */
 .fridge {
   width: 500px;
   height: 700px;
-  background-color: #333; /* Darker grey for metallic look */
+  background-color: #2b2b2b;
   border-radius: 20px;
   position: relative;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: linear-gradient(to bottom, #333, #1c1c1c); /* Metallic gradient */
+  
+  /* Updated shadow effect */
+  box-shadow: 
+    0 10px 15px rgba(0, 0, 0, 0.5),  /* Main shadow for depth */
+    0 0 30px rgba(255, 255, 255, 0.1),  /* Soft white glow for light effect */
+    inset 0 0 50px rgba(255, 255, 255, 0.05);  /* Inner glow for reflection */
 }
 
-/* Fridge closed styling with improved colors */
+/* Fridge closed styling */
 .fridge.closed .fridge-door-left {
-  background-color: #1f1f1f; /* Darker grey for realism */
+  background-color: #1e1e1e;
+  background: linear-gradient(to right, #1e1e1e, #2c2c2c);
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .fridge.closed .fridge-door-right {
-  background-color: #2a2a2a; /* Slightly lighter grey */
+  background-color: #262626;
+  background: linear-gradient(to left, #262626, #333);
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Reflections for realism */
+.fridge.closed .fridge-door-left::after,
+.fridge.closed .fridge-door-right::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), transparent);
+  opacity: 0.4; /* Subtle reflection */
+  pointer-events: none;
 }
 
 /* Separation line */
 .fridge.closed::before {
   content: '';
   position: absolute;
-  top: 60px; /* To avoid covering the fridge header */
+  top: 60px;
   left: 50%;
-  width: 4px; /* Line width */
+  width: 3px;
   height: 100%;
-  background-color: white; /* Line color */
-  z-index: 3; /* Line above doors */
+  background-color: white;
+  z-index: 3;
   transform: translateX(-50%);
 }
 
@@ -59,12 +83,20 @@
 .fridge-door-left, .fridge-door-right {
   width: 50%;
   height: 100%;
-  background-color: #444; /* Darker metallic grey */
   position: absolute;
   top: 60px;
   transition: transform 1s ease-in-out;
   z-index: 2;
   border-radius: 0 0 10px 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center; /* למקם את המנעול בצורה אנכית */
+  justify-content: center; /* למקם את המנעול בצורה אופקית */
+
+  /* Add subtle shadow effect to fridge doors */
+  box-shadow: 
+    0 5px 10px rgba(0, 0, 0, 0.4),  /* Shadow below the doors */
+    inset 0 0 10px rgba(255, 255, 255, 0.1);  /* Inner glow for depth */
 }
 
 .fridge-door-left {
@@ -77,6 +109,14 @@
   transform-origin: right;
 }
 
+/* Light and shadow effect when fridge is opened */
+.fridge.open {
+  /* Add a glow around the fridge when it's open */
+  box-shadow: 
+    0 20px 30px rgba(0, 0, 0, 0.7),  /* Stronger shadow for depth */
+    0 0 50px rgba(255, 255, 255, 0.3);  /* Bright white glow around the fridge */
+}
+
 .fridge-door-left.open {
   transform: rotateY(150deg);
 }
@@ -85,138 +125,153 @@
   transform: rotateY(-150deg);
 }
 
+/* Keeping the matte black look when the doors are open */
+.fridge.open .fridge-door-left,
+.fridge.open .fridge-door-right {
+  background-color: #1e1e1e;
+  background: linear-gradient(to right, #1e1e1e, #2c2c2c);
+}
+
 /* Fridge interior */
 .fridge-interior {
-  position: relative;
-  width: 100%; /* Or specific value if you want fixed width */
-  height: 500px; /* Example value, you can change as needed */
+  position: absolute;
+  width: 91.8%;
+  height: calc(100% - 60px);
   top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
   visibility: hidden;
-  overflow: hidden;
-}
-
-.fridge-interior.visible {
-  visibility: visible;
-}
-
-/* Drawers */
-.drawer-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
-}
-
-.drawer {
-  background-color: #555; /* Darker color for drawers */
-  border: 2px solid #666; /* Slightly lighter border */
-  border-radius: 10px;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: white; /* Text color in drawers */
-  cursor: pointer;
-  position: absolute;
-}
-
-/* Expanded drawer styling */
-.drawer.expanded {
-  height: 150px;
-  background-color: #666; /* Lighter for expanded state */
+  background-color: #fff; /* White color for open fridge */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 20px;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8); /* Internal lighting effect */
+  transition: visibility 0.1s ease-in-out, background-color 1s;
 }
 
-/* Drawer details styling */
-.drawer-details {
-  text-align: center;
-  font-size: 0.9rem;
+.fridge-door-left .lock-container, .fridge-door-right .lock-container {
+  position: absolute;
+  top: 50%; /* למקם את המנעול במרכז האנכי של הדלת */
+  transform: translateY(-50%);
+  background-color: #444; /* צבע רקע של המנעול */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.drawer-details p {
-  margin: 5px 0;
+
+/* Add light effect when doors open */
+.fridge.open .fridge-interior {
+  visibility: visible;
+  background-color: #10b2c7; /* Bright white light */
 }
+
 
 /* Fridge header */
 .fridge-header {
-  width: 100%;
-  height: 60px;
-  background-color: #222; /* Darker grey for header */
-  border-radius: 20px 20px 0 0;
+  width: 50px; 
+  height: 50px; 
+  background: linear-gradient(to bottom, #2e2e2e, #1b1b1b); /* גרדיאנט מתכתי */
+  border-radius: 50%; /* צורה עגולה */
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: absolute; /* יהיה חלק מהדלת */
+  top: 2px; /* מיקום מלמעלה */
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* הוספת צל להעמקה */
+  padding: 2px; /* מרווח פנימי */
+}
+  /* Toggle button styling */
+.toggle-btn {
+  background-color: #555;
+  color: white;
+  padding: 5px 10px; /* נקטין את הריפוד */
+  font-size: 20px;
+  border: none;
+  border-radius: 50%; /* צורה עגולה */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* צל נוסף */
+}
+.toggle-btn:hover {
+  background-color: #777;
+  transform: scale(1.05); /* הגדלה קלה בזמן hover */
 }
 
+.toggle-btn:active {
+  transform: scale(0.95); /* הקטנה קלה בזמן לחיצה */
+}
+
+/* Lock icon styling */
+.lock-icon {
+  font-size: 20px; /* הקטנת גודל האייקון */
+}
 /* Handle for opening the fridge */
 .fridge-handle {
   position: absolute;
-  top: 40%; /* Center the handle vertically */
+  top: 40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px; /* Increase handle width */
-  height: 250px; /* Increase handle height */
-  background-color: #777; /* Handle color */
-  border-radius: 35px; /* Rounded edges */
+  width: 20px;
+  height: 250px;
+  background-color: #555;
+  border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 1.5);
   cursor: pointer;
-  z-index: 4; /* Ensure handle is above the doors */
+  z-index: 4;
 }
 
-/* White line connecting the handles */
 .fridge.closed .fridge-handle::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 3.5px; /* Line width */
+  width: 3px;
   height: 100%;
-  background-color: white; /* Line color */
+  background-color: white;
   transform: translate(-50%, -50%);
-  z-index: 3; /* Line above handles */
+  z-index: 3;
 }
 
-/* Popup styling */
-.drawer-popup {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 80%;
-  padding: 20px;
-  background-color: #1a1a1a; /* Dark background for popup */
+
+
+/* Drawer styling */
+.drawer {
+  background: linear-gradient(145deg, #d1d1d1, #ffffff); /* גרדיאנט מתכתי */
+  border: 2px solid #a3a3a3; /* צבע מתכתי כהה יותר */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 5;
-}
-
-/* Form styling */
-.drawer-popup form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-/* Input styling */
-.drawer-popup input {
-  padding: 10px;
-  border: 1px solid #666; /* Darker border */
-  border-radius: 5px;
-}
-
-/* Button styling */
-.drawer-popup button {
-  padding: 10px;
-  background-color: #007bff; /* Button color */
-  color: white;
-  border: none;
-  border-radius: 5px;
+  align-items: center; /* מיקום במרכז */
+  justify-content: center; /* מיקום במרכז */
+  height: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1); /* צל נוסף */
+  color: #333; /* צבע טקסט כהה */
   cursor: pointer;
+  transition: transform 0.2s ease, height 0.3s ease;
+  position: absolute;
 }
 
-.drawer-popup button:hover {
-  background-color: #0056b3;  
+.drawer:hover {
+  background: linear-gradient(145deg, #bcbcbc, #e0e0e0); /* גרדיאנט מתכתי בהיר יותר */
+  transform: scale(1.05); /* הגדלה קלה בזמן hover */
 }
+
+.drawer .edit-button {
+  position: absolute; /* מיקום יחסי לכפתור */
+  top: 5px; /* מרווח עליון */
+  right: 5px; /* מרווח ימני */
+  background: none; /* ללא רקע */
+  border: none; /* ללא גבול */
+  cursor: pointer; /* שינוי לסמן היד */
+  color: #a3a3a3; /* צבע מתכתי כהה */
+  font-size: 1.2rem; /* גודל הכפתור */
+}
+
+.drawer .edit-button:hover {
+  color: #ff4500; /* שינוי לצבע כתום כהה בעת מעבר עכבר */
+}
+

@@ -108,15 +108,15 @@ function Home() {
     return (
         <div className="home-container">
             <h1 className="fridge-title">My Fridge</h1>
-            <Toolbar 
-                onEditToggle={toggleEditing} 
+            <Toolbar
+                onEditToggle={toggleEditing}
                 onMoveToggle={toggleMoving}
-                isEditing={isEditing} 
-                isMoving={isMoving} 
-                onAddDrawer={addDrawer} 
-                onSaveChanges={saveChanges} 
-                isSaveDisabled={!hasUnsavedChanges || isLoading} 
-                isLoading={isLoading} // מצב טעינה מועבר ל-Toolbar
+                isEditing={isEditing}
+                isMoving={isMoving}
+                onAddDrawer={addDrawer}
+                onSaveChanges={saveChanges}
+                isSaveDisabled={!hasUnsavedChanges || isLoading}
+                isLoading={isLoading} 
             />
             <div className={`fridge ${isOpen ? 'open' : 'closed'}`}>
                 <div className="fridge-header">
@@ -124,62 +124,51 @@ function Home() {
                         {isOpen ? <FaLockOpen className="lock-icon" /> : <FaLock className="lock-icon" />}
                     </button>
                 </div>
-
                 <div className={`fridge-door-left ${isOpen ? 'open' : 'closed'}`}></div>
                 <div className={`fridge-door-right ${isOpen ? 'open' : 'closed'}`}></div>
-
                 <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
-
-                        {drawers.map((drawer) => (
-                            <Draggable
-                                className = "drawer"
-                                key={drawer.id}
-                                defaultPosition={{ x: drawer.x, y: drawer.y }} // הגדרת מיקום ראשוני
-                                disabled={!isMoving} 
-                                bounds=".fridge-interior"
-                                onStop={(e, data) => {
-                                    const updatedDrawers = drawers.map(d => 
-                                        d.id === drawer.id 
-                                            ? { ...d, x: data.x, y: data.y }
-                                            : d
+                    {drawers.map((drawer) => (
+                        <Draggable
+                            className="drawer"
+                            key={drawer.id}
+                            defaultPosition={{ x: drawer.x, y: drawer.y }} // הגדרת מיקום ראשוני
+                            disabled={!isMoving}
+                            bounds=".fridge-interior"
+                            onStop={(e, data) => {
+                                const updatedDrawers = drawers.map(d =>
+                                    d.id === drawer.id ? { ...d, x: data.x, y: data.y } : d
+                                );
+                                setDrawers(updatedDrawers);
+                            }}
+                        >
+                            <ResizableBox
+                                onClick={() => isEditing && editDrawer(drawer.id)}
+                                style={{ position: 'absolute' }}
+                                width={drawer.width} // הוספת width מהדאטה
+                                height={drawer.height} // הוספת height מהדאטה
+                                minConstraints={[100, 50]}
+                                maxConstraints={[470, 640]}
+                                className="drawer"
+                                onResizeStop={(e, { size }) => {
+                                    const updatedDrawers = drawers.map(d =>
+                                        d.id === drawer.id ? { ...d, width: size.width, height: size.height } : d
                                     );
                                     setDrawers(updatedDrawers);
                                 }}
                             >
-                                <ResizableBox 
-                                    onClick={() => isEditing && editDrawer(drawer.id)}
-                                    style={{ position: 'absolute'}}
-                                    width={drawer.width} // הוספת width מהדאטה
-                                    height={drawer.height} // הוספת height מהדאטה
-                                    minConstraints={[100, 50]} 
-                                    maxConstraints={[300, 150]} 
-                                    className="drawer" 
-                                    onResizeStop={(e, { size }) => {
-                                        const updatedDrawers = drawers.map(d => 
-                                            d.id === drawer.id 
-                                                ? { ...d, width: size.width, height: size.height }
-                                                : d
-                                        );
-                                        setDrawers(updatedDrawers);
-                                    }}
-                                >
-                                    <div>
-                                        {drawer.name}
-                                        <br>
-                                        </br>
-                                        {"amount: "  +  Math.floor(drawer.weight / drawer.weightperitem)}
-                                    </div>
-                                </ResizableBox>
-                            </Draggable>
-                        ))}
-
+                                <div>
+                                    {drawer.name}
+                                    <br />
+                                    {"amount: " + Math.floor(drawer.weight / drawer.weightperitem)}
+                                </div>
+                            </ResizableBox>
+                        </Draggable>
+                    ))}
                 </div>
-
                 {!isOpen && (
                     <div className="fridge-handle" onClick={toggleFridge}></div>
                 )}
             </div>
-            
             {isModalOpen && (
                 <EditDrawerModal
                     drawerDetails={drawerDetails}
@@ -192,5 +181,6 @@ function Home() {
         </div>
     );
 }
+
 
 export default Home;
