@@ -275,3 +275,26 @@
   color: #ff4500; /* שינוי לצבע כתום כהה בעת מעבר עכבר */
 }
 
+/* Fridge footer for legs */
+.fridge-footer {
+  width: calc(100% - 1500px);
+  height: 25px; /* גובה הרגליות */
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* נעביר למרכז */
+  transform: translateX(-50%); /* נמקם במרכז */
+  display: flex;
+  justify-content: space-between; /* רווח מקסימלי בין הרגליים */
+  align-items: center;
+}
+
+/* Fridge leg styling */
+.fridge-leg {
+  width: 40px; /* רוחב הרגל */
+  height: 20px; /* גובה הרגל */
+  background-color: #333; /* צבע כהה יותר לרגל */
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* הוספת צל */
+}
+
+

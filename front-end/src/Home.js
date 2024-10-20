@@ -178,7 +178,14 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
+            <div className="fridge-footer">
+             <div className="fridge-leg"></div>
+             <div className="fridge-leg"></div>
+            </div>
+
+
         </div>
+         
     );
 }
 
