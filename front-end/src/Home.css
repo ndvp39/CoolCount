@@ -6,10 +6,11 @@
   justify-content: center;
   height: 100vh;
   background-color: #1a1a1a;
-  color: black; /* Change text color to black */
+  color: white; /* Change text color to white for better contrast */
   text-align: center;
   padding: 20px;
 }
+
 /* Title styling */
 .fridge-title {
   font-size: 2rem; /* Font size */
@@ -23,10 +24,10 @@
 .fridge {
   width: 500px;
   height: 700px;
-  background-color: #f2f2f2;
+  background-color: #333; /* Darker grey for metallic look */
   border-radius: 20px;
   position: relative;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -34,11 +35,11 @@
 
 /* Fridge closed styling with improved colors */
 .fridge.closed .fridge-door-left {
-  background-color: #b0b0b0; /* Darker grey for realism */
+  background-color: #1f1f1f; /* Darker grey for realism */
 }
 
 .fridge.closed .fridge-door-right {
-  background-color: #c0c0c0; /* Slightly lighter grey */
+  background-color: #2a2a2a; /* Slightly lighter grey */
 }
 
 /* Separation line */
@@ -52,14 +53,13 @@
   background-color: white; /* Line color */
   z-index: 3; /* Line above doors */
   transform: translateX(-50%);
-  
 }
 
 /* Fridge doors */
 .fridge-door-left, .fridge-door-right {
   width: 50%;
   height: 100%;
-  background-color: #b3b3b3;
+  background-color: #444; /* Darker metallic grey */
   position: absolute;
   top: 60px;
   transition: transform 1s ease-in-out;
@@ -88,8 +88,8 @@
 /* Fridge interior */
 .fridge-interior {
   position: relative;
-  width: 100%; /* או ערך ספציפי אם אתה רוצה רוחב קבוע */
-  height: 500px; /* ערך לדוגמה, תוכל לשנות לפי הצורך */
+  width: 100%; /* Or specific value if you want fixed width */
+  height: 500px; /* Example value, you can change as needed */
   top: 60px;
   left: 0;
   right: 0;
@@ -102,8 +102,6 @@
   visibility: visible;
 }
 
-
-
 /* Drawers */
 .drawer-container {
   display: grid;
@@ -112,23 +110,20 @@
 }
 
 .drawer {
-  background-color: #e0e0e0; /* Darker color for drawers */
-  border: 2px solid #ccc;
+  background-color: #555; /* Darker color for drawers */
+  border: 2px solid #666; /* Slightly lighter border */
   border-radius: 10px;
-
   justify-content: center;
-
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: black; /* Text color in drawers */
+  color: white; /* Text color in drawers */
   cursor: pointer;
   position: absolute;
-
 }
 
 /* Expanded drawer styling */
 .drawer.expanded {
   height: 150px;
-  background-color: #f0f0f0;
+  background-color: #666; /* Lighter for expanded state */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -148,7 +143,7 @@
 .fridge-header {
   width: 100%;
   height: 60px;
-  background-color: #333;
+  background-color: #222; /* Darker grey for header */
   border-radius: 20px 20px 0 0;
   display: flex;
   justify-content: center;
@@ -164,15 +159,12 @@
   transform: translateX(-50%);
   width: 40px; /* Increase handle width */
   height: 250px; /* Increase handle height */
-  background-color: #a6a6a6; /* Handle color */
+  background-color: #777; /* Handle color */
   border-radius: 35px; /* Rounded edges */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 1.5);
   cursor: pointer;
   z-index: 4; /* Ensure handle is above the doors */
 }
-
-
-
 
 /* White line connecting the handles */
 .fridge.closed .fridge-handle::before {
@@ -187,42 +179,6 @@
   z-index: 3; /* Line above handles */
 }
 
-
-/* Drawers */
-.drawer-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
-}
-
-.drawer {
-  background-color: #e0e0e0; /* Darker color for drawers */
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column; /* Stack icon and name vertically */
-  align-items: flex-start; /* Align items to the start */
-  justify-content: center; /* Center vertically */
-  height: 80px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: black; /* Text color in drawers */
-  cursor: pointer;
-  transition: transform 0.2s ease, height 0.3s ease;
-  position: relative; /* Position relative for absolute positioning of the button */
-}
-
-/* Edit button style */
-.drawer .edit-button {
-  position: absolute; /* Make the button absolute */
-  top: 5px; /* Align to the top of the drawer */
-  right: 5px; /* Space from the right edge */
-  background: none; /* No background */
-  border: none; /* No border */
-  cursor: pointer; /* Cursor pointer on hover */
-  color: black; /* Icon color */
-  font-size: 1.2rem; /* Size of the icon */
-}
-
 /* Popup styling */
 .drawer-popup {
   position: absolute;
@@ -231,7 +187,7 @@
   transform: translate(-50%, 0);
   width: 80%;
   padding: 20px;
-  background-color: white;
+  background-color: #1a1a1a; /* Dark background for popup */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 5;
@@ -247,14 +203,14 @@
 /* Input styling */
 .drawer-popup input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #666; /* Darker border */
   border-radius: 5px;
 }
 
 /* Button styling */
 .drawer-popup button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #007bff; /* Button color */
   color: white;
   border: none;
   border-radius: 5px;
