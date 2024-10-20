@@ -165,8 +165,12 @@ function Home() {
                         </Draggable>
                     ))}
                 </div>
-                {!isOpen && (
-                    <div className="fridge-handle" onClick={toggleFridge}></div>
+                 {!isOpen && (
+                 <>
+                  <div className="fridge-handle" onClick={toggleFridge}></div>
+                  <div className="tablet-screen">
+                    </div> {/* הוספת הטאבלט */}
+                 </>
                 )}
             </div>
             {isModalOpen && (

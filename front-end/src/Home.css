@@ -248,11 +248,24 @@
   align-items: center; /* מיקום במרכז */
   justify-content: center; /* מיקום במרכז */
   height: 80px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1); /* צל נוסף */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.2); /* צל נוסף */
   color: #333; /* צבע טקסט כהה */
   cursor: pointer;
   transition: transform 0.2s ease, height 0.3s ease;
   position: absolute;
+  overflow: hidden; /* הגבלת תוכן פנימי */
+}
+
+/* Interior of the drawer */
+.drawer .drawer-interior {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5); /* גוון כהה בתוך המגירה */
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* צל פנימי להעמקה */
 }
 
 .drawer:hover {
@@ -275,6 +288,7 @@
   color: #ff4500; /* שינוי לצבע כתום כהה בעת מעבר עכבר */
 }
 
+
 /* Fridge footer for legs */
 .fridge-footer {
   width: calc(100% - 1500px);
@@ -295,6 +309,21 @@
   background-color: #333; /* צבע כהה יותר לרגל */
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* הוספת צל */
+}
+
+/* Tablet screen styling */
+.tablet-screen {
+  width: 180px; /* רוחב המסך */
+  height: 240px; /* גובה המסך */
+  background-color: #1b263b; /* צבע כחול כהה */
+  border: 5px solid #2e2e2e; /* גבול כהה כדי לתת מראה מסך */
+  border-radius: 20px; /* פינות מעוגלות יותר */
+  position: absolute;
+  top: 75px; /* מיקום מלמעלה */
+  right: 27px; /* מיקום מימין */
+  z-index: 5; /* קדימות על שאר האלמנטים */
+  display: block; /* מציג את המסך תמיד */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* הוספת צל להעמקה */
 }
 
 
