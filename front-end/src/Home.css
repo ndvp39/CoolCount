@@ -31,7 +31,8 @@
   flex-direction: column;
   overflow: hidden;
   background: linear-gradient(to bottom, #333, #1c1c1c); /* Metallic gradient */
-  
+  margin-bottom: 50px; /* הוסף מרווח בתחתית המקרר */
+
   /* Updated shadow effect */
   box-shadow: 
     0 10px 15px rgba(0, 0, 0, 0.5),  /* Main shadow for depth */
@@ -164,7 +165,7 @@
 /* Add light effect when doors open */
 .fridge.open .fridge-interior {
   visibility: visible;
-  background-color: #10b2c7; /* Bright white light */
+  background-color: #7f7f7f; /* אפור מתכתי */
 }
 
 
@@ -236,11 +237,38 @@
   z-index: 3;
 }
 
+/* Shelf styling */
+.shelf {
+  position: absolute;
+  height: 10px; /* גובה המדף */
+  background-color: #a9a9a9; /* צבע המדף */
+  border-radius: 5px; /* פינות מעוגלות */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* צל להעמקה */
+}
+
+/* Positions for the shelves */
+.shelf:nth-child(1) { /* מדף עליון */
+  top: 150px; /* מיקום מלמעלה */
+  left: 5%;
+  right: 5%;
+}
+
+.shelf:nth-child(2) { /* מדף אמצעי */
+  top: 370px; /* מיקום מלמעלה */
+  left: 5%;
+  right: 5%;
+}
+
+.shelf:nth-child(3) { /* מדף תחתון */
+  top: 600px; /* מיקום מלמעלה */
+  left: 5%;
+  right: 5%;
+}
 
 
 /* Drawer styling */
 .drawer {
-  background: linear-gradient(145deg, #d1d1d1, #ffffff); /* גרדיאנט מתכתי */
+  background: linear-gradient(145deg, #333, #555); /* מגירה בצבע שחור מתכתי */
   border: 2px solid #a3a3a3; /* צבע מתכתי כהה יותר */
   border-radius: 10px;
   display: flex;
@@ -254,6 +282,8 @@
   transition: transform 0.2s ease, height 0.3s ease;
   position: absolute;
   overflow: hidden; /* הגבלת תוכן פנימי */
+  color: white; /* צבע טקסט לבן */
+
 }
 
 /* Interior of the drawer */
@@ -266,10 +296,11 @@
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.5); /* גוון כהה בתוך המגירה */
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* צל פנימי להעמקה */
+  
 }
 
 .drawer:hover {
-  background: linear-gradient(145deg, #bcbcbc, #e0e0e0); /* גרדיאנט מתכתי בהיר יותר */
+  background: linear-gradient(145deg, #444, #666); /* שינוי גוון במעבר עכבר */
   transform: scale(1.05); /* הגדלה קלה בזמן hover */
 }
 
@@ -289,33 +320,12 @@
 }
 
 
-/* Fridge footer for legs */
-.fridge-footer {
-  width: calc(100% - 1500px);
-  height: 25px; /* גובה הרגליות */
-  position: absolute;
-  bottom: 0;
-  left: 50%; /* נעביר למרכז */
-  transform: translateX(-50%); /* נמקם במרכז */
-  display: flex;
-  justify-content: space-between; /* רווח מקסימלי בין הרגליים */
-  align-items: center;
-}
-
-/* Fridge leg styling */
-.fridge-leg {
-  width: 40px; /* רוחב הרגל */
-  height: 20px; /* גובה הרגל */
-  background-color: #333; /* צבע כהה יותר לרגל */
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* הוספת צל */
-}
 
 /* Tablet screen styling */
 .tablet-screen {
   width: 180px; /* רוחב המסך */
   height: 300px; /* גובה המסך */
-  background-color: #1b263b; /* צבע כחול כהה */
+  background-color: #7f7f7f; /* אפור מתכתי */
   border: 5px solid #2e2e2e; /* גבול כהה כדי לתת מראה מסך */
   border-radius: 10px; /* פינות מעוגלות יותר */
   position: absolute;
@@ -331,7 +341,6 @@
   display: flex;
   justify-content: space-around; /* מרווחים בין הטאבים */
   background-color: #2e2e2e; /* רקע כהה לטאבים */
-  border-bottom: 30px solid #1b263b; /* גבול תחתון */
 }
 
 .tab {
@@ -348,10 +357,10 @@
 }
 
 .tab-content {
-  padding: 50px;
-  background-color: #999bb0; /* רקע לבן לתוכן */
-  color: #000; /* צבע טקסט שחור */
+  padding: 1px;
+  background-color: #7f7f7f; /* אפור מתכתי */
   border-radius: 15px 15px ; /* פינות מעוגלות מעל */
+  color: #fff; /* צבע טקסט לבן */
 
 }
 

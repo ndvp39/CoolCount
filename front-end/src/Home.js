@@ -8,6 +8,7 @@ import Draggable from 'react-draggable';
 import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
 import apiService from './apiService';
+import Notification from './Notification';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
@@ -25,18 +26,31 @@ function Home() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
     const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
-    
+
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
                 const data = await apiService.getDrawers(userId, fridgeId);
-                setDrawers(data);
+                // Convert each plain object into an instance of the Drawer class
+                const drawerInstances = data.map(drawer => new Drawer(
+                    drawer.id, 
+                    drawer.name, 
+                    drawer.weightperitem, 
+                    drawer.weight, 
+                    drawer.lastAddedDate, 
+                    drawer.x, 
+                    drawer.y, 
+                    drawer.width, 
+                    drawer.height
+                ));
+                setDrawers(drawerInstances);
             } catch (error) {
                 console.error('Failed to load drawers:', error);
             }
         };    
         fetchDrawers();
     }, []);
+    
 
     useEffect(() => {
         console.log("Drawers updated:", drawers);
@@ -74,24 +88,48 @@ function Home() {
     const handleEditSubmit = (event) => {
         event.preventDefault();
         const updatedDrawers = drawers.map(drawer => 
-            drawer.id === editingDrawerId 
-                ? { ...drawer, ...drawerDetails }
+            drawer.id === editingDrawerId
+                ? new Drawer(
+                    drawer.id, 
+                    drawerDetails.name, 
+                    drawerDetails.weightperitem, 
+                    drawerDetails.weight, 
+                    drawerDetails.lastAddedDate, 
+                    drawer.x, 
+                    drawer.y, 
+                    drawer.width, 
+                    drawer.height
+                ) 
                 : drawer
         );
         setDrawers(updatedDrawers);
         setIsModalOpen(false); 
         setEditingDrawerId(null);
     };
+    
 
     const deleteDrawer = () => {
         if (editingDrawerId !== null) {
-            const updatedDrawers = drawers.filter(drawer => drawer.id !== editingDrawerId);
+            const updatedDrawers = drawers
+                .filter(drawer => drawer.id !== editingDrawerId) // מסנן את המגירה לפי ה-ID שלה
+                .map(drawer => new Drawer( // יוצרים מחדש את כל המגירות הנותרות
+                    drawer.id, 
+                    drawer.name, 
+                    drawer.weightperitem, 
+                    drawer.weight, 
+                    drawer.lastAddedDate, 
+                    drawer.x, 
+                    drawer.y, 
+                    drawer.width, 
+                    drawer.height
+                ));
             setDrawers(updatedDrawers);
             setIsModalOpen(false);
             setEditingDrawerId(null);
             setDrawerDetails({ name: '' });
         }
     };
+    
 
     const toggleEditing = () => {
         setIsEditing(!isEditing);
@@ -105,6 +143,8 @@ function Home() {
         const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100); 
         setDrawers([...drawers, newDrawer]);
     };
+
+    
 
     return (
         <div className="home-container">
@@ -128,6 +168,9 @@ function Home() {
                 <div className={`fridge-door-left ${isOpen ? 'open' : 'closed'}`}></div>
                 <div className={`fridge-door-right ${isOpen ? 'open' : 'closed'}`}></div>
                 <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
+                    <div class="shelf"></div>
+                    <div class="shelf"></div>
+                    <div class="shelf"></div>
                     {drawers.map((drawer) => (
                         <Draggable
                             className="drawer"
@@ -136,10 +179,23 @@ function Home() {
                             disabled={!isMoving}
                             bounds=".fridge-interior"
                             onStop={(e, data) => {
-                                const updatedDrawers = drawers.map(d =>
-                                    d.id === drawer.id ? { ...d, x: data.x, y: data.y } : d
+                                const updatedDrawers = drawers.map(d => 
+                                    d.id === drawer.id 
+                                        ? new Drawer( // יצירת מופע חדש של Drawer
+                                            d.id, 
+                                            d.name, 
+                                            d.weightperitem, 
+                                            d.weight, 
+                                            d.lastAddedDate, 
+                                            data.x, // עדכון המיקום החדש
+                                            data.y, 
+                                            d.width, 
+                                            d.height
+                                        ) 
+                                        : d
                                 );
                                 setDrawers(updatedDrawers);
+                                
                             }}
                         >
                             <ResizableBox
@@ -151,16 +207,29 @@ function Home() {
                                 maxConstraints={[470, 640]}
                                 className="drawer"
                                 onResizeStop={(e, { size }) => {
-                                    const updatedDrawers = drawers.map(d =>
-                                        d.id === drawer.id ? { ...d, width: size.width, height: size.height } : d
+                                    const updatedDrawers = drawers.map(d => 
+                                        d.id === drawer.id 
+                                            ? new Drawer( // יצירת מופע חדש של Drawer
+                                                d.id, 
+                                                d.name, 
+                                                d.weightperitem, 
+                                                d.weight, 
+                                                d.lastAddedDate, 
+                                                d.x, 
+                                                d.y, 
+                                                size.width, // עדכון הרוחב החדש
+                                                size.height // עדכון הגובה החדש
+                                            ) 
+                                            : d
                                     );
                                     setDrawers(updatedDrawers);
+                                    
                                 }}
                             >
                                 <div>
                                     {drawer.name}
                                     <br />
-                                    {"amount: " + Math.floor(drawer.weight / drawer.weightperitem)}
+                                    {"amount: " + drawer.getQuantity()}
                                 </div>
                             </ResizableBox>
                         </Draggable>
@@ -175,17 +244,21 @@ function Home() {
                         <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>Notification</div>
                     </div>
                     <div className="tab-content">
-                        {activeTab === 'statistics' ? (
-                        <div>Statistics ...</div>
-                        ) : (
-                        <div>Notifications ...</div>
-                        )}
-                    </div>
-                    </div> {/* הוספת הטאבלט */}
+                            {activeTab === 'statistics' ? (
+                                <div>
+                                    Statistics ...
+                                </div>
+                            ) : (
+                                <div>
+                                    <Notification drawers={drawers} />
+                                </div>
+                            )}
+                        </div>
+                    </div> 
                 </>
                 )}
-
             </div>
+                
             {isModalOpen && (
                 <EditDrawerModal
                     drawerDetails={drawerDetails}
@@ -195,10 +268,7 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
-            <div className="fridge-footer">
-             <div className="fridge-leg"></div>
-             <div className="fridge-leg"></div>
-            </div>
+
 
 
         </div>

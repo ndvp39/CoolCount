@@ -20,7 +20,13 @@ class Drawer {
         this.y = y;
         this.width = width;
         this.height = height;
+
     }
+    
+    getQuantity(){
+        return Math.floor(this.weight / this.weightperitem);
+    }
+
 
     printDetails() {
         console.log(`ID: ${this.id}`);
@@ -32,7 +38,9 @@ class Drawer {
         console.log(`y: ${this.y}`);
         console.log(`width: ${this.width}`);
         console.log(`height: ${this.height}`);
+        console.log(`quantity: ${this.getQuantity()}`);
     }
+
 }
 
 export default Drawer;
