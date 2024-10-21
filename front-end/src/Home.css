@@ -32,6 +32,7 @@
   overflow: hidden;
   background: linear-gradient(to bottom, #333, #1c1c1c); /* Metallic gradient */
   margin-bottom: 50px; /* הוסף מרווח בתחתית המקרר */
+  overflow: visible; /* מאפשר לרגליים לצאת מהדיב ועדיין להופיע */
 
   /* Updated shadow effect */
   box-shadow: 
@@ -83,7 +84,7 @@
 /* Fridge doors */
 .fridge-door-left, .fridge-door-right {
   width: 50%;
-  height: 100%;
+  height: calc(100% - 50px);
   position: absolute;
   top: 60px;
   transition: transform 1s ease-in-out;
@@ -99,6 +100,7 @@
     0 5px 10px rgba(0, 0, 0, 0.4),  /* Shadow below the doors */
     inset 0 0 10px rgba(255, 255, 255, 0.1);  /* Inner glow for depth */
 }
+
 
 .fridge-door-left {
   left: 0;
@@ -137,7 +139,7 @@
 .fridge-interior {
   position: absolute;
   width: 91.8%;
-  height: calc(100% - 60px);
+  height: calc(100% - 90px);
   top: 60px;
   left: 0;
   right: 0;
@@ -160,6 +162,28 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+
+
+/* Fridge leg styling */
+.fridge-leg {
+  position: absolute;
+  bottom: -31px; /* ממקם את הרגליים מתחת למקרר */
+  width: 40px; /* רוחב הרגל */
+  height: 20px; /* גובה הרגל */
+  background-color: #333; /* צבע כהה יותר לרגל */
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(195, 11, 11, 0.5); /* הוספת צל */
+}
+
+.fridge-leg:first-child {
+  left: 20px; /* ממקם את הרגל הראשונה מצד שמאל */
+}
+
+.fridge-leg:last-child {
+  right: 20px; /* ממקם את הרגל השנייה מצד ימין */
+}
+
 
 
 /* Add light effect when doors open */

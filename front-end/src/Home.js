@@ -167,6 +167,10 @@ function Home() {
                 </div>
                 <div className={`fridge-door-left ${isOpen ? 'open' : 'closed'}`}></div>
                 <div className={`fridge-door-right ${isOpen ? 'open' : 'closed'}`}></div>
+                <div className="fridge-footer">
+                    <div className="fridge-leg"></div>
+                    <div className="fridge-leg"></div>
+                </div>
                 <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
                     <div class="shelf"></div>
                     <div class="shelf"></div>
@@ -268,8 +272,6 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
-
-
 
         </div>
          
