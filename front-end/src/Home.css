@@ -32,7 +32,7 @@
   overflow: hidden;
   background: linear-gradient(to bottom, #333, #1c1c1c); /* Metallic gradient */
   margin-bottom: 50px; /* הוסף מרווח בתחתית המקרר */
-  overflow: visible; /* מאפשר לרגליים לצאת מהדיב ועדיין להופיע */
+  overflow: visible; /* מאפשר לאובייקטים לצאת מהדיב ועדיין להופיע */
 
   /* Updated shadow effect */
   box-shadow: 
@@ -94,6 +94,7 @@
   display: flex;
   align-items: center; /* למקם את המנעול בצורה אנכית */
   justify-content: center; /* למקם את המנעול בצורה אופקית */
+
 
   /* Add subtle shadow effect to fridge doors */
   box-shadow: 

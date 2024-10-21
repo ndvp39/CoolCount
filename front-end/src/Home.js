@@ -26,6 +26,7 @@ function Home() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
     const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
+    const [showHandleAndTablet, setShowHandleAndTablet] = useState(false); // בקרה על הצגת הידית והטאבלט
 
     useEffect(() => {
         const fetchDrawers = async () => {
@@ -71,6 +72,15 @@ function Home() {
 
     const toggleFridge = () => {
         setIsOpen(!isOpen);
+
+        // הפעלת ההופעה של הידית והטאבלט לאחר שנייה
+        if (isOpen) {
+            setTimeout(() => {
+                setShowHandleAndTablet(true);
+            }, 700); // 1000 מילישניות = שנייה אחת
+        } else {
+            setShowHandleAndTablet(false); // הסתרת הידית והטאבלט כשהמקרר נפתח מחדש
+        }
     };
 
     const editDrawer = (drawerId) => {
@@ -159,7 +169,7 @@ function Home() {
                 isSaveDisabled={!hasUnsavedChanges || isLoading}
                 isLoading={isLoading} 
             />
-            <div className={`fridge ${isOpen ? 'open' : 'closed'}`}>
+            <div className={`fridge open`}>
                 <div className="fridge-header">
                     <button className="toggle-btn" onClick={toggleFridge}>
                         {isOpen ? <FaLockOpen className="lock-icon" /> : <FaLock className="lock-icon" />}
@@ -171,7 +181,7 @@ function Home() {
                     <div className="fridge-leg"></div>
                     <div className="fridge-leg"></div>
                 </div>
-                <div className={`fridge-interior ${isOpen ? 'visible' : 'hidden'}`}>
+                <div className={`fridge-interior visible`}>
                     <div class="shelf"></div>
                     <div class="shelf"></div>
                     <div class="shelf"></div>
@@ -239,10 +249,10 @@ function Home() {
                         </Draggable>
                     ))}
                 </div>
-                {!isOpen && (
+                {!isOpen && showHandleAndTablet && (
                 <>
-                    <div className="fridge-handle" onClick={toggleFridge}></div>
-                    <div className="tablet-screen">
+                <div className="fridge-handle" onClick={toggleFridge}></div>
+                <div className="tablet-screen">
                     <div className="tab-container">
                         <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>Statistic</div>
                         <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>Notification</div>
@@ -258,9 +268,9 @@ function Home() {
                                 </div>
                             )}
                         </div>
-                    </div> 
+                </div> 
                 </>
-                )}
+            )}
             </div>
                 
             {isModalOpen && (
