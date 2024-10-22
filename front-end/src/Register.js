@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from './firebaseConfig'; // יבוא של הגדרת Firebase
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   async function registerUser(uid, email) {
     try {
@@ -42,6 +44,7 @@ function Register() {
         const uid = userCredential.user.uid; // קבלת ה-UID של המשתמש
         await registerUser(uid, email); // שליחת UID ומייל לשרת
         alert('Registration successful!');
+        navigate('/'); // הפניה לדף ההרשמה
       } catch (registrationError) {
         setError(registrationError.message); // הצגת שגיאת הרשמה
       }

@@ -22,6 +22,7 @@ function Login({ setIsAuthenticated }) {
       const uid = user.uid; // קבלת ה-uid
 
       console.log(uid)
+      localStorage.setItem('uid-coolcount', user.uid);
       setIsAuthenticated(true); // קובע שהמשתמש מחובר
       alert('Login successful!');
       

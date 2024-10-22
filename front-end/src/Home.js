@@ -43,6 +43,7 @@ function Home() {
         try {
             await signOut(auth);
             console.log("User signed out successfully");
+            localStorage.removeItem('uid-coolcount'); // מחק את ה-uid מהlocalStorage
             navigate('/'); // הנח את המשתמש למסך הלוגין
         } catch (error) {
             console.error("Error signing out: ", error);
