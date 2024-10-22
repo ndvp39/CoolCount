@@ -10,9 +10,14 @@ import 'react-resizable/css/styles.css';
 import apiService from './apiService';
 import Notification from './Notification';
 
+import { useLocation } from 'react-router-dom';
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
+
+
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
-const userId = 'user';
+
 const fridgeId = '1';
 
 function Home() {
@@ -28,10 +33,27 @@ function Home() {
     const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
     const [showHandleAndTablet, setShowHandleAndTablet] = useState(false); // בקרה על הצגת הידית והטאבלט
 
+    const location = useLocation();
+    const { uid } = location.state || {}; // קבלת ה-uid מתוך ה-state
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        const auth = getAuth();
+        try {
+            await signOut(auth);
+            console.log("User signed out successfully");
+            navigate('/'); // הנח את המשתמש למסך הלוגין
+        } catch (error) {
+            console.error("Error signing out: ", error);
+        }
+    };
+    
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
-                const data = await apiService.getDrawers(userId, fridgeId);
+                console.log(location.state)
+                const data = await apiService.getDrawers(uid, fridgeId);
                 // Convert each plain object into an instance of the Drawer class
                 const drawerInstances = data.map(drawer => new Drawer(
                     drawer.id, 
@@ -61,7 +83,7 @@ function Home() {
     const saveChanges = async () => {
         setIsLoading(true); // התחלת טעינה
         try {
-            const data = await apiService.saveDrawers(userId, fridgeId, drawers);
+            const data = await apiService.saveDrawers(uid, fridgeId, drawers);
             console.log("Changes saved successfully:", data);
             setHasUnsavedChanges(false);
         } catch (error) {
@@ -182,9 +204,9 @@ function Home() {
                     <div className="fridge-leg"></div>
                 </div>
                 <div className={`fridge-interior visible`}>
-                    <div class="shelf"></div>
-                    <div class="shelf"></div>
-                    <div class="shelf"></div>
+                    <div className="shelf"></div>
+                    <div className="shelf"></div>
+                    <div className="shelf"></div>
                     {drawers.map((drawer) => (
                         <Draggable
                             className="drawer"
@@ -282,7 +304,7 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
-
+<button onClick={handleLogout}>Logout</button>
         </div>
          
     );

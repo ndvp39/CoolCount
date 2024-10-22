@@ -76,6 +76,20 @@ app.post('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
     }
 });
 
+app.post('/api/users', async (req, res) => {
+    const { uid, email } = req.body; // קבלת uid מהבקשה
+    
+    try {
+      // שמירה של פרטי המשתמש במסד הנתונים לאחר ההרשמה
+      await db.collection('Users').doc(uid).set({ details: email, fridges: {1:null} }); // הוספת המייל לשדה details
+      res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating user' });
+    }
+  });
+  
+  
+
 // נתיב לבדיקת תקינות השרת
 app.get('/api/message', (req, res) => {
   res.json({ message: 'Hello from the server!' });

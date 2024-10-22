@@ -1,93 +1,33 @@
-/* קונטיינר מסך ההתחברות */
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
-  background-color: #1e1e2f; /* צבע רקע כהה יותר */
-  color: white;
+  background-color: #1e1e2f; /* צבע רקע כהה */
 }
 
-/* כותרת */
 h1 {
-  margin-bottom: 150px;
-  font-size: 2.5rem;
-  color: #61dafb; /* צבע כחול בהיר כמו ב-React */
+  color: #61dafb; /* צבע כותרת */
 }
 
-/* טופס התחברות */
 .login-form {
   background-color: #2a2a3d;
   color: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* צללה חזקה יותר */
   max-width: 400px;
   width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* אפקט מעבר */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-form:hover {
-  transform: scale(1.02); /* אפקט הגדלה קל */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* צללה חזקה יותר במעבר */
+  transform: scale(1.02);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* קבוצת שדה */
-.form-group {
-  margin-bottom: 20px;
-}
-
-/* תווית של שדות */
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1.2rem;
-  color: #61dafb; /* צבע כותרות */
-}
-
-/* שדות קלט */
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #333344; /* רקע כהה יותר לשדה */
-  color: white;
-  outline: none;
-  transition: background-color 0.3s ease;
-}
-
-.form-group input:focus {
-  background-color: #444466; /* רקע כהה יותר בפוקוס */
-}
-
-/* כפתור התחברות */
 button {
-  width: 100%;
-  padding: 12px;
-  font-size: 1.2rem;
-  color: white;
-  background-color: #61dafb; /* צבע כחול בהיר */
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* אפקט מעבר */
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background-color: #4ea6d8;
-  transform: translateY(-2px); /* העלאת הכפתור קלות */
+  transform: translateY(-2px);
 }
 
 button:active {
-  transform: translateY(0px); /* ביטול ההרמה בעת לחיצה */
-}
-
-/* הודעת שגיאה */
-.error-message {
-  color: #ff4d4d; /* צבע שגיאה אדום */
-  margin-bottom: 20px;
-  font-size: 1.1rem;
+  transform: translateY(0px);
 }
