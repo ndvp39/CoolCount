@@ -1,8 +1,7 @@
 .toolbar-container {
     position: fixed; /* Fix position to the right side */
     top: 50%; /* Center vertically */
-    right: 50px; /* Space from the right edge */
-    transform: translateY(-50%); /* Adjust position */
+    right: 10px; /* Space from the right edge */
     z-index: 1000; /* Ensure it stays above other elements */
     display: flex; /* Use flex to align items */
     flex-direction: column; /* Stack items vertically */
@@ -11,7 +10,6 @@
   .toolbar {
     display: flex;
     flex-direction: column; /* Stack buttons vertically */
-    align-items: flex-end; /* Align buttons to the right */
     background-color: #b0e0e6; /* Light turquoise background for the toolbar */
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding for the toolbar */
@@ -19,6 +17,7 @@
   }
   
   .toggle-button {
+    
     background-color: #10b2c7; /* Turquoise button color */
     color: black; /* Text color */
     padding: 10px; /* Button padding */
@@ -32,6 +31,7 @@
   
   .toggle-button:hover {
     background-color: #008b8b; /* Darker turquoise on hover */
+   
     transform: scale(1.05); /* Slightly increase button size */
   }
   
@@ -39,7 +39,6 @@
     display: flex;
     align-items: center; /* Center icons and text vertically */
     padding: 10px 15px;
-    font-size: 16px;
     cursor: pointer;
     background-color: #10b2c7; /* Primary button color in turquoise */
     color: black; /* Button text color */
@@ -55,6 +54,7 @@
   
   .toolbar-button:hover {
     background-color: #008b8b; /* Darker turquoise on hover */
+    
     transform: scale(1.05); /* Slightly increase button size */
   }
   
@@ -76,14 +76,4 @@
     background-color: darkred; /* Darker red on hover */
   }
   
-  .toolbar-button.disabled {
-    /* Styles for the disabled button */
-    background-color: #ffffff; /* Gray color */
-    color: #7d7d7d; /* Darker gray text */
-    cursor: not-allowed; /* Change cursor to indicate disabled state */
-  }
-  
-  .toolbar-button.disabled:hover {
-    background-color: #c0c0c0; /* Keep the same color when hovering */
-  }
-  
+

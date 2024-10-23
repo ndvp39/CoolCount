@@ -20,9 +20,12 @@ const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer,
             onStop={() => setTimeout(() => setIsDragging(false), 100)} // הוספת עיכוב קל בסיום גרירה
         >
             <div className={`toolbar-container ${isVisible ? 'active' : ''}`}>
-                <button className="toggle-button" onClick={handleToggle}>
+            <div className="toggle-button">
+            <button className="toggle-button hover" onClick={handleToggle}>
                     <i className={`fa ${isVisible ? 'fa-times' : 'fa-plus'}`}></i>
                 </button>
+            </div>
+                 
                 {isVisible && (
                     <div className="toolbar">
                         <button className="toolbar-button" onClick={onEditToggle}>
@@ -38,7 +41,7 @@ const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer,
                             Add Drawer
                         </button>
                         <button
-                            className={`toolbar-button ${isSaveDisabled ? 'disabled' : ''}`}
+                            className={`btn btn-secondary toolbar-button ${isSaveDisabled ? 'disabled' : ''}`}
                             onClick={onSaveChanges}
                             disabled={isSaveDisabled}
                         >

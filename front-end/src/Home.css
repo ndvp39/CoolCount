@@ -1,3 +1,7 @@
+.fridge-title {
+  margin-bottom: 10px; /* תוכל לשנות את הערך לפי הצורך */
+}
+
 /* General layout */
 .home-container {
   display: flex;
@@ -11,34 +15,26 @@
   padding: 20px;
 }
 
-/* Title styling */
-.fridge-title {
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  text-align: center;
-}
 
 /* Fridge styling */
 .fridge {
-  width: 500px;
-  height: 700px;
+  width: 100%; /* שינוי ל-100% כדי למלא את המסך */
+  max-width: 400px; /* הגבלת רוחב המקרר */
+  height: auto; /* שינוי לגובה אוטומטי */
+  aspect-ratio: 8 / 14; /* יחס גובה-רוחב כדי לשמור על פורמט המקרר */
   background-color: #2b2b2b;
   border-radius: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background: linear-gradient(to bottom, #333, #1c1c1c); /* Metallic gradient */
-  margin-bottom: 50px; /* הוסף מרווח בתחתית המקרר */
+  margin: 0 auto; /* מרכז את המקרר */
+  transform: translateY(-15px); /* ניתן לשנות את הערך לפי הצורך */
   overflow: visible; /* מאפשר לאובייקטים לצאת מהדיב ועדיין להופיע */
-
-  /* Updated shadow effect */
   box-shadow: 
-    0 10px 15px rgba(0, 0, 0, 0.5),  /* Main shadow for depth */
-    0 0 30px rgba(255, 255, 255, 0.1),  /* Soft white glow for light effect */
-    inset 0 0 50px rgba(255, 255, 255, 0.05);  /* Inner glow for reflection */
+    0 10px 15px rgba(0, 0, 0, 0.5), 
+    0 0 30px rgba(255, 255, 255, 0.1),  
+    inset 0 0 50px rgba(255, 255, 255, 0.05);  
 }
 
 /* Fridge closed styling */
@@ -58,7 +54,6 @@
 .fridge.closed .fridge-door-left::after,
 .fridge.closed .fridge-door-right::after {
   content: '';
-  position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
@@ -68,18 +63,6 @@
   pointer-events: none;
 }
 
-/* Separation line */
-.fridge.closed::before {
-  content: '';
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  width: 3px;
-  height: 100%;
-  background-color: white;
-  z-index: 3;
-  transform: translateX(-50%);
-}
 
 /* Fridge doors */
 .fridge-door-left, .fridge-door-right {
@@ -88,7 +71,7 @@
   position: absolute;
   top: 60px;
   transition: transform 1s ease-in-out;
-  z-index: 2;
+  z-index: 1;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1);
   display: flex;
@@ -139,8 +122,8 @@
 /* Fridge interior */
 .fridge-interior {
   position: absolute;
-  width: 91.8%;
-  height: calc(100% - 90px);
+  width: 100%;
+  height: 90%;
   top: 60px;
   left: 0;
   right: 0;
@@ -149,9 +132,10 @@
   background-color: #fff; /* White color for open fridge */
   display: flex;
   flex-direction: column;
-  padding: 20px;
   box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8); /* Internal lighting effect */
   transition: visibility 0.1s ease-in-out, background-color 1s;
+  padding: 10px;
+  border-radius: 10%
 }
 
 .fridge-door-left .lock-container, .fridge-door-right .lock-container {
@@ -170,8 +154,8 @@
 .fridge-leg {
   position: absolute;
   bottom: -31px; /* ממקם את הרגליים מתחת למקרר */
-  width: 40px; /* רוחב הרגל */
-  height: 20px; /* גובה הרגל */
+  width: 30px; /* רוחב הרגל */
+  height: 15px; /* גובה הרגל */
   background-color: #333; /* צבע כהה יותר לרגל */
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(195, 11, 11, 0.5); /* הוספת צל */
@@ -212,10 +196,11 @@
 }
   /* Toggle button styling */
 .toggle-btn {
+  width: 100%; /* Make button take full width */
   background-color: #555;
   color: white;
-  padding: 5px 10px; /* נקטין את הריפוד */
-  font-size: 20px;
+  padding:10px; /* נקטין את הריפוד */
+  font-size: 16px;
   border: none;
   border-radius: 50%; /* צורה עגולה */
   cursor: pointer;
@@ -264,32 +249,22 @@
 
 /* Shelf styling */
 .shelf {
-  position: absolute;
-  height: 10px; /* גובה המדף */
-  background-color: #a9a9a9; /* צבע המדף */
+  height: 12px; /* גובה המדף */
+  background-color: #c0c0c0; /* צבע מתכתי */
   border-radius: 5px; /* פינות מעוגלות */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* צל להעמקה */
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); /* צל להעמקה */
+  width: 100%; /* התאמת רוחב המדף */
+  max-width: 500px; /* הגבלת רוחב המדף */
+  margin: 0 auto; /* ממרכז את המדף */
 }
-
-/* Positions for the shelves */
-.shelf:nth-child(1) { /* מדף עליון */
-  top: 150px; /* מיקום מלמעלה */
-  left: 5%;
-  right: 5%;
+/* Custom spacing between rows */
+.shelf-spacing {
+  margin-top: 130px; /* מרווח מותאם אישית בין המדפים */
 }
-
-.shelf:nth-child(2) { /* מדף אמצעי */
-  top: 370px; /* מיקום מלמעלה */
-  left: 5%;
-  right: 5%;
+/* Adjust top shelf position */
+.shelf-spacing:first-of-type {
+  margin-top: 100px; /* להוריד את כל המדפים למטה, המדף העליון יתחיל מ-200px */
 }
-
-.shelf:nth-child(3) { /* מדף תחתון */
-  top: 600px; /* מיקום מלמעלה */
-  left: 5%;
-  right: 5%;
-}
-
 
 /* Drawer styling */
 .drawer {
@@ -306,7 +281,6 @@
   cursor: pointer;
   transition: transform 0.2s ease, height 0.3s ease;
   position: absolute;
-  overflow: hidden; /* הגבלת תוכן פנימי */
   color: white; /* צבע טקסט לבן */
 
 }
@@ -329,34 +303,22 @@
   transform: scale(1.05); /* הגדלה קלה בזמן hover */
 }
 
-.drawer .edit-button {
-  position: absolute; /* מיקום יחסי לכפתור */
-  top: 5px; /* מרווח עליון */
-  right: 5px; /* מרווח ימני */
-  background: none; /* ללא רקע */
-  border: none; /* ללא גבול */
-  cursor: pointer; /* שינוי לסמן היד */
-  color: #a3a3a3; /* צבע מתכתי כהה */
-  font-size: 1.2rem; /* גודל הכפתור */
-}
 
-.drawer .edit-button:hover {
-  color: #ff4500; /* שינוי לצבע כתום כהה בעת מעבר עכבר */
-}
+
 
 
 
 /* Tablet screen styling */
 .tablet-screen {
-  width: 180px; /* רוחב המסך */
-  height: 300px; /* גובה המסך */
+  width: 40%; /* רוחב המסך */
+  height: 50%; /* גובה המסך */
   background-color: #7f7f7f; /* אפור מתכתי */
   border: 5px solid #2e2e2e; /* גבול כהה כדי לתת מראה מסך */
   border-radius: 10px; /* פינות מעוגלות יותר */
   position: absolute;
   top: 75px; /* מיקום מלמעלה */
-  right: 27px; /* מיקום מימין */
-  z-index: 5; /* קדימות על שאר האלמנטים */
+  right: 15px; /* מיקום מימין */
+  z-index: 10; /* קדימות על שאר האלמנטים */
   display: block; /* מציג את המסך תמיד */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* הוספת צל להעמקה */
 }
@@ -369,6 +331,9 @@
 }
 
 .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 15px;
   cursor: pointer;
   color: #fff; /* צבע טקסט לבן */
@@ -389,5 +354,24 @@
 
 }
 
+.tab i {
+  display: inline-block; /* שמירה על גובה האייקון */
+}
 
+.logout-button-container {
+  z-index: 10; /* להבטיח שהכפתור מעל שאר האלמנטים */
+}
 
+.logout-button-container .btn {
+  color: white; /* צבע טקסט לבן */
+  background-color: #dc3545; /* צבע אדום לכפתור */
+  border: none; /* ללא גבול */
+  border-radius: 5px; /* פינות מעוגלות */
+  padding: 10px 15px; /* ריווח פנימי */
+  cursor: pointer; /* מצביע על כך שהכפתור ניתן ללחיצה */
+  transition: background-color 0.3s ease; /* אפקט מעבר צבע */
+}
+
+.logout-button-container .btn:hover {
+  background-color: #c82333; /* צבע כהה יותר בעת ריחוף */
+}

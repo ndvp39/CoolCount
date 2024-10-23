@@ -9,10 +9,13 @@ import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
 import apiService from './apiService';
 import Notification from './Notification';
+import 'font-awesome/css/font-awesome.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
+import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
 
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -31,7 +34,7 @@ function Home() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
     const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
-    const [showHandleAndTablet, setShowHandleAndTablet] = useState(false); // בקרה על הצגת הידית והטאבלט
+    const [showHandleAndTablet, setShowHandleAndTablet] = useState(true); // בקרה על הצגת הידית והטאבלט
 
     const location = useLocation();
     const { uid } = location.state || {}; // קבלת ה-uid מתוך ה-state
@@ -180,8 +183,15 @@ function Home() {
     
 
     return (
-        <div className="home-container">
-            <h1 className="fridge-title">My Fridge</h1>
+        
+        <div class="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
+            <div className="logout-button-container" style={{ position: 'absolute', top: '10px', right: '20px' }}>
+                <button onClick={handleLogout} className="btn btn-danger">
+                    <i className="fas fa-sign-out-alt"></i> {/* אייקון של התנתקות */}
+                </button>
+            </div>
+            <h1 class="fridge-title display-4 text-centerz text-light">My Fridge</h1>
+            <br></br>
             <Toolbar
                 onEditToggle={toggleEditing}
                 onMoveToggle={toggleMoving}
@@ -205,9 +215,21 @@ function Home() {
                     <div className="fridge-leg"></div>
                 </div>
                 <div className={`fridge-interior visible`}>
-                    <div className="shelf"></div>
-                    <div className="shelf"></div>
-                    <div className="shelf"></div>
+                       <div class="row justify-content-center shelf-spacing">
+                            <div class="col-12">
+                                <div class="shelf"></div> 
+                            </div>
+                            </div>
+                        <div class="row justify-content-center shelf-spacing">
+                            <div class="col-12">
+                            <div class="shelf"></div> 
+                            </div>
+                            </div>
+                        <div class="row justify-content-center  shelf-spacing">
+                            <div class="col-12">
+                            <div class="shelf"></div>
+                            </div>
+                        </div>
                     {drawers.map((drawer) => (
                         <Draggable
                             className="drawer"
@@ -276,9 +298,14 @@ function Home() {
                 <>
                 <div className="fridge-handle" onClick={toggleFridge}></div>
                 <div className="tablet-screen">
-                    <div className="tab-container">
-                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>Statistic</div>
-                        <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>Notification</div>
+                    <div className="tab-container d-flex justify-content-around">
+                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
+                        <i className="fa fa-chart-bar"></i> {/* אייקון של סטטיסטיקה */}
+                        </div>
+                        <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>
+                        <i className="fa fa-bell"></i> {/* אייקון של התראה */}
+                        </div>
+
                     </div>
                     <div className="tab-content">
                             {activeTab === 'statistics' ? (
@@ -290,7 +317,7 @@ function Home() {
                                     <Notification drawers={drawers} />
                                 </div>
                             )}
-                        </div>
+                    </div>
                 </div> 
                 </>
             )}
@@ -305,7 +332,6 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
-<button onClick={handleLogout}>Logout</button>
         </div>
          
     );

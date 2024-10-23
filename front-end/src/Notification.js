@@ -19,7 +19,7 @@ const Notification = ({ drawers }) => {
                     ))}
                 </ul>
             ) : (
-                <div><br></br><br></br><br></br><br></br><br></br>No notifications</div>
+                "No notifications"
             )}
         </div>
     );
