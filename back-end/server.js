@@ -17,7 +17,7 @@ initializeApp({
   credential: cert(serviceAccount),
 });
 
-const db = getFirestore(); //dsdsd
+const db = getFirestore(); //dsdsd 
 
 // נתיב לקבלת המגירות של המקרר (GET)
 app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
