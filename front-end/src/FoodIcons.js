@@ -1,5 +1,5 @@
 // FoodIcons.js
-import { Apple, BananaIcon, Cake, Milk,Fish,Carrot} from 'lucide-react';
+import { Apple, BananaIcon, Cake, Milk,Fish,Carrot,Egg} from 'lucide-react';
 
 // אובייקט שמכיל את השמות בעברית (ולמעלה גם באנגלית)
 const foodIcons = {
@@ -9,6 +9,8 @@ const foodIcons = {
     "banana": <BananaIcon style={{ color: 'yellow', width: '50px', height: '50px' }} />,
     "fish": <Fish style={{ color: 'blue', width: '50px', height: '50px' }} />,
     "carrot": <Carrot style={{ color: 'orange', width: '50px', height: '50px' }} />,
+    "egg": <Egg style={{ color: 'white', width: '50px', height: '50px' }} />,
+
 };
 
 // אובייקט לתרגום לשמות באנגלית
@@ -19,6 +21,7 @@ const translations = {
     "בננה": "banana",
     "דג": "fish",
     "גזר": "carrot",
+    "ביצה": "egg"
 
 };
 
