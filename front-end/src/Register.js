@@ -13,7 +13,7 @@ function Register() {
 
   async function registerUser(uid, email) {
     try {
-      const response = await fetch('http://localhost:4000/api/users', {
+      const response = await fetch('http://localhost:3000/api/users', {
         method: 'POST', // שיטת הבקשה
         headers: {
           'Content-Type': 'application/json', // סוג התוכן

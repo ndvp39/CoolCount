@@ -16,6 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
+import {foodIcons, getFoodIcon} from './FoodIcons';
 
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -257,6 +258,7 @@ function Home() {
                                 
                             }}
                         >
+                        
                             <ResizableBox
                                 onClick={() => isEditing && editDrawer(drawer.id)}
                                 style={{ position: 'absolute' }}
@@ -285,11 +287,13 @@ function Home() {
                                     
                                 }}
                             >
-                                <div>
-                                    {drawer.name}
-                                    <br />
-                                    {"amount: " + drawer.getQuantity()}
-                                </div>
+                                
+                         <div>
+                            {getFoodIcon(drawer.name)} {}
+                            {drawer.name}
+                            <br />
+                            {"amount: " + drawer.getQuantity()}
+                        </div>
                             </ResizableBox>
                         </Draggable>
                     ))}
