@@ -2,7 +2,8 @@ import React from 'react';
 
 const Notification = ({ drawers }) => {
     const getLowWeightDrawers = () => {
-        return drawers.filter(drawer => drawer.getQuantity() <= 2);
+        return drawers.filter(drawer => drawer.getQuantity() <= drawer.alertLimit,
+    );
     };
 
     return (

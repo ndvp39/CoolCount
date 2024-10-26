@@ -28,7 +28,7 @@ function Home() {
     const [isOpen, setIsOpen] = useState(false);
     const [drawers, setDrawers] = useState([]);
     const [editingDrawerId, setEditingDrawerId] = useState(null);
-    const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, lastAddedDate: '' });
+    const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, lastAddedDate: '', alertLimit: ''});
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [isEditing, setIsEditing] = useState(false); 
     const [isMoving, setIsMoving] = useState(false);
@@ -69,7 +69,9 @@ function Home() {
                     drawer.x, 
                     drawer.y, 
                     drawer.width, 
-                    drawer.height
+                    drawer.height,
+                    drawer.alertLimit,
+
                 ));
                 setDrawers(drawerInstances);
             } catch (error) {
@@ -117,6 +119,7 @@ function Home() {
             weightperitem: drawer.weightperitem,
             weight: drawer.weight,
             lastAddedDate: drawer.lastAddedDate,
+            alertLimit:drawer.alertLimit,
         });
         setEditingDrawerId(drawerId);
         setIsModalOpen(true); 
@@ -135,7 +138,8 @@ function Home() {
                     drawer.x, 
                     drawer.y, 
                     drawer.width, 
-                    drawer.height
+                    drawer.height,
+                    drawerDetails.alertLimit
                 ) 
                 : drawer
         );
@@ -158,7 +162,8 @@ function Home() {
                     drawer.x, 
                     drawer.y, 
                     drawer.width, 
-                    drawer.height
+                    drawer.height,
+                    drawer.alertLimit
                 ));
             setDrawers(updatedDrawers);
             setIsModalOpen(false);
@@ -177,7 +182,7 @@ function Home() {
     };
 
     const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100); 
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100,0); 
         setDrawers([...drawers, newDrawer]);
     };
 
@@ -250,7 +255,8 @@ function Home() {
                                             data.x, // עדכון המיקום החדש
                                             data.y, 
                                             d.width, 
-                                            d.height
+                                            d.height,
+                                            d.alertLimit
                                         ) 
                                         : d
                                 );
@@ -279,7 +285,8 @@ function Home() {
                                                 d.x, 
                                                 d.y, 
                                                 size.width, // עדכון הרוחב החדש
-                                                size.height // עדכון הגובה החדש
+                                                size.height, // עדכון הגובה החדש
+                                                d.alertLimit
                                             ) 
                                             : d
                                     );
@@ -303,11 +310,11 @@ function Home() {
                 <div className="fridge-handle" onClick={toggleFridge}></div>
                 <div className="tablet-screen">
                     <div className="tab-container d-flex justify-content-around">
-                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
-                        <i className="fa fa-chart-bar"></i> {/* אייקון של סטטיסטיקה */}
-                        </div>
                         <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>
                         <i className="fa fa-bell"></i> {/* אייקון של התראה */}
+                        </div>
+                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
+                        <i className="fa fa-chart-bar"></i> {/* אייקון של סטטיסטיקה */}
                         </div>
 
                     </div>

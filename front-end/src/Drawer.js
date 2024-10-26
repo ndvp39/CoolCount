@@ -1,5 +1,5 @@
 class Drawer {
-    constructor(id, name, weightperitem, weight, lastAddedDate, x = 0, y = 0, width = 100, height = 100) {
+    constructor(id, name, weightperitem, weight, lastAddedDate, x = 0, y = 0, width = 100, height = 100, alertLimit = 0) {
         this.id = id; // הוספת שדה ID
         this.name = name;
         this.weightperitem = weightperitem;
@@ -9,9 +9,10 @@ class Drawer {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.alertLimit=alertLimit;
     }
 
-    updateDetails(name, weightperitem, weight, lastAddedDate, x, y, width, height) {
+    updateDetails(name, weightperitem, weight, lastAddedDate, x, y, width, height, alertLimit) {
         this.name = name;
         this.weightperitem = weightperitem;
         this.weight = weight;
@@ -20,13 +21,13 @@ class Drawer {
         this.y = y;
         this.width = width;
         this.height = height;
-
+        this.alertLimit=alertLimit;
     }
     
     getQuantity(){
         return Math.floor(this.weight / this.weightperitem);
     }
-
+    
 
     printDetails() {
         console.log(`ID: ${this.id}`);

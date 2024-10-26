@@ -28,11 +28,11 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="weightperitem">Weight Per Item:</label>
+                        <label htmlFor="weightperitem">Weight Per Item (kg):</label>
                         <input
                             id="weightperitem"
                             type="number"
-                            placeholder="Enter Weight Per Item"
+                            placeholder="Enter Weight Per Item (kg)"
                             value={drawerDetails.weightperitem}
                             onChange={(e) => setDrawerDetails({ ...drawerDetails, weightperitem: parseFloat(e.target.value) })}
                             required
@@ -63,7 +63,17 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             type="date"
                             value={drawerDetails.lastAddedDate}
                             onChange={(e) => setDrawerDetails({ ...drawerDetails, lastAddedDate: e.target.value })}
-                            // Removed required attribute here
+                            
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="alertLimit">Set Alert</label>
+                        <input
+                            id="alertLimit"
+                            type="number"
+                            placeholder="Enter limit for alert"
+                            value={drawerDetails.alertLimit}
+                            onChange={(e) => setDrawerDetails({ ...drawerDetails, alertLimit: e.target.value })}
                         />
                     </div>
                     <div className="modal-buttons">
