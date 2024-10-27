@@ -1,5 +1,36 @@
 // apiService.js
 
+const APP_ID = '35b35351';
+const APP_KEY = 'dd40ed22e00202893a0c9e4c37a3685d';
+const BASE_URL = "https://api.edamam.com/search";
+
+
+//https://api.edamam.com/search?q=egg,בננה&app_id=35b35351&app_key=dd40ed22e00202893a0c9e4c37a3685d
+console.log('APP_ID:', APP_ID);
+console.log('APP_KEY:', APP_KEY);
+
+
+// פונקציה לחיפוש מתכונים על בסיס רשימת מוצרים
+const fetchRecipes = async (ingredients) => {
+    const query = ingredients.join(",");
+    const url = `${BASE_URL}?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Failed to fetch recipes");
+
+        const data = await response.json();
+        console.log('Items: ',data)
+
+        return data.hits; // מחזיר את רשימת המתכונים
+
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+        throw error;
+    }
+
+};
+
 
 // פונקציה לשמירת המגירות של המשתמש במקרר מסוים
 const saveDrawers = async (userId, fridgeId, drawers) => {
@@ -50,4 +81,5 @@ const getDrawers = async (userId, fridgeId) => {
 export default {
     saveDrawers,
     getDrawers,
+    fetchRecipes,
 };

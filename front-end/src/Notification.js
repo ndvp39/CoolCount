@@ -1,4 +1,5 @@
 import React from 'react';
+import './Notification.css'; 
 
 const Notification = ({ drawers }) => {
     const getLowWeightDrawers = () => {
@@ -7,22 +8,24 @@ const Notification = ({ drawers }) => {
     };
 
     return (
+        <div className="notifications-container">
+    {getLowWeightDrawers().length > 0 ? (
         <div>
-            {getLowWeightDrawers().length > 0 ? (
-                <ul>
-                    {getLowWeightDrawers().map(drawer => (
-                        <li key={drawer.id}>
-                           Drawer "{drawer.name}" 
-                           <br>
-                           </br> 
-                           Quantity: {drawer.getQuantity()} 
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                "No notifications"
-            )}
+            <h3>Low Stock</h3>
+            <ul className="notifications-list">
+                {getLowWeightDrawers().map(drawer => (
+                    <li key={drawer.id} className="notification-item">
+                        <span className="drawer-name">  {drawer.name}</span>
+                        <span className="drawer-quantity">  {drawer.getQuantity()}</span>
+                    </li>
+                ))}
+            </ul>
         </div>
+    ) : (
+        <p className="no-notifications">no notifications</p>
+    )}
+</div>
+
     );
 };
 

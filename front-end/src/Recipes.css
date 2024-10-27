@@ -1,0 +1,32 @@
+.container {
+    margin: 0 auto;
+}
+
+.recipe-card {
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.recipe-img {
+    border-radius: 8px 8px 0 0;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    font-weight: bold;
+}

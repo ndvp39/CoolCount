@@ -11,6 +11,7 @@ import apiService from './apiService';
 import Notification from './Notification';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import RecipesList from './Recipes.js'
 
 import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
@@ -36,7 +37,7 @@ function Home() {
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
     const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
     const [showHandleAndTablet, setShowHandleAndTablet] = useState(true); // בקרה על הצגת הידית והטאבלט
-
+    const [recipes, setRecipes] = useState([]); // מצב לאחסון המתכונים שנמצאו
     const location = useLocation();
     const { uid } = location.state || {}; // קבלת ה-uid מתוך ה-state
 
@@ -186,8 +187,23 @@ function Home() {
         setDrawers([...drawers, newDrawer]);
     };
 
-    
+    const onSearchRecipes = async () => {
+        // מסננים את שמות המגירות שבהן הכמות היא מעל 0
+        const ingredients = drawers
+            .filter(drawer => drawer.getQuantity() > 0) // רק מגירות עם כמות גדולה מ-0
+            .map(drawer => drawer.name); // אוספים את שם המגירה
 
+        if (ingredients.length === 0) return; // אם אין מרכיבים לחיפוש, יוצאים מהפונקציה
+
+        try {
+            const recipes = await apiService.fetchRecipes(ingredients); // גישה לפונקציה דרך apiService
+            setRecipes(recipes); // הנחה שהנתונים מכילים את המתכונים
+        } catch (error) {
+            console.error("Error fetching recipes:", error);
+        }
+    };
+
+    
     return (
         
         <div class="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
@@ -204,6 +220,7 @@ function Home() {
                 isEditing={isEditing}
                 isMoving={isMoving}
                 onAddDrawer={addDrawer}
+                onSearchRecipes={onSearchRecipes}
                 onSaveChanges={saveChanges}
                 isSaveDisabled={!hasUnsavedChanges || isLoading}
                 isLoading={isLoading} 
@@ -231,6 +248,11 @@ function Home() {
                             <div class="shelf"></div> 
                             </div>
                             </div>
+                        <div class="row justify-content-center  shelf-spacing">
+                            <div class="col-12">
+                            <div class="shelf"></div>
+                            </div>
+                        </div>
                         <div class="row justify-content-center  shelf-spacing">
                             <div class="col-12">
                             <div class="shelf"></div>

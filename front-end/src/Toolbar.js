@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Draggable from 'react-draggable'; // הוספת react-draggable
 import './Toolbar.css';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import Recipes from './Recipes'; // ודא שהנתיב נכון לפי מיקום הקובץ
 
-const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer, onSaveChanges, isSaveDisabled, isLoading }) => {
+const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer, onSaveChanges, isSaveDisabled, isLoading,onSearchRecipes }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [recipes, setRecipes] = useState([]);
 
     const handleToggle = () => {
         if (!isDragging) {
@@ -40,6 +42,11 @@ const Toolbar = ({ onEditToggle, isEditing, onMoveToggle, isMoving, onAddDrawer,
                             <i className="fa fa-plus"></i>
                             Add Drawer
                         </button>
+                        <button className="toolbar-button" onClick={onSearchRecipes}>
+                            <i className="fa fa-search"></i>
+                            Search Recipes
+                            <Recipes recipes={recipes} />
+                        </button> 
                         <button
                             className={`btn btn-secondary toolbar-button ${isSaveDisabled ? 'disabled' : ''}`}
                             onClick={onSaveChanges}
