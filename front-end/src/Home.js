@@ -198,6 +198,10 @@ function Home() {
         try {
             const recipes = await apiService.fetchRecipes(ingredients); // גישה לפונקציה דרך apiService
             setRecipes(recipes); // הנחה שהנתונים מכילים את המתכונים
+            console.log('Navigating to recipes with:', recipes);
+            navigate('/recipes', { state: { recipes: recipes } });
+            
+            
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }

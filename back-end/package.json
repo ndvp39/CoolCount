@@ -2,8 +2,11 @@
   "name": "back-end",
   "version": "1.0.0",
   "main": "index.js",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +15,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
-    "firebase-admin": "^12.6.0"
+    "firebase-admin": "^12.7.0"
   }
 }
