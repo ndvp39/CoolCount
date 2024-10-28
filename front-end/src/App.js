@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Route, Routes, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './Login';
@@ -12,22 +12,20 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // בדיקה אם יש uid ב-localStorage
     const uid = localStorage.getItem('uid-coolcount');
     if (uid) {
-      //setIsAuthenticated(true);
-      // נווט אוטומטית למסך הבית עם ה-uid
+      setIsAuthenticated(true);
       //navigate('/home', { state: { uid } });
     }
   }, [navigate]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-      <Route path="/home" element={isAuthenticated ? <Home /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/recipes" element={isAuthenticated ? <RecipesList /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/home" element={isAuthenticated ? <Home /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/recipes" element={isAuthenticated ? <RecipesList /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+      </Routes>
   );
 }
 
