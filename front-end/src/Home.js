@@ -35,7 +35,7 @@ function Home() {
     const [isMoving, setIsMoving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
-    const [activeTab, setActiveTab] = useState('statistics'); // הטאב הפעיל
+    const [activeTab, setActiveTab] = useState('notifications'); // הטאב הפעיל
     const [showHandleAndTablet, setShowHandleAndTablet] = useState(true); // בקרה על הצגת הידית והטאבלט
     const [recipes, setRecipes] = useState([]); // מצב לאחסון המתכונים שנמצאו
     const location = useLocation();
