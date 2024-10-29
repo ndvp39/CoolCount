@@ -43,7 +43,7 @@ function RecipesList() {
                                     </p>
                                 )}
                                 <p className="card-text">
-                                    <strong>Calories:</strong> {item.recipe.calories || 'Not Specified'}
+                                <strong>Calories:</strong> {Math.round(item.recipe.calories) || 'Not Specified'}
                                 </p>
                                 <p className="card-text">
                                     <strong>Dish Type:</strong> {item.recipe.dishType || 'Not Specified'}
