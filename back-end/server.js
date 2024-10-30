@@ -3,6 +3,7 @@ const cors = require('cors');
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const serviceAccount = require('./firebase-key.json'); // החלף את הנתיב לקובץ ה-JSON שלך
+const SerialPort = require('serialport');
 
 
 // הגדרת היישום Express
@@ -18,6 +19,15 @@ initializeApp({
 });
 
 const db = getFirestore(); //dsdsd 
+
+// פונקציה שתדפיס את הפלט של הארדוינו
+app.post('/api/weight', (req, res) => {
+    const weightData = req.body; // קבלת הנתונים מהארדוינו
+    console.log("Weight received:", weightData.weight); // הדפסת המשקל שנשלח מהארדוינו
+  
+    // שליחה של תגובה ללקוח
+    res.json({ message: "Weight received", weight: weightData.weight });
+  });
 
 // נתיב לקבלת המגירות של המקרר (GET)
 app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
