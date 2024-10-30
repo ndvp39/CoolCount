@@ -21,13 +21,54 @@ initializeApp({
 const db = getFirestore(); //dsdsd 
 
 // פונקציה שתדפיס את הפלט של הארדוינו
-app.post('/api/weight', (req, res) => {
+/*app.post('/api/weight', (req, res) => {
     const weightData = req.body; // קבלת הנתונים מהארדוינו
     console.log("Weight received:", weightData.weight); // הדפסת המשקל שנשלח מהארדוינו
   
     // שליחה של תגובה ללקוח
     res.json({ message: "Weight received", weight: weightData.weight });
   });
+*/
+
+app.post('/api/weight', async (req, res) => {
+    const weightData = req.body;
+    console.log(weightData.weight);
+    const uid= "6z5EApKWaFO765mCBkpIL3vW0xo1"
+
+    if (weightData === undefined || !weightData.weight) {
+        return res.status(400).send("Missing required fields: weight.");
+    }
+    
+    try {
+        const userRef = db.collection('Users').doc(uid);
+        
+        const userDoc = await userRef.get();
+        if (!userDoc.exists) {
+            console.log("ERROR1");
+            return res.status(404).send("User not found.");
+        }
+        
+        const userData = userDoc.data();
+        console.log(userData);
+        // עדכון ערך ה-weight במיקום המתאים
+        if (userData.fridges && userData.fridges['2'] && userData.fridges['2']['1']) {
+            userData.fridges['1']['0'].weight = weightData.weight;
+        } else {
+            return res.status(404).send("Drawer not found.");
+        }
+
+        // שמירה של הנתונים המעודכנים
+        await userRef.update({ fridges: userData.fridges });
+
+        res.status(200).send(`Weight updated to ${weightData.weight} successfully!`);
+    } catch (error) {
+        console.error("Error updating weight:", error);
+        res.status(500).send("Error updating weight.");
+    }
+});
+
+
+
 
 // נתיב לקבלת המגירות של המקרר (GET)
 app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
