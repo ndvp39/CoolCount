@@ -77,9 +77,33 @@ const getDrawers = async (userId, fridgeId) => {
     }
 };
 
+// שליחת קוד הארדוינו לשרת לאימות, הפונקציה תחזיר אם אומת ותקשר בדטבייס בין המשתמש למקרר (קוד הארדוינו, ותשנה את האיידי של המקרר (את שםהאיידי של הקולקשן לקוד הארדיונ שזה המקרר))
+const sendArduinoCode = async (userId, arduinoCode) => {
+    try {
+        const response = await fetch(`api/savearduinocode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userId, arduinoCode),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Failed : ' + response.statusText);
+        }
+    } catch (error) {
+        console.error("Error saving arduino code:", error);
+        throw error;
+    }
+};
+
 
 export default {
     saveDrawers,
     getDrawers,
     fetchRecipes,
+    sendArduinoCode
 };

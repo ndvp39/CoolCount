@@ -138,6 +138,19 @@ app.post('/api/users', async (req, res) => {
       res.status(500).json({ message: 'Error creating user' });
     }
   });
+
+
+  app.post('api/savearduinocode', async (req, res) => {
+    const { userId, arduinoCode } = req.body;
+    
+    try {
+        // בדיקה אם קיים קוד ארדוינו כזה. אם כן, להוסיף לאותו אחד את האיידי של המשתמש שיהיה קישור בין הארדוינו למשתמש. לאחר מכן, לשנות את האיידי של המקרר שיהיה שווה לקוד של הארדוינו. ובהעלאת הנתונםי למשתמש, לכתוב אוטומטי את הוד של הארדוינו בsetarduinocode
+      //await db.collection('Users').doc(uid).set({ details: email, fridges: {1:null} });
+      res.status(201).json({ message: 'succes' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error' });
+    }
+  });
   
   
 

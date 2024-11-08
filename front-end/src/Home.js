@@ -40,6 +40,7 @@ function Home() {
     const [recipes, setRecipes] = useState([]); // מצב לאחסון המתכונים שנמצאו
     const location = useLocation();
     const { uid } = location.state || {}; // קבלת ה-uid מתוך ה-state
+    const [arduinoCode, setArduinoCode] = useState("");
 
     const navigate = useNavigate();
 
@@ -54,12 +55,24 @@ function Home() {
             console.error("Error signing out: ", error);
         }
     };
+
+    const handleSendArduinoCode = async () => {
+        console.log("Arduino Code:", arduinoCode);
+        try {
+            const arduinoCodeResult = await apiService.sendArduinoCode(uid, arduinoCode); // גישה לפונקציה דרך apiService
+
+            // @@@@@@@@@@@@@@@@@@@@@@@@2
+            
+        } catch (error) {
+            console.error("Error send Arduino Code:", error);
+        }
+    };
     
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
                 console.log(location.state)
-                const data = await apiService.getDrawers(uid, fridgeId);
+                const data = await apiService.getDrawers(uid, arduinoCode);
                 // Convert each plain object into an instance of the Drawer class
                 const drawerInstances = data.map(drawer => new Drawer(
                     drawer.id, 
@@ -80,7 +93,7 @@ function Home() {
             }
         };    
         fetchDrawers();
-    }, []);
+    }, [arduinoCode]);
     
 
     useEffect(() => {
@@ -91,7 +104,7 @@ function Home() {
     const saveChanges = async () => {
         setIsLoading(true); // התחלת טעינה
         try {
-            const data = await apiService.saveDrawers(uid, fridgeId, drawers);
+            const data = await apiService.saveDrawers(uid, arduinoCode, drawers);
             console.log("Changes saved successfully:", data);
             setHasUnsavedChanges(false);
         } catch (error) {
@@ -211,11 +224,28 @@ function Home() {
     return (
         
         <div class="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
+            
             <div className="logout-button-container" style={{ position: 'absolute', top: '10px', right: '20px' }}>
                 <button onClick={handleLogout} className="btn btn-danger">
                     <i className="fas fa-sign-out-alt"></i> {/* אייקון של התנתקות */}
                 </button>
             </div>
+
+            {/* שדה להזנת קוד Arduino וכפתור Send */}
+            <div className="arduino-code-container" style={{ position: 'absolute', top: '10px', right: '100px' }}>
+                <input
+                    type="text"
+                    placeholder="Enter Arduino Code"
+                    value={arduinoCode}
+                    onChange={(e) => setArduinoCode(e.target.value)}
+                    className="form-control"
+                    style={{ display: 'inline', width: '150px', marginRight: '10px' }}
+                />
+                <button onClick={handleSendArduinoCode} className="btn btn-primary">
+                    Confirm
+                </button>
+            </div>
+
             <h1 class="fridge-title display-4 text-centerz text-light">My Fridge</h1>
             <br></br>
             <Toolbar
