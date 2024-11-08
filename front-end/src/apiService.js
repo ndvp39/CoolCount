@@ -85,7 +85,7 @@ const sendArduinoCode = async (userId, arduinoCode) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userId, arduinoCode),
+            body: JSON.stringify({userId, arduinoCode}),
         });
 
         if (response.ok) {
