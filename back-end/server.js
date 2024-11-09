@@ -73,7 +73,6 @@ app.post('/api/weight', async (req, res) => {
 // נתיב לקבלת המגירות של המקרר (GET)
 app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
     const { userId, fridgeId } = req.params;
-    
     try {
         // קריאת נתוני המגירות מהדטבייס לפי userId ו-fridgeId
         const userDoc = await db.collection('Users').doc(userId).get();
@@ -96,36 +95,33 @@ app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
     }
 });
 
-// נתיב לשמירת המגירות של המקרר (POST)
-app.post('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
-    const { userId, fridgeId } = req.params;
-    const drawers = req.body; // המגירות שנשלחות בבקשה
+app.post('/api/users/savedrawers', async (req, res) => {
+  const { userId, fridgeId, drawers } = req.body;  // מקבל את המידע מתוך גוף הבקשה
+  
+  try {
+      if (!userId || !fridgeId || !drawers) {
+          return res.status(400).json({ message: 'Missing required data' });
+      }
 
-    try {
-        const userDocRef = db.collection('Users').doc(userId);
-        const userDoc = await userDocRef.get();
+      const userDocRef = db.collection('Users').doc(userId);
+      const userDoc = await userDocRef.get();
 
-        if (!userDoc.exists) {
-            // אם המשתמש לא קיים, צור מסמך חדש
-            /*await userDocRef.set({
-                fridges: {
-                    [fridgeId]: drawers
-                }
-            });*/
-        } else {
-            // אם המשתמש קיים, עדכן את המקרר הרלוונטי
-            const fridges = userDoc.data().fridges || {};
-            fridges[fridgeId] = drawers;
-            
-            await userDocRef.update({ fridges });
-        }
-
-        res.status(200).json({ message: 'Drawers saved successfully' });
-    } catch (error) {
-        console.error('Error saving drawers:', error);
-        res.status(500).json({ message: 'Error saving drawers data' });
-    }
+      if (!userDoc.exists) {
+          return res.status(404).json({ message: 'User not found' });
+      } else {
+          const fridges = userDoc.data().fridges || {};
+          fridges[fridgeId] = drawers;
+          await userDocRef.update({ fridges });
+          return res.status(200).json({ message: 'Drawers saved successfully' });
+      }
+  } catch (error) {
+      console.error('Error saving drawers:', error);
+      return res.status(500).json({ message: 'Error saving drawers data' });
+  }
 });
+
+
+
 
 app.post('/api/users', async (req, res) => {
     const { uid, email } = req.body; // קבלת uid מהבקשה
@@ -138,6 +134,36 @@ app.post('/api/users', async (req, res) => {
       res.status(500).json({ message: 'Error creating user' });
     }
   });
+
+  // נתיב לקבלת IDs של המקררים של המשתמש
+app.post('/api/users/getfridgesid', async (req, res) => {
+  const { userId } = req.body;
+  
+  try {
+      // קריאת נתוני המשתמש מהדטבייס
+      const userDoc = await db.collection('Users').doc(userId).get();
+
+      if (!userDoc.exists) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      const fridges = userDoc.data().fridges;
+
+      
+      // אם אין מקררים, מחזירים רשימה ריקה
+      if (!fridges) {
+          return res.status(200).json([]);
+      }
+
+      // מחזירים את ה-IDs של המקררים
+      const fridgeIds = Object.keys(fridges);
+      res.json(fridgeIds);
+  } catch (error) {
+      console.error('Error fetching fridges IDs:', error);
+      res.status(500).json({ message: 'Error retrieving fridges data' });
+  }
+});
+
 
   // Endpoint to register Arduino MAC address
 app.post('/api/registerArduino', async (req, res) => {

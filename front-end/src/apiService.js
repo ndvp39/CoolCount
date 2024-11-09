@@ -32,28 +32,34 @@ const fetchRecipes = async (ingredients) => {
 };
 
 
-// פונקציה לשמירת המגירות של המשתמש במקרר מסוים
 const saveDrawers = async (userId, fridgeId, drawers) => {
     try {
-        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, {
+        const response = await fetch(`/api/users/savedrawers`, { // הנתיב הנכון
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json', // חשוב לציין שזה JSON
             },
-            body: JSON.stringify(drawers),
+            body: JSON.stringify({
+                userId: userId,
+                fridgeId: fridgeId,
+                drawers: drawers
+            }),
         });
 
         if (response.ok) {
             const data = await response.json();
             return data;
         } else {
-            throw new Error('Failed to save drawers: ' + response.statusText);
+            const errorMessage = await response.text();
+            throw new Error(`Failed to save drawers: ${errorMessage}`);
         }
     } catch (error) {
         console.error("Error saving drawers:", error);
         throw error;
     }
 };
+
+
 
 // פונקציה לקבלת המגירות של המשתמש ממקרר מסוים
 const getDrawers = async (userId, fridgeId) => {
@@ -76,6 +82,29 @@ const getDrawers = async (userId, fridgeId) => {
         throw error;
     }
 };
+
+const getFridgesId = async (userId) => {
+    try {
+        const response = await fetch(`/api/users/getfridgesid`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId }), // שולח את userId בגוף הבקשה
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Failed to fetch fridges: ' + response.statusText);
+        }
+    } catch (error) {
+        console.error("Error fetching fridges:", error);
+        throw error;
+    }
+};
+
 
 // שליחת קוד הארדוינו לשרת לאימות, הפונקציה תחזיר אם אומת ותקשר בדטבייס בין המשתמש למקרר (קוד הארדוינו, ותשנה את האיידי של המקרר (את שםהאיידי של הקולקשן לקוד הארדיונ שזה המקרר))
 const sendArduinoCode = async (userId, arduinoCode) => {
@@ -105,5 +134,6 @@ export default {
     saveDrawers,
     getDrawers,
     fetchRecipes,
-    sendArduinoCode
+    sendArduinoCode,
+    getFridgesId
 };

@@ -42,6 +42,12 @@ function Home() {
     const { uid } = location.state || {}; // קבלת ה-uid מתוך ה-state
     const [arduinoCode, setArduinoCode] = useState("");
 
+    
+    // הוספת סטייטים עבור רשימת האיידי של המקררים
+    const [fridgesList, setFridgesList] = useState([]); 
+    const [selectedFridgeId, setSelectedFridgeId] = useState(null);
+    const [isListVisible, setListVisible] = useState(false);
+
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -67,12 +73,26 @@ function Home() {
             console.error("Error send Arduino Code:", error);
         }
     };
-    
+    useEffect(() => {
+        const fetchFridges = async () => {
+            try {
+                const fridgesId = await apiService.getFridgesId(uid);
+                setFridgesList(fridgesId);
+                if(fridgesId.length > 0){
+                    setSelectedFridgeId(fridgesId[0]) // שם את המקרר הראשון שיש יציג את המגירות שלו
+                }
+            } catch (error) {
+                console.error('Failed to load drawers:', error);
+            }
+        }
+        fetchFridges();
+    }, []);
+
     useEffect(() => {
         const fetchDrawers = async () => {
             try {
                 console.log(location.state)
-                const data = await apiService.getDrawers(uid, arduinoCode);
+                const data = await apiService.getDrawers(uid, selectedFridgeId);
                 // Convert each plain object into an instance of the Drawer class
                 const drawerInstances = data.map(drawer => new Drawer(
                     drawer.id, 
@@ -93,7 +113,7 @@ function Home() {
             }
         };    
         fetchDrawers();
-    }, [arduinoCode]);
+    }, [selectedFridgeId]);
     
 
     useEffect(() => {
@@ -101,10 +121,20 @@ function Home() {
         setHasUnsavedChanges(true);
     }, [drawers]);
 
+    // פונקציה להציג או להסתיר את רשימת המקררים
+    const toggleList = () => {
+        setListVisible(!isListVisible);
+    };
+
+    // פונקציה לעדכון האיידי שנבחר
+    const handleSelectFridge = (event) => {
+        setSelectedFridgeId(event.target.value);
+    };
+
     const saveChanges = async () => {
         setIsLoading(true); // התחלת טעינה
         try {
-            const data = await apiService.saveDrawers(uid, arduinoCode, drawers);
+            const data = await apiService.saveDrawers(uid, selectedFridgeId, drawers);
             console.log("Changes saved successfully:", data);
             setHasUnsavedChanges(false);
         } catch (error) {
@@ -223,7 +253,7 @@ function Home() {
     
     return (
         
-        <div class="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
+        <div className="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
             
             <div className="logout-button-container" style={{ position: 'absolute', top: '10px', right: '20px' }}>
                 <button onClick={handleLogout} className="btn btn-danger">
@@ -242,11 +272,25 @@ function Home() {
                     style={{ display: 'inline', width: '150px', marginRight: '10px' }}
                 />
                 <button onClick={handleSendArduinoCode} className="btn btn-primary">
-                    Confirm
+                    Connect to Arduino
                 </button>
             </div>
 
-            <h1 class="fridge-title display-4 text-centerz text-light">My Fridge</h1>
+            {/* כפתור לפתיחת רשימת המקררים */}
+            <button onClick={toggleList} className="btn btn-secondary mt-3">
+                Select Fridge
+            </button>
+
+            {/* תפריט המקררים */}
+            {isListVisible && (
+                <select onChange={handleSelectFridge} className="form-control mt-2">
+                    {fridgesList.map(id => (
+                        <option key={id} value={id}>Fridge {id}</option>
+                    ))}
+                </select>
+            )}
+
+            <h1 className="fridge-title display-4 text-centerz text-light">My Fridge</h1>
             <br></br>
             <Toolbar
                 onEditToggle={toggleEditing}
@@ -272,24 +316,24 @@ function Home() {
                     <div className="fridge-leg"></div>
                 </div>
                 <div className={`fridge-interior visible`}>
-                       <div class="row justify-content-center shelf-spacing">
-                            <div class="col-12">
-                                <div class="shelf"></div> 
+                       <div className="row justify-content-center shelf-spacing">
+                            <div className="col-12">
+                                <div className="shelf"></div> 
                             </div>
                             </div>
-                        <div class="row justify-content-center shelf-spacing">
-                            <div class="col-12">
-                            <div class="shelf"></div> 
+                        <div className="row justify-content-center shelf-spacing">
+                            <div className="col-12">
+                            <div className="shelf"></div> 
                             </div>
                             </div>
-                        <div class="row justify-content-center  shelf-spacing">
-                            <div class="col-12">
-                            <div class="shelf"></div>
+                        <div className="row justify-content-center  shelf-spacing">
+                            <div className="col-12">
+                            <div className="shelf"></div>
                             </div>
                         </div>
-                        <div class="row justify-content-center  shelf-spacing">
-                            <div class="col-12">
-                            <div class="shelf"></div>
+                        <div className="row justify-content-center  shelf-spacing">
+                            <div className="col-12">
+                            <div className="shelf"></div>
                             </div>
                         </div>
                     {drawers.map((drawer) => (

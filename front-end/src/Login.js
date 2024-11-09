@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from './firebaseConfig'; // יבוא של הגדרת Firebase
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import './Login.css';
+import apiService from './apiService';
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState(''); // שדה דוא"ל במקום שם משתמש
@@ -20,6 +21,7 @@ function Login({ setIsAuthenticated }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user; // קבלת פרטי המשתמש
       const uid = user.uid; // קבלת ה-uid
+
 
       console.log(uid)
       localStorage.setItem('uid-coolcount', user.uid);
