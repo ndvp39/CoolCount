@@ -279,7 +279,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.2); /* צל נוסף */
   color: #333; /* צבע טקסט כהה */
   cursor: pointer;
-  transition: transform 0.2s ease, height 0.3s ease;
   position: absolute;
   color: white; /* צבע טקסט לבן */
 

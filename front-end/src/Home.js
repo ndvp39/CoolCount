@@ -78,22 +78,28 @@ function Home() {
             try {
                 const fridgesId = await apiService.getFridgesId(uid);
                 setFridgesList(fridgesId);
-                if(fridgesId.length > 0){
-                    setSelectedFridgeId(fridgesId[0]) // שם את המקרר הראשון שיש יציג את המגירות שלו
+                if (fridgesId.length > 0) {
+                    setSelectedFridgeId(fridgesId[0]); // בוחר את המקרר הראשון כדי להציג את המגירות שלו
                 }
             } catch (error) {
-                console.error('Failed to load drawers:', error);
+                console.error('Failed to load Fridges:', error);
             }
-        }
+        };
         fetchFridges();
     }, []);
-
+    
     useEffect(() => {
         const fetchDrawers = async () => {
+            // בדיקה אם selectedFridgeId תקין
+            if (!selectedFridgeId) {
+                return;
+            }
+    
             try {
-                console.log(location.state)
+                console.log(selectedFridgeId); // לוג למטרת דיבוג
                 const data = await apiService.getDrawers(uid, selectedFridgeId);
-                // Convert each plain object into an instance of the Drawer class
+    
+                // המרה של כל אובייקט למופע של המחלקה Drawer
                 const drawerInstances = data.map(drawer => new Drawer(
                     drawer.id, 
                     drawer.name, 
@@ -105,15 +111,16 @@ function Home() {
                     drawer.width, 
                     drawer.height,
                     drawer.alertLimit,
-
                 ));
                 setDrawers(drawerInstances);
             } catch (error) {
                 console.error('Failed to load drawers:', error);
             }
-        };    
+        };
+    
         fetchDrawers();
     }, [selectedFridgeId]);
+    
     
 
     useEffect(() => {
@@ -276,6 +283,8 @@ function Home() {
                 </button>
             </div>
 
+            <h1 className="fridge-title display-4 text-centerz text-light">My Fridge</h1>
+            
             {/* כפתור לפתיחת רשימת המקררים */}
             <button onClick={toggleList} className="btn btn-secondary mt-3">
                 Select Fridge
@@ -283,14 +292,19 @@ function Home() {
 
             {/* תפריט המקררים */}
             {isListVisible && (
-                <select onChange={handleSelectFridge} className="form-control mt-2">
+                <select 
+                    onChange={handleSelectFridge} 
+                    className="form-control mt-2"
+                    style={{ width: '200px', fontSize: '14px' }}
+                >
                     {fridgesList.map(id => (
                         <option key={id} value={id}>Fridge {id}</option>
                     ))}
                 </select>
+
             )}
 
-            <h1 className="fridge-title display-4 text-centerz text-light">My Fridge</h1>
+            
             <br></br>
             <Toolbar
                 onEditToggle={toggleEditing}
@@ -338,7 +352,6 @@ function Home() {
                         </div>
                     {drawers.map((drawer) => (
                         <Draggable
-                            className="drawer"
                             key={drawer.id}
                             defaultPosition={{ x: drawer.x, y: drawer.y }} // הגדרת מיקום ראשוני
                             disabled={!isMoving}
