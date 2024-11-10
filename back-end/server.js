@@ -31,41 +31,54 @@ const db = getFirestore(); //dsdsd
 */
 
 app.post('/api/weight', async (req, res) => {
-    const weightData = req.body;
-    console.log(weightData.weight);
-    const uid= "6z5EApKWaFO765mCBkpIL3vW0xo1"
-
-    if (weightData === undefined || !weightData.weight) {
-        return res.status(400).send("Missing required fields: weight.");
-    }
+    const { mac_address, sensor_id, weight } = req.body;  // קבלת כתובת MAC, מזהה חיישן ונתוני משקל מהבקשה
+    console.log(req.body);
     
+    if (!mac_address || !sensor_id || !weight) {
+        return res.status(400).send("Missing required fields: mac_address, sensor_id, or weight.");
+    }
     try {
-        const userRef = db.collection('Users').doc(uid);
-        
+        // חיפוש המסמך של המקררים והמשתמש בכתובת MAC שנמסרה
+        const userRelateRef = db.collection('Fridges_Users').doc('fridges_users');
+        const userRelateDoc = await userRelateRef.get();
+
+        if (!userRelateDoc.exists) {
+            console.log("ERROR: fridges_users document not found.");
+            return res.status(404).send("fridges_users document not found.");
+                }
+        // קבלת מזהה המשתמש (uid) מתוך הנתונים של ה-MAC
+        const userId = userRelateDoc.data()[mac_address];
+
+        // חיפוש המשתמש ב-Users לפי ה-uid
+        const userRef = db.collection('Users').doc(userId);
         const userDoc = await userRef.get();
+
+
         if (!userDoc.exists) {
-            console.log("ERROR1");
+            console.log("ERROR: User not found.");
             return res.status(404).send("User not found.");
         }
-        
-        const userData = userDoc.data();
-        console.log(userData);
-        // עדכון ערך ה-weight במיקום המתאים
-        if (userData.fridges && userData.fridges['2'] && userData.fridges['2']['1']) {
-            userData.fridges['1']['0'].weight = weightData.weight;
+
+        const userDataFromUsers = userDoc.data(); // קבלת נתוני המשתמש
+
+        // בדיקה אם יש מקום למגירה המתאימה לחיישן
+        if (userDataFromUsers.fridges && userDataFromUsers.fridges[mac_address] && userDataFromUsers.fridges[mac_address][sensor_id]) {
+            userDataFromUsers.fridges[mac_address][sensor_id].weight = weight; // עדכון המשקל
         } else {
-            return res.status(404).send("Drawer not found.");
+            return res.status(404).send("Sensor or drawer not found.");
         }
 
-        // שמירה של הנתונים המעודכנים
-        await userRef.update({ fridges: userData.fridges });
+        // עדכון הנתונים בבסיס הנתונים
+        await userRef.update({ fridges: userDataFromUsers.fridges });
 
-        res.status(200).send(`Weight updated to ${weightData.weight} successfully!`);
+        res.status(200).send(`Weight updated to ${weight} for sensor ${sensor_id} successfully!`);
     } catch (error) {
         console.error("Error updating weight:", error);
         res.status(500).send("Error updating weight.");
     }
+
 });
+
 
 
 
@@ -154,7 +167,6 @@ app.post('/api/users/getfridgesid', async (req, res) => {
       if (!fridges) {
           return res.status(200).json([]);
       }
-
       // מחזירים את ה-IDs של המקררים
       const fridgeIds = Object.keys(fridges);
       res.json(fridgeIds);
@@ -167,8 +179,12 @@ app.post('/api/users/getfridgesid', async (req, res) => {
 
   // Endpoint to register Arduino MAC address
 app.post('/api/registerArduino', async (req, res) => {
-    const { macAddress } = req.body;
-  
+    console.log("3");
+    const { mac_address } = req.body;
+    console.log("3");
+    console.log(mac_address);
+    console.log("3");
+    console.log(req.body);
     try {
       // Reference to the 'Fridges_Users' collection in Firestore
       const fridgeUsersRef = db.collection('Fridges_Users').doc('fridges_users');
@@ -177,13 +193,13 @@ app.post('/api/registerArduino', async (req, res) => {
       const fridgeDoc = await fridgeUsersRef.get();
       const fridgesData = fridgeDoc.data();
   
-      if (fridgeDoc.exists && fridgesData[macAddress] === undefined) {
+      if (fridgeDoc.exists && fridgesData[mac_address] === undefined) {
         // MAC address does not exist, so we add it with an empty value
         await fridgeUsersRef.update({
-          [macAddress]: ""
+          [mac_address]: ""
         });
         res.status(201).json({ message: 'MAC Address registered successfully' });
-      } else if (fridgesData[macAddress] === "") {
+      } else if (fridgesData[mac_address] === "") {
         // MAC address exists but has an empty value
         res.status(200).json({ message: 'MAC Address already registered but no user assigned' });
       } else {
