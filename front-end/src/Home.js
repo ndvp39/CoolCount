@@ -119,7 +119,7 @@ function Home() {
         };
     
         fetchDrawers();
-    }, [selectedFridgeId]);
+    }, [selectedFridgeId, isLoading]);
     
     
 

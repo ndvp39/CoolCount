@@ -109,8 +109,8 @@ app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
 });
 
 app.post('/api/users/savedrawers', async (req, res) => {
-  const { userId, fridgeId, drawers } = req.body;  // מקבל את המידע מתוך גוף הבקשה
-  
+  const { userId, fridgeId, drawers } = req.body;
+
   try {
       if (!userId || !fridgeId || !drawers) {
           return res.status(400).json({ message: 'Missing required data' });
@@ -121,17 +121,30 @@ app.post('/api/users/savedrawers', async (req, res) => {
 
       if (!userDoc.exists) {
           return res.status(404).json({ message: 'User not found' });
-      } else {
-          const fridges = userDoc.data().fridges || {};
-          fridges[fridgeId] = drawers;
-          await userDocRef.update({ fridges });
-          return res.status(200).json({ message: 'Drawers saved successfully' });
       }
+
+      // שמירת `weight` הקיים אם ישנו
+      const existingFridge = (userDoc.data().fridges || {})[fridgeId] || [];
+      const drawersUpdated = drawers.map((drawer, index) => {
+          const existingDrawer = existingFridge[index] || {};
+          return {
+              ...drawer,
+              weight: existingDrawer.weight ?? drawer.weight // שומר את הערך הקיים של `weight`
+          };
+      });
+
+      const fridges = userDoc.data().fridges || {};
+      fridges[fridgeId] = drawersUpdated;
+
+      await userDocRef.update({ fridges });
+      return res.status(200).json({ message: 'Drawers saved successfully' });
   } catch (error) {
       console.error('Error saving drawers:', error);
       return res.status(500).json({ message: 'Error saving drawers data' });
   }
 });
+
+
 
 
 
