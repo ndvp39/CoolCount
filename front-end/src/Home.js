@@ -260,30 +260,33 @@ function Home() {
     
     return (
         
-        <div className="home-container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
-            
-            <div className="logout-button-container" style={{ position: 'absolute', top: '10px', right: '20px' }}>
-                <button onClick={handleLogout} className="btn btn-danger">
-                    <i className="fas fa-sign-out-alt"></i> {/* אייקון של התנתקות */}
-                </button>
+        <div className="container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
+         
+          <div className="row d-flex justify-content-end align-items-center mt-4">        
+                {/* שדה להזנת קוד Arduino וכפתור Connect */}
+                <div className="col-auto d-flex align-items-center">
+                    <input
+                        type="text"
+                        placeholder="Arduino MAC"
+                        value={arduinoCode}
+                        onChange={(e) => setArduinoCode(e.target.value)}
+                        className="form-control"
+                        style={{ width: '120px', marginRight: '10px' }}
+                    />
+                    <button onClick={handleSendArduinoCode} className="btn btn-primary" style={{ width: '50px',marginLeft: '10px' }}>
+                        Link
+                    </button>
+                </div>
+
+                {/* כפתור Logout בצד ימין */}
+                <div className="col-auto ml-auto">
+                    <button onClick={handleLogout} className="btn btn-danger">
+                        <i className="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
             </div>
 
-            {/* שדה להזנת קוד Arduino וכפתור Send */}
-            <div className="arduino-code-container" style={{ position: 'absolute', top: '10px', right: '100px' }}>
-                <input
-                    type="text"
-                    placeholder="Enter Arduino Code"
-                    value={arduinoCode}
-                    onChange={(e) => setArduinoCode(e.target.value)}
-                    className="form-control"
-                    style={{ display: 'inline', width: '150px', marginRight: '10px' }}
-                />
-                <button onClick={handleSendArduinoCode} className="btn btn-primary">
-                    Connect to Arduino
-                </button>
-            </div>
-
-            <h1 className="fridge-title display-4 text-centerz text-light">My Fridge</h1>
+            <h1 className="fridge-title display-4 text-centerz text-light mt-3">My Fridge</h1>
             
             {/* כפתור לפתיחת רשימת המקררים */}
             <button onClick={toggleList} className="btn btn-secondary mt-3">

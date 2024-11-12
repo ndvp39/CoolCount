@@ -73,7 +73,6 @@ input {
     font-size: 14px;
     color: white; /* צבע טקסט לבן */
     background: #3A3A3A; /* רקע כהה */
-
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -84,7 +83,6 @@ input:focus {
 }
 
 .modal-buttons {
-    display: flex;
     justify-content: space-between;
 }
 
@@ -116,3 +114,30 @@ input:focus {
 .delete-button:hover {
     background: #ff3d3d;
 }
+
+.calculator-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 90001; /* זדאייה מעל כל שאר האלמנטים */
+    width: 300px;
+    max-width: 90%;
+    border: 2px solid black;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 90000; /* זדאייה מתחת לפופ-אפ */
+}
+
+

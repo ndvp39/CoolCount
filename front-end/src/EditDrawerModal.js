@@ -1,14 +1,32 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import './EditDrawerModal.css'; 
-import { FaTimes } from 'react-icons/fa'; // Import the close icon
+import { FaTimes,FaCalculator  } from 'react-icons/fa'; // Import the close icon
 
 const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , onDelete}) => {
+    
+    const [showCalculatorPopup, setShowCalculatorPopup] = useState(false);
+    const [amount, setAmount] = useState(0);
+    const [calculatedWeight, setCalculatedWeight] = useState(null);
+
     const handleDelete = () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this drawer?");
         if (confirmDelete) {
             onDelete(); // Call the delete function passed as a prop
         }
     };
+    // פונקציית חישוב המשקל פר פריט
+    useEffect(() => {
+        if (amount > 0 && drawerDetails.weight > 0) {  // בדיקה שהערכים תקינים
+            const result = drawerDetails.weight / amount;
+            setCalculatedWeight(result);
+        } else {
+            setCalculatedWeight(0);  // ננקה את התוצאה אם הערכים לא תקינים
+        }
+    }, [amount, drawerDetails.weight]); // הפעולה תתבצע כאשר amount או weight משתנים
+
+
+
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -28,7 +46,24 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="weightperitem">Weight Per Item (kg):</label>
+                        <label htmlFor="weightperitem" style={{ display: 'flex', alignItems: 'center' }}>
+                            Weight Per Item (kg):
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault(); // מניעת השליחה של הטופס
+                                    setShowCalculatorPopup(true);
+                                }}
+                                style={{
+                                    background: 'none',
+                                    color: 'white',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    marginLeft: '8px',
+                                }}
+                            >
+                                <FaCalculator size={20} />
+                            </button>
+                        </label>
                         <input
                             id="weightperitem"
                             type="number"
@@ -77,13 +112,61 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                         />
                     </div>
                     <div className="modal-buttons">
-                        <button type="submit" className="save-button">Save</button>
+                        <button type="submit" className="save-button me-2">Save</button>
                         <button type="button" className="delete-button" onClick={handleDelete}>Delete</button>
+                    </div>
+                </form>
+            </div>
+
+       {/* Calculator Popup */}
+       {showCalculatorPopup && (
+                <div className="modal-content">
+                    <button
+                        className="close-button"
+                        onClick={() => setShowCalculatorPopup(false)}
+                    >
+                    <FaTimes size={20} color="white" />
+                    </button>
+                    <h3 style={{ color: 'white'}}>Calculate Weight Per Item</h3>
+                    <div className="form-group my-3">
+                    <label>Amount of Items:</label>                       
+                        <input
+                            type="number"
+                            value={amount}
+                            onChange={(e) => {
+                                setAmount(parseInt(e.target.value));
+                            }}
+                            placeholder="Enter amount of items"
+                        />
+                    </div>
+                    <div className="form-group">
+                    <label>Drawer Weight (kg):</label>  
+                        <input
+                            type="number"
+                            value={drawerDetails.weight} // ערך שמוגדר כבר
+                            readOnly
+                        />
+                    </div>
+                    <div className="">
+                        {(calculatedWeight !== null && !isNaN(calculatedWeight)) && (
+                            <p>Recommended Weight per Item: <br />{calculatedWeight.toFixed(2)} kg</p>
+                        )}
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <button 
+                            onClick={() => setDrawerDetails({ ...drawerDetails, weightperitem: parseFloat(calculatedWeight.toFixed(2)) })} 
+                            className="save-button"
+                        >
+                            Set changes
+                        </button>
                     </div>
 
 
-                </form>
-            </div>
+
+                </div>
+            )}
+
+
         </div>
     );
 };
