@@ -9,6 +9,7 @@ import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
 import apiService from './apiService';
 import Notification from './Notification';
+import ShoppingCart from './ShoppingCart';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import RecipesList from './Recipes.js'
@@ -36,6 +37,7 @@ function Home() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // מצב טעינה
     const [activeTab, setActiveTab] = useState('notifications'); // הטאב הפעיל
+    const [cart, setCart] = useState([]); // ניהול מצב עגלת הקניות
     const [showHandleAndTablet, setShowHandleAndTablet] = useState(true); // בקרה על הצגת הידית והטאבלט
     const [recipes, setRecipes] = useState([]); // מצב לאחסון המתכונים שנמצאו
     const location = useLocation();
@@ -256,7 +258,20 @@ function Home() {
             console.error("Error fetching recipes:", error);
         }
     };
-
+    
+    const addToCart = (drawer) => {
+        const existingDrawer = cart.find(item => item.id === drawer.id);
+        if (existingDrawer) {
+            // אם המגירה כבר קיימת בעגלה, עדכון הכמות
+            const updatedCart = cart.map(item => 
+                item.id === drawer.id ? { ...item, quantity: item.quantity + 1 } : item
+            );
+            setCart(updatedCart);
+        } else {
+            // אם המגירה לא קיימת בעגלה, הוספה עם כמות 1
+            setCart([...cart, { ...drawer, quantity: 1 }]);
+        }
+    };
     
     return (
         
@@ -432,19 +447,22 @@ function Home() {
                         <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
                         <i className="fa fa-chart-bar"></i> {/* אייקון של סטטיסטיקה */}
                         </div>
+                        <div className={`tab ${activeTab === 'cart' ? 'active' : ''}`} onClick={() => setActiveTab('cart')}>
+                        <i className="fa fa-shopping-cart"></i> {/* אייקון של עגלת קניות */}
+                        </div>
+                   </div>      
 
-                    </div>
-                    <div className="tab-content">
-                            {activeTab === 'statistics' ? (
-                                <div>
-                                    Statistics ...
-                                </div>
-                            ) : (
-                                <div>
-                                    <Notification drawers={drawers} />
-                                </div>
-                            )}
-                    </div>
+                   <div className="tab-content">
+                        {activeTab === 'statistics' ? (
+                            <div>
+                                Statistics ...
+                            </div>
+                        ) : activeTab === 'notifications' ? (
+                            <Notification drawers={drawers} addToCart={addToCart} />
+                        ) : activeTab === 'cart' ? (
+                            <ShoppingCart cart={cart} setCart={setCart} />
+                        ) : null}
+                  </div>
                 </div> 
                 </>
             )}

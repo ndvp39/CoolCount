@@ -54,3 +54,16 @@ h3 {
         font-size: 1rem;
     }
 }
+.add-to-cart-btn {
+    background: none; /* אין רקע */
+    border: none; /* אין גבול */
+    cursor: pointer; /* מצביע כעכבר */
+    padding: 0; /* ביטול ריפוד */
+    color: blue; /* צבע כחול לאייקון */
+    font-size: 20px; /* גודל אייקון */
+    transition: color 0.3s ease; /* אנימציה של שינוי צבע */
+}
+
+.add-to-cart-btn:hover {
+    color: darkblue; /* צבע כחול כהה בהעברה מעל האייקון */
+}
