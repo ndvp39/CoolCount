@@ -13,7 +13,7 @@ const Notification = ({ drawers,addToCart  }) => {
     };
 
     return (
-        <div className="notifications-container">
+<div className="notifications-container">
     {getLowWeightDrawers().length > 0 ? (
         <div>
             <h3>Low Stock</h3>
@@ -36,6 +36,7 @@ const Notification = ({ drawers,addToCart  }) => {
         <p className="no-notifications">no notifications</p>
     )}
 </div>
+
 
     );
 };

@@ -12,6 +12,13 @@ h3 {
     margin: 0;
 }
 
+.notifications-container {
+    max-height: 300px; /* הגבלת גובה כדי שיהיה צורך בגלילה */
+    overflow-y: auto; /* אפשר גלילה אנכית */
+    padding: 10px;
+    border-radius: 8px; /* אפשר גם להוסיף אם תרצה עיצוב מעוגל לפינות */
+}
+
 .notification-item {
     display: flex;
     justify-content: space-between;
@@ -66,4 +73,20 @@ h3 {
 
 .add-to-cart-btn:hover {
     color: darkblue; /* צבע כחול כהה בהעברה מעל האייקון */
+}
+
+/* עיצוב מותאם אישית לגלילה כמו אפל */
+.notifications-container::-webkit-scrollbar {
+    width: 6px; /* רוחב דק של הגלילה */
+}
+
+.notifications-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1); /* צבע כהה ודי שקוף של פס הגלילה */
+    border-radius: 10px; /* עיגול פינות פס הגלילה */
+    border: 2px solid rgba(0, 0, 0, 0.1); /* מסביב לפס הגלילה */
+}
+
+.notifications-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05); /* צבע רקע מאוד בהיר למסלול */
+    border-radius: 10px; /* פינות מעוגלות למסלול */
 }

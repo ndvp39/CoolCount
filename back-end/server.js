@@ -4,6 +4,7 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const serviceAccount = require('./firebase-key.json'); // החלף את הנתיב לקובץ ה-JSON שלך
 const SerialPort = require('serialport');
+const nodemailer = require('nodemailer');
 
 
 // הגדרת היישום Express
@@ -271,7 +272,33 @@ app.post('/api/registerArduino', async (req, res) => {
   });
   
   
-  
+  // הגדרת המייל
+  const transporter = nodemailer.createTransport({
+    service: "gmail", // או כל ספק דוא"ל אחר
+    auth: {
+        user: "market.monitor.b@gmail.com", // המייל שממנו תשלח הודעה
+        pass: "jwhj qkys tdsr wiav" // סיסמת המייל (או סיסמת אפליקציה במידה ואתה משתמש ב-Gmail)
+    }
+  });
+
+  // מסלול לשליחת מייל
+  app.post("/send-email", (req, res) => {
+    const { to, subject, text } = req.body;
+
+    const mailOptions = {
+        from: "test@gmail.com", // כתובת המייל השולחת
+        to: to, // כתובת הנמען
+        subject: subject,
+        text: text
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).send(error.toString());
+        }
+        res.status(200).send("Email sent: " + info.response);
+    });
+  });
   
   
   

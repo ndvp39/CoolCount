@@ -3,8 +3,30 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 100%; /* מתאים למסכים קטנים */
+    overflow-y: auto; /* אם התוכן ארוך מדי, יופיעו גלגלות */
+    flex-direction: column; /* כדי שהתוכן יתחלק בין החלקים השונים */
+    overflow-x: hidden; /* מונע גלילה אופקית */
+    scrollbar-width: thin; /* כיוון הגלילה דק */
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05); /* צבע הגלילה */
+    max-height: 250px; /* הגדרת גובה מקסימלי */
 }
 
+.shopping-cart-container::-webkit-scrollbar {
+    width: 6px; /* רוחב דק של הגלילה */
+}
+
+.shopping-cart-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1); /* צבע כהה ודי שקוף של פס הגלילה */
+    border-radius: 10px; /* עיגול פינות פס הגלילה */
+    border: 2px solid rgba(0, 0, 0, 0.1); /* מסביב לפס הגלילה */
+}
+
+.shopping-cart-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05); /* צבע רקע מאוד בהיר למסלול */
+    border-radius: 10px; /* פינות מעוגלות למסלול */
+}
+
+/* שאר העיצובים */
 h3 {
     font-size: 1.2rem;
     margin-bottom: 8px;
@@ -28,8 +50,6 @@ h3 {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     font-size: 0.9rem; /* להקטין טקסט לטאבלט */
 }
-
-
 
 .item-name {
     font-weight: bold;

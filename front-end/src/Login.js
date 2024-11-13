@@ -21,14 +21,14 @@ function Login({ setIsAuthenticated }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user; // קבלת פרטי המשתמש
       const uid = user.uid; // קבלת ה-uid
-
+      const user_email = user.email;
 
       console.log(uid)
       localStorage.setItem('uid-coolcount', user.uid);
       setIsAuthenticated(true); // קובע שהמשתמש מחובר
       alert('Login successful!');
       
-      navigate('/home', { state: { uid } }); // הפניה ל-HOME עם ה-uid בתוך state
+      navigate('/home', { state: { uid, user_email } }); // הפניה ל-HOME עם ה-uid בתוך state
     } catch (error) {
       console.error('Error during login:', error); // הדפסת השגיאה
       setError('Invalid email or password'); // הצגת שגיאה מתאימה

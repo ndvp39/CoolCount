@@ -60,6 +60,35 @@ const saveDrawers = async (userId, fridgeId, drawers) => {
 };
 
 
+// פונקציה לשליחת מייל דרך השרת
+const sendEmail = async (cart, email) => {
+    const emailData = {
+        to: email, // כתובת הנמען
+        subject: "Order Details",
+        text: `Order summary: ${cart.map(item => `${item.name} x ${item.quantity}`).join(", ")}`
+    };
+
+    try {
+        const response = await fetch("send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(emailData),
+        });
+
+        if (response.ok) {
+            alert("Email sent successfully!");
+        } else {
+            alert("Failed to send email.");
+        }
+    } catch (error) {
+        console.error("Error sending email:", error);
+        alert("Error sending email.");
+    }
+};
+
+
 
 // פונקציה לקבלת המגירות של המשתמש ממקרר מסוים
 const getDrawers = async (userId, fridgeId) => {
@@ -135,5 +164,6 @@ export default {
     getDrawers,
     fetchRecipes,
     sendArduinoCode,
-    getFridgesId
+    getFridgesId,
+    sendEmail
 };
