@@ -1,104 +1,134 @@
-.shopping-cart-container {
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    max-width: 100%; /* מתאים למסכים קטנים */
-    overflow-y: auto; /* אם התוכן ארוך מדי, יופיעו גלגלות */
-    flex-direction: column; /* כדי שהתוכן יתחלק בין החלקים השונים */
-    overflow-x: hidden; /* מונע גלילה אופקית */
-    scrollbar-width: thin; /* כיוון הגלילה דק */
-    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05); /* צבע הגלילה */
-    max-height: 250px; /* הגדרת גובה מקסימלי */
-}
-
-.shopping-cart-container::-webkit-scrollbar {
-    width: 6px; /* רוחב דק של הגלילה */
-}
-
-.shopping-cart-container::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1); /* צבע כהה ודי שקוף של פס הגלילה */
-    border-radius: 10px; /* עיגול פינות פס הגלילה */
-    border: 2px solid rgba(0, 0, 0, 0.1); /* מסביב לפס הגלילה */
-}
-
-.shopping-cart-container::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05); /* צבע רקע מאוד בהיר למסלול */
-    border-radius: 10px; /* פינות מעוגלות למסלול */
-}
-
-/* שאר העיצובים */
+/* כותרת */
 h3 {
+    color: #000000;
     font-size: 1.2rem;
     margin-bottom: 8px;
     text-align: center;
+    font-weight: 500;
 }
 
-.shopping-cart-list {
+/* רשימת הפריטים */
+.tabletin-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.cart-item {
+.tabletin-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 12px;
+    border-radius: 15px;
+    background-color: #f5f5f7; /* צבע רקע עדין */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* הצללה רכה */
+}
+
+/* פריט בודד */
+.tabletin-item {
     display: flex;
+    flex-direction: column; /* שורה חדשה לשם המגירה */
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
-    padding: 8px;
-    margin-bottom: 6px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    font-size: 0.9rem; /* להקטין טקסט לטאבלט */
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.item-name {
+/* מעבר עם עכבר */
+.tabletin-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* שם המגירה */
+.drawer-name {
     font-weight: bold;
-    color: #333;
+    margin-bottom: 4px; /* מרווח קטן מתחת לשם המגירה */
+    color: #1c1c1e; /* צבע טקסט כהה יותר */
 }
 
-.quantity-controls {
-    display: flex;
-    align-items: center;
+/* כמות המוצרים במגירה */
+.drawer-quantity {
+    color: #e63946;
+    font-weight: 500;
 }
 
-.quantity-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 0 5px;
-}
-
-.quantity-btn:hover {
-    background-color: #0056b3;
-}
-
-.item-quantity {
-    font-size: 16px;
-    padding: 0 10px;
-    color: black;
-}
-
-.no-cart-items {
-    color: #666;
+/* הודעה ריקה */
+.no-tabletin {
+    color: #8e8e93;
     font-style: italic;
     font-size: 0.9rem;
     text-align: center;
 }
 
+/* כפתור להוספה לעגלה */
+.add-to-cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #007aff; /* צבע כחול כמו באפל */
+    font-size: 22px;
+    transition: color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    color: #005bb5; /* צבע כחול כהה יותר */
+}
+
+/* עיצוב מותאם אישית לגלילה כמו באפל */
+.tabletin-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tabletin-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.tabletin-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+/* התאמה למסכים קטנים */
 @media (max-width: 600px) {
-    .shopping-cart-container {
-        max-width: 100%; /* מתאים למסכים קטנים יותר */
-        padding: 10px;
+    .tabletin-container {
+        max-width: 100%;
+        padding: 8px;
     }
 
-    .cart-item {
+    .tabletin-item {
         font-size: 0.85rem;
     }
 
     h3 {
         font-size: 1rem;
     }
+}
+
+
+/* כמות המוצרים בעגלת הקניות */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    background-color: #3a6b58; /* ירוק כהה עם גוון כחלחל */
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #c0392b;
 }

@@ -460,18 +460,9 @@ function Home() {
                         ) : activeTab === 'notifications' ? (
                             <Notification drawers={drawers} addToCart={addToCart} />
                         ) : activeTab === 'cart' ? (
-                            <ShoppingCart cart={cart} setCart={setCart} />
+                            <ShoppingCart cart={cart} setCart={setCart} user_email={user_email}/>
                         ) : null}
                     </div>
-
-                    {/* כפתור לשליחת המייל */}
-                    {activeTab === 'cart' && (
-                        <div className="position-sticky">
-                            <button onClick={() => apiService.sendEmail(cart, user_email)} className="btn btn-primary">
-                                Send to email
-                            </button>
-                        </div>
-                    )}
                 </div>
 
                 </>

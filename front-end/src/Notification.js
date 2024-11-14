@@ -13,13 +13,13 @@ const Notification = ({ drawers,addToCart  }) => {
     };
 
     return (
-<div className="notifications-container">
+<div className="tabletin-container">
     {getLowWeightDrawers().length > 0 ? (
         <div>
             <h3>Low Stock</h3>
-            <ul className="notifications-list">
+            <ul className="tabletin-list">
                 {getLowWeightDrawers().map(drawer => (
-                    <li key={drawer.id} className="notification-item">
+                    <li key={drawer.id} className="tabletin-item noti-item">
                         <span className="drawer-name">  {drawer.name}</span>
                         <span className="drawer-quantity">  {drawer.getQuantity()}</span>
                         <button 

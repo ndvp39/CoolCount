@@ -309,24 +309,34 @@
 
 /* Tablet screen styling */
 .tablet-screen {
-  width: 40%; /* רוחב המסך */
-  height: 50%; /* גובה המסך */
-  background-color: #7f7f7f; /* אפור מתכתי */
-  border: 5px solid #2e2e2e; /* גבול כהה כדי לתת מראה מסך */
-  border-radius: 10px; /* פינות מעוגלות יותר */
+  width: 40%; /* רוחב מעט יותר רחב */
+  height: 50%; /* גובה יותר מאוזן */
+  background-color: #f0f0f0; /* אפור בהיר עם גוון קריר */
+  border: 3px solid #444444; /* גבול כהה וחד יותר */
+  border-radius: 15px; /* פינות יותר מעוגלות */
   position: absolute;
-  top: 75px; /* מיקום מלמעלה */
-  right: 15px; /* מיקום מימין */
-  z-index: 10; /* קדימות על שאר האלמנטים */
-  display: block; /* מציג את המסך תמיד */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* הוספת צל להעמקה */
+  top: 80px; /* מיקום מלמעלה */
+  right: 13px; /* מיקום מימין */
+  z-index: 20; /* קדימות גבוהה יותר */
+  display: block; /* תמיד מוצג */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* הצללה מעודנת ויותר טבעית */
+  transition: all 0.3s ease; /* מעבר חלק לכל שינוי */
 }
+
+
+/* מצב כשמזיזים את הטאבלט */
+.tablet-screen:active {
+  transform: translateY(2px); /* הזזה קלה למטה */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* הצללה רכה יותר בעת לחיצה */
+}
+
 
 /* Tab styling */
 .tab-container {
   display: flex;
   justify-content: space-around; /* מרווחים בין הטאבים */
   background-color: #2e2e2e; /* רקע כהה לטאבים */
+  border-radius: 10px ;
 }
 
 .tab {
@@ -339,6 +349,7 @@
   flex: 1;
   text-align: center;
   transition: background-color 0.3s ease;
+  border-radius: 10px ;
 }
 
 .tab:hover {
@@ -347,7 +358,7 @@
 
 .tab-content {
   padding: 1px;
-  background-color: #7f7f7f; /* אפור מתכתי */
+ 
   border-radius: 15px 15px ; /* פינות מעוגלות מעל */
   color: #fff; /* צבע טקסט לבן */
 
@@ -373,4 +384,25 @@
 
 .logout-button-container .btn:hover {
   background-color: #c82333; /* צבע כהה יותר בעת ריחוף */
+}
+
+.email-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.email-fab:hover {
+  background-color: #0056b3; /* צבע כהה יותר לריחוף */
 }
