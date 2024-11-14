@@ -93,7 +93,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                                         </span>
                                     )}
                                 </div>
-                                <div className="quantity-controls">
+                                <div className="quantity-controls mx-2">
                                     <button 
                                         className="quantity-btn" 
                                         onClick={() => handleQuantityChange(drawer, 'decrease')}
@@ -114,7 +114,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                     {/* כפתור שליחת מייל או אנימציית טעינה */}
                     <button 
                         onClick={handleSendEmail} 
-                        className="btn btn-primary my-2"
+                        className="btn btn-primary mx-2 my-2"
                         disabled={loading} // לא ניתן ללחוץ אם הטעינה פעילה
                     >
                         {loading ? (

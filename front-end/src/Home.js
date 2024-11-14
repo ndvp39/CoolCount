@@ -317,7 +317,7 @@ function Home() {
                     />
                     <button 
                     onClick={handleSendArduinoCode} 
-                    className="btn btn-primary rounded-pill shadow-sm" 
+                    className="toggle-btn rounded-pill shadow-sm" 
                     style={{ width: '60px', marginLeft: '10px', padding: '8px' }}
                     >
                     Link
