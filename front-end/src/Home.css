@@ -322,11 +322,6 @@
 }
 
 
-/* מצב כשמזיזים את הטאבלט */
-.tablet-screen:active {
-  transform: translateY(2px); /* הזזה קלה למטה */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* הצללה רכה יותר בעת לחיצה */
-}
 
 
 /* Tab styling */

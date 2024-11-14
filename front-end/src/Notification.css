@@ -37,11 +37,6 @@ h3 {
 .noti-item{
     display: flex;
 }
-/* מעבר עם עכבר */
-.tabletin-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
 
 /* שם המגירה */
 .drawer-name {
@@ -70,13 +65,13 @@ h3 {
     border: none;
     cursor: pointer;
     padding: 0;
-    color: #007aff; /* צבע כחול כמו באפל */
+    color: #10b2c7; /* צבע כחול כמו באפל */
     font-size: 22px;
     transition: color 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
-    color: #005bb5; /* צבע כחול כהה יותר */
+    color: #008b8b; /* צבע כחול כהה יותר */
 }
 
 /* עיצוב מותאם אישית לגלילה כמו באפל */
@@ -118,7 +113,7 @@ h3 {
 }
 
 .quantity-btn {
-    background-color: #3a6b58; /* ירוק כהה עם גוון כחלחל */
+    background-color: #10b2c7; /* ירוק כהה עם גוון כחלחל */
     color: #ffffff;
     border: none;
     border-radius: 20px;
@@ -129,8 +124,15 @@ h3 {
 }
 
 .quantity-btn:hover {
-    background-color: #c0582b;
+    background-color: #008b8b;
 }
 .btn.btn-primary {
-    border-radius: 12px; /* עיגול עדין */
+    background-color: transparent; /* אין רקע */
+    border: none; /* אין גבול */
+    color: black; /* צבע טקסט יירש מההורה */
 }
+.btn.btn-primary:hover {
+    background-color: transparent;
+
+}
+

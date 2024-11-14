@@ -33,7 +33,7 @@ const Notification = ({ drawers,addToCart  }) => {
             </ul>
         </div>
     ) : (
-        <p className="no-notifications">no notifications</p>
+        <p className="no-tabletin">No Notifications</p>
     )}
 </div>
 

@@ -65,7 +65,7 @@ const sendEmail = async (cart, email) => {
     const emailData = {
         to: email, // כתובת הנמען
         subject: "Order Details",
-        text: `Order summary: ${cart.map(item => `${item.name} x ${item.quantity}`).join(", ")}`
+        text: `Order summary: ${cart.map(item => `${item.name} x ${item.quantity}`).join("\n")}`
     };
 
     try {
