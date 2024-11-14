@@ -1,7 +1,13 @@
 /* Popup.css */
 .alert {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
+  position: fixed;
+  bottom: 20px; /* מרחק מהחלק התחתון של המסך */
+  left: 50%; /* מרכז את הפופאפ לרוחב המסך */
+  transform: translateX(-50%); /* מסדר את המיקום המדויק במרכז */
+  z-index: 1000;
+  transition: opacity 0.5s ease; /* אפקט מעבר חלק */
+}
+
   
   .fade-in {
     opacity: 1;

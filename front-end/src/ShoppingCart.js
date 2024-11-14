@@ -3,6 +3,7 @@ import './Notification';
 import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
 import apiService from './apiService';
 import { FaEnvelope, FaPlus } from 'react-icons/fa'; // ייבוא אייקונים מספריית react-icons
+import { usePopup } from './PopupContext';
 
 
 
@@ -10,6 +11,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
     const [loading, setLoading] = useState(false); // state למעקב אחרי מצב טעינה
     const [editingName, setEditingName] = useState(null); // state למעקב אחרי המוצר שנערך
     const [newName, setNewName] = useState(''); // state לשם החדש של המוצר
+    const { showPopup } = usePopup();
 
   
     // פונקציה להוספת או הורדת כמות פריטים בעגלת הקניות
@@ -22,7 +24,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                     item.quantity -= 1;
                     // אם הכמות שווה ל-0, נמחק את הפריט מהעגלה
                     if (item.quantity === 0) {
-                        //showPopup("Item has been removed from cart", "success");
+                        showPopup("Item has been removed from cart", "success");
                         return null; // מחזיר null כדי להיפטר מהפריט
 
                     }
@@ -40,9 +42,11 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
         try {
             await apiService.sendEmail(cart, user_email);
             setLoading(false); // סיימנו את שליחת המייל
+            showPopup('cart sent to email!', 'success');
         } catch (error) {
             console.error("Error sending email", error);
             setLoading(false); // אם קרתה טעות, מסיימים את מצב הטעינה
+            showPopup('Error sending cart to email!', 'danger');
         }
     };
 

@@ -12,16 +12,15 @@ import Notification from './Notification';
 import ShoppingCart from './ShoppingCart';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import RecipesList from './Recipes.js'
 
 import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
 import {foodIcons, getFoodIcon} from './FoodIcons';
-import Popup from './Popup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { usePopup } from './PopupContext';
 
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -46,8 +45,7 @@ function Home() {
     const location = useLocation();
     const { uid, user_email } = location.state || {}; // קבלת ה-user מתוך ה-state
     const [arduinoCode, setArduinoCode] = useState("");
-    // מצב לניהול הצגת הפופ-אפ
-    const [popup, setPopup] = useState(null);
+    const { showPopup } = usePopup();
 
     
     // הוספת סטייטים עבור רשימת האיידי של המקררים
@@ -57,10 +55,6 @@ function Home() {
 
     const navigate = useNavigate();
 
-    // פונקציה שמציגה את הפופ-אפ
-    const showPopup = (message, type) => {
-        setPopup({ message, type });
-    };
 
     const handleLogout = async () => {
         const auth = getAuth();
@@ -131,7 +125,7 @@ function Home() {
         };
     
         fetchDrawers();
-    }, [selectedFridgeId, isLoading]);
+    }, [selectedFridgeId, isLoading]); // @@@@@@@@ להסיר isLoading ולשים פה מה שקשור לכפתור רענון
     
     
 
@@ -365,7 +359,6 @@ function Home() {
                 isLoading={isLoading} 
             />
             <div className={`fridge open`}>
-            {popup && <Popup message={popup.message} type={popup.type} onClose={() => setPopup(null)} />}
                 <div className="fridge-header">
                     <button className="toggle-btn" onClick={toggleFridge}>
                         {isOpen ? <FaLockOpen className="lock-icon" /> : <FaLock className="lock-icon" />}

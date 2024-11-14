@@ -77,11 +77,6 @@ const sendEmail = async (cart, email) => {
             body: JSON.stringify(emailData),
         });
 
-        if (response.ok) {
-            alert("Email sent successfully!");
-        } else {
-            alert("Failed to send email.");
-        }
     } catch (error) {
         console.error("Error sending email:", error);
         alert("Error sending email.");
