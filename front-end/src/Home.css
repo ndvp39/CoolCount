@@ -3,16 +3,14 @@
 }
 
 /* General layout */
-.container {
+.container-fluid {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background-color: #1b263b;
   color: white;
   text-align: center;
-  padding: 20px;
 }
 
 

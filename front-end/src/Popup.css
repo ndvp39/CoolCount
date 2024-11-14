@@ -1,0 +1,17 @@
+/* Popup.css */
+.alert {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  /* כאן אפשר לשנות את המראה של ההתראה בהתאם לצורך */
+  

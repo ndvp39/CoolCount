@@ -19,6 +19,9 @@ import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
 import {foodIcons, getFoodIcon} from './FoodIcons';
+import Popup from './Popup';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -43,6 +46,8 @@ function Home() {
     const location = useLocation();
     const { uid, user_email } = location.state || {}; // קבלת ה-user מתוך ה-state
     const [arduinoCode, setArduinoCode] = useState("");
+    // מצב לניהול הצגת הפופ-אפ
+    const [popup, setPopup] = useState(null);
 
     
     // הוספת סטייטים עבור רשימת האיידי של המקררים
@@ -51,6 +56,11 @@ function Home() {
     const [isListVisible, setListVisible] = useState(false);
 
     const navigate = useNavigate();
+
+    // פונקציה שמציגה את הפופ-אפ
+    const showPopup = (message, type) => {
+        setPopup({ message, type });
+    };
 
     const handleLogout = async () => {
         const auth = getAuth();
@@ -68,11 +78,11 @@ function Home() {
         console.log("Arduino Code:", arduinoCode);
         try {
             const arduinoCodeResult = await apiService.sendArduinoCode(uid, arduinoCode); // גישה לפונקציה דרך apiService
-
-            // @@@@@@@@@@@@@@@@@@@@@@@@2
+            showPopup("Arduino linked successfully", "success");
             
         } catch (error) {
             console.error("Error send Arduino Code:", error);
+            showPopup("Arduino linked error, check the arduino code again", "danger");
         }
     };
     useEffect(() => {
@@ -145,9 +155,11 @@ function Home() {
         try {
             const data = await apiService.saveDrawers(uid, selectedFridgeId, drawers);
             console.log("Changes saved successfully:", data);
+            showPopup("Changes saved successfully", "success");
             setHasUnsavedChanges(false);
         } catch (error) {
             console.error('Failed to save drawers:', error);
+            showPopup("Failed to save drawers, try again.", "danger");
         }
         setIsLoading(false); // סיום טעינה
     };
@@ -275,54 +287,71 @@ function Home() {
     
     return (
         
-        <div className="container d-flex flex-column justify-content-center align-items-center vh-120 text-white text-center p-3">
+        <div className="container-fluid d-flex flex-column justify-content-center align-items-center text-white text-center p-3">
          
-          <div className="row d-flex justify-content-end align-items-center mt-4">        
-                {/* שדה להזנת קוד Arduino וכפתור Connect */}
-                <div className="col-auto d-flex align-items-center">
-                    <input
-                        type="text"
-                        placeholder="Arduino MAC"
-                        value={arduinoCode}
-                        onChange={(e) => setArduinoCode(e.target.value)}
-                        className="form-control"
-                        style={{ width: '120px', marginRight: '10px' }}
-                    />
-                    <button onClick={handleSendArduinoCode} className="btn btn-primary" style={{ width: '50px',marginLeft: '10px' }}>
-                        Link
-                    </button>
-                </div>
-
-                {/* כפתור Logout בצד ימין */}
-                <div className="col-auto ml-auto">
-                    <button onClick={handleLogout} className="btn btn-danger">
-                        <i className="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-
-            <h1 className="fridge-title display-4 text-centerz text-light mt-3">My Fridge</h1>
-            
-            {/* כפתור לפתיחת רשימת המקררים */}
-            <button onClick={toggleList} className="btn btn-secondary mt-3">
-                Select Fridge
+         <div className="container mt-4">
+        <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'transparent', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
+            <button 
+            className="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+            style={{ border: 'none' }}
+            >
+            <span className="navbar-toggler-icon"></span>
             </button>
-
-            {/* תפריט המקררים */}
-            {isListVisible && (
-                <select 
-                    onChange={handleSelectFridge} 
-                    className="form-control mt-2"
-                    style={{ width: '200px', fontSize: '14px' }}
+            <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                <div className="d-flex align-items-center">
+                    <input
+                    type="text"
+                    placeholder="Arduino MAC"
+                    value={arduinoCode}
+                    onChange={(e) => setArduinoCode(e.target.value)}
+                    className="form-control rounded-pill border-0 shadow-sm"
+                    style={{ width: '150px', marginRight: '10px', padding: '8px' }}
+                    />
+                    <button 
+                    onClick={handleSendArduinoCode} 
+                    className="btn btn-primary rounded-pill shadow-sm" 
+                    style={{ width: '60px', marginLeft: '10px', padding: '8px' }}
+                    >
+                    Link
+                    </button>
+                </div>
+                </li>
+                <li className="nav-item">
+                <button 
+                    onClick={handleLogout} 
+                    className="btn btn-danger rounded-pill shadow-sm" 
+                    style={{ padding: '8px' }}
                 >
+                    <i className="fas fa-sign-out-alt"></i>
+                </button>
+                </li>
+                {/* כפתור לפתיחת רשימת המקררים */}  
+                <li className="nav-item mt-2">
+                    <select 
+                    onChange={handleSelectFridge} 
+                    className="form-control rounded-pill"
+                    style={{ width: '200px', fontSize: '14px' }}
+                    >
                     {fridgesList.map(id => (
                         <option key={id} value={id}>Fridge {id}</option>
                     ))}
-                </select>
+                    </select>
+                </li>
 
-            )}
 
-            
+            </ul>
+            </div>
+        </nav>
+        </div>
+            <h1 className="fridge-title display-4 text-centerz text-light mt-3">My Fridge</h1>          
             <br></br>
             <Toolbar
                 onEditToggle={toggleEditing}
@@ -336,6 +365,7 @@ function Home() {
                 isLoading={isLoading} 
             />
             <div className={`fridge open`}>
+            {popup && <Popup message={popup.message} type={popup.type} onClose={() => setPopup(null)} />}
                 <div className="fridge-header">
                     <button className="toggle-btn" onClick={toggleFridge}>
                         {isOpen ? <FaLockOpen className="lock-icon" /> : <FaLock className="lock-icon" />}
