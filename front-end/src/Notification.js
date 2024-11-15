@@ -1,8 +1,13 @@
 import React from 'react';
 import './Notification.css'; 
 import { FaShoppingCart } from 'react-icons/fa'; // אייקון של עגלת קניות
+import apiService from './apiService';
+import { usePopup } from './PopupContext';
+
 
 const Notification = ({ drawers,addToCart  }) => {
+    const { showPopup } = usePopup();
+  
     const getLowWeightDrawers = () => {
         return drawers.filter(drawer => drawer.getQuantity() <= drawer.alertLimit,
     );
@@ -10,8 +15,10 @@ const Notification = ({ drawers,addToCart  }) => {
 
     const handleAddToCart = (drawer) => {
         addToCart(drawer); // פונקציה שמוסיפה את המגירה לעגלת הקניות
+        showPopup("Item has been added to cart", "success");
     };
-
+    
+    
     return (
 <div className="tabletin-container">
     {getLowWeightDrawers().length > 0 ? (
@@ -24,7 +31,7 @@ const Notification = ({ drawers,addToCart  }) => {
                         <span className="drawer-quantity">  {drawer.getQuantity()}</span>
                         <button 
                             className="add-to-cart-btn" 
-                            onClick={() => handleAddToCart(drawer)}
+                               onClick={() => handleAddToCart(drawer)}
                         >
                             <FaShoppingCart /> {/* אייקון של עגלת קניות */}
                         </button>
