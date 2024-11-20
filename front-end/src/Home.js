@@ -22,7 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { usePopup } from './PopupContext';
 import SettingsModal from './SettingsModal';
-
+import RecipesList from './Recipes';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
@@ -49,7 +49,8 @@ function Home() {
     const { showPopup } = usePopup();
     const [isRefresh, setIsRefresh] = useState(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-    
+    const [isRecipesModalOpen, setIsRecipesModalOpen] = useState(false);
+
 
     
     // הוספת סטייטים עבור רשימת האיידי של המקררים
@@ -257,24 +258,21 @@ function Home() {
     };
 
     const onSearchRecipes = async () => {
-        // מסננים את שמות המגירות שבהן הכמות היא מעל 0
         const ingredients = drawers
-            .filter(drawer => drawer.getQuantity() > 0) // רק מגירות עם כמות גדולה מ-0
-            .map(drawer => drawer.name); // אוספים את שם המגירה
-
-        if (ingredients.length === 0) return; // אם אין מרכיבים לחיפוש, יוצאים מהפונקציה
-
+            .filter(drawer => drawer.getQuantity() > 0)
+            .map(drawer => drawer.name);
+    
+        if (ingredients.length === 0) return;
+    
         try {
-            const recipes = await apiService.fetchRecipes(ingredients); // גישה לפונקציה דרך apiService
-            setRecipes(recipes); // הנחה שהנתונים מכילים את המתכונים
-            console.log('Navigating to recipes with:', recipes);
-            navigate('/recipes', { state: { recipes: recipes } });
-            
-            
+            const recipesData = await apiService.fetchRecipes(ingredients);
+            setRecipes(recipesData); // שמירת המתכונים
+            setIsRecipesModalOpen(true); // פתיחת המודל
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
     };
+    
     
     const addToCart = (drawer) => {
         const existingDrawer = cart.find(item => item.id === drawer.id);
@@ -466,8 +464,17 @@ function Home() {
                 handleLogout={handleLogout}
             />
             )}
-
-            
+            {isRecipesModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <button className="close-button" onClick={() => setIsRecipesModalOpen(false)}>
+                            &times;
+                        </button>
+                        <RecipesList recipes={recipes} />
+                    </div>
+                </div>
+            )}
+          
         </div>
 
        

@@ -119,7 +119,7 @@
 
 /* Fridge interior */
 .fridge-interior {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 90%;
   top: 60px;
@@ -133,7 +133,8 @@
   box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8); /* Internal lighting effect */
   transition: visibility 0.1s ease-in-out, background-color 1s;
   padding: 10px;
-  border-radius: 10%
+  border-radius: 10%;
+  overflow: hidden;
 }
 
 .fridge-door-left .lock-container, .fridge-door-right .lock-container {

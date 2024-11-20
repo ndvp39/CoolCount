@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import './Recipes.css'; 
 
-function RecipesList() {
-    const location = useLocation();
-    const recipes = location.state?.recipes || []; // קבלת recipes או רשימה ריקה כברירת מחדל
-
-    // מצב להחזקת המידע על האם להציג את המרכיבים עבור כל מתכון
+function RecipesList({ recipes }) { // קבלת recipes כ-props
     const [showIngredients, setShowIngredients] = useState(Array(recipes.length).fill(false));
 
     const toggleIngredients = (index) => {
@@ -15,49 +11,57 @@ function RecipesList() {
     };
 
     return (
-        <div className="container mt-4">
+        <div className="recipes-list container mt-4">
             <div className="row">
                 {recipes.map((item, index) => (
-                    <div className="col-md-4 mb-4" key={index}>
-                        <div className="card recipe-card shadow-sm">
+                    <div className="mb-4" key={index}>
+                        <div className="recipe-card shadow-sm">
                             {item.recipe.image && (
-                                <img src={item.recipe.image} alt={item.recipe.label} className="card-img-top recipe-img" />
+                                <img
+                                    src={item.recipe.image}
+                                    alt={item.recipe.label}
+                                    className="recipe-img"
+                                />
                             )}
                             <div className="card-body">
-                                <h5 className="card-title text-primary">{item.recipe.label || 'Recipe Without Name'}</h5>
+                                <h5 className="card-title">{item.recipe.label || 'Recipe Without Name'}</h5>
                                 {/* כפתור להציג/להסתיר את המרכיבים */}
-                                <button 
-                                    className="btn btn-outline-secondary mb-2" 
+                                <button
+                                    className="btn mb-2"
                                     onClick={() => toggleIngredients(index)}
                                 >
                                     {showIngredients[index] ? 'Hide Ingredients' : 'Show Ingredients'}
                                 </button>
                                 {showIngredients[index] && (
-                                    <p>
+                                    <div className="ingredients-list">
                                         <strong>Ingredients:</strong>
                                         <ul>
                                             {item.recipe.ingredientLines.map((ingredient, ingIndex) => (
                                                 <li key={ingIndex}>{ingredient}</li>
                                             ))}
                                         </ul>
-                                    </p>
+                                    </div>
                                 )}
                                 <p className="card-text">
-                                <strong>Calories:</strong> {Math.round(item.recipe.calories) || 'Not Specified'}
+                                    <strong>Calories:</strong>{' '}
+                                    {Math.round(item.recipe.calories) || 'Not Specified'}
                                 </p>
                                 <p className="card-text">
-                                    <strong>Dish Type:</strong> {item.recipe.dishType || 'Not Specified'}
+                                    <strong>Dish Type:</strong>{' '}
+                                    {item.recipe.dishType || 'Not Specified'}
                                 </p>
                                 <p className="card-text">
-                                    <strong>Preparation Time:</strong> {item.recipe.totalTime ? `${item.recipe.totalTime} minutes` : 'Not Specified'}
+                                    <strong>Preparation Time:</strong>{' '}
+                                    {item.recipe.totalTime
+                                        ? `${item.recipe.totalTime} minutes`
+                                        : 'Not Specified'}
                                 </p>
                                 <button
-                                    className="btn btn-outline-primary btn-block mt-2"
+                                    className="btn"
                                     onClick={() => window.open(item.recipe.shareAs, '_blank')}
-                                    >
+                                >
                                     View Recipe
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -65,6 +69,7 @@ function RecipesList() {
             </div>
         </div>
     );
+    
 }
 
 export default RecipesList;

@@ -21,6 +21,11 @@ const Toolbar = ({
         setIsVisible(!isVisible); // פתיחה/סגירה של התפריט
     };
 
+    const handleButtonClick = (action) => {
+        action(); // קריאה לפונקציה שהועברה כפרופ
+        setIsVisible(false); // סגירת התפריט
+    };
+
     return (
         <div className="hamburger-toolbar-container">
             {/* כפתור תפריט 3 פסים */}
@@ -31,25 +36,25 @@ const Toolbar = ({
             {/* תוכן התפריט */}
             {isVisible && (
                 <div className="hamburger-menu-content">
-                    <button className="toolbar-button" onClick={onEditToggle}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onEditToggle)}>
                         <i className={`fa ${isEditing ? 'fa-stop' : 'fa-pencil'}`}></i>
                         {isEditing ? ' Stop Editing' : ' Edit Drawer'}
                     </button>
-                    <button className="toolbar-button" onClick={onMoveToggle}>
+                    <button className="toolbar-button"  onClick={() => handleButtonClick(onMoveToggle)}>
                         <i className={`fa ${isMoving ? 'fa-lock' : 'fa-arrows-alt'}`}></i>
                         {isMoving ? ' Disable Moving' : ' Enable Moving'}
                     </button>
-                    <button className="toolbar-button" onClick={onAddDrawer}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onAddDrawer)}>
                         <i className="fa fa-plus"></i>
                         Add Drawer
                     </button>
-                    <button className="toolbar-button" onClick={onSearchRecipes}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onSearchRecipes)}>
                         <i className="fa fa-search"></i>
                         Search Recipes
                     </button>
                     <button
                         className={`toolbar-button ${isSaveDisabled ? 'disabled' : ''}`}
-                        onClick={onSaveChanges}
+                        onClick={() => handleButtonClick(onSaveChanges)}
                         disabled={isSaveDisabled}
                     >
                         {isLoading ? (
@@ -60,11 +65,11 @@ const Toolbar = ({
                         {isLoading ? ' Saving...' : ' Save changes'}
                     </button>
                     {/* הכפתור החדש */}
-                    <button className="toolbar-button" onClick={() => isRefresh()}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(isRefresh)}>
                         <i className="fa fa-sync"></i>
                         Refresh
                     </button>
-                    <button className="toolbar-button" onClick={onSettings}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onSettings)}>
                         <i className="fa fa-cogs"></i>
                         Settings
                     </button>
