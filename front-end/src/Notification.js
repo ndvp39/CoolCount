@@ -15,12 +15,13 @@ const Notification = ({ drawers,addToCart  }) => {
 
     const handleAddToCart = (drawer) => {
         addToCart(drawer); // פונקציה שמוסיפה את המגירה לעגלת הקניות
-        showPopup("Item has been added to cart", "success");
+        showPopup("Item has been added to cart", "success","popup");
     };
     
     
     return (
 <div className="tabletin-container">
+    
     {getLowWeightDrawers().length > 0 ? (
         <div>
             <h3>Low Stock</h3>

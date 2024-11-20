@@ -46,6 +46,8 @@ function Home() {
     const { uid, user_email } = location.state || {}; // קבלת ה-user מתוך ה-state
     const [arduinoCode, setArduinoCode] = useState("");
     const { showPopup } = usePopup();
+    const [isRefresh, setIsRefresh] = useState(false);
+    
 
     
     // הוספת סטייטים עבור רשימת האיידי של המקררים
@@ -72,11 +74,11 @@ function Home() {
         console.log("Arduino Code:", arduinoCode);
         try {
             const arduinoCodeResult = await apiService.sendArduinoCode(uid, arduinoCode); // גישה לפונקציה דרך apiService
-            showPopup("Arduino linked successfully", "success");
+            showPopup("Arduino linked successfully", "success","popup");
             
         } catch (error) {
             console.error("Error send Arduino Code:", error);
-            showPopup("Arduino linked error, check the arduino code again", "danger");
+            showPopup("Arduino linked error, check the arduino code again", "danger","popup");
         }
     };
     useEffect(() => {
@@ -125,7 +127,7 @@ function Home() {
         };
     
         fetchDrawers();
-    }, [selectedFridgeId, isLoading]); // @@@@@@@@ להסיר isLoading ולשים פה מה שקשור לכפתור רענון
+    }, [selectedFridgeId, isRefresh]);
     
     
 
@@ -149,11 +151,11 @@ function Home() {
         try {
             const data = await apiService.saveDrawers(uid, selectedFridgeId, drawers);
             console.log("Changes saved successfully:", data);
-            showPopup("Changes saved successfully", "success");
+            showPopup("Changes saved successfully", "success","popup");
             setHasUnsavedChanges(false);
         } catch (error) {
             console.error('Failed to save drawers:', error);
-            showPopup("Failed to save drawers, try again.", "danger");
+            showPopup("Failed to save drawers, try again.", "danger","popup");
         }
         setIsLoading(false); // סיום טעינה
     };
@@ -170,6 +172,11 @@ function Home() {
             setShowHandleAndTablet(false); // הסתרת הידית והטאבלט כשהמקרר נפתח מחדש
         }
     };
+
+    const refreshDrawers = () => {
+        setIsRefresh((prev) => !prev); // משנה את הערך של isRefresh
+    };
+    
 
     const editDrawer = (drawerId) => {
         const drawer = drawers.find(d => d.id === drawerId);
@@ -344,8 +351,7 @@ function Home() {
             </ul>
             </div>
         </nav>
-        </div>
-            <h1 className="fridge-title display-4 text-centerz text-light mt-3">My Fridge</h1>          
+        </div>        
             <br></br>
             <Toolbar
                 onEditToggle={toggleEditing}
@@ -356,10 +362,11 @@ function Home() {
                 onSearchRecipes={onSearchRecipes}
                 onSaveChanges={saveChanges}
                 isSaveDisabled={!hasUnsavedChanges || isLoading}
-                isLoading={isLoading} 
+                isLoading={isLoading}
+                isRefresh={refreshDrawers}
             />
             <div className={`fridge open`}>
-                <div className="fridge-header">
+                <div className="fridge-header" id="popup">
                     <button className="toggle-btn" onClick={toggleFridge}>
                         {isOpen ? <FaLockOpen className="lock-icon" /> : <FaLock className="lock-icon" />}
                     </button>

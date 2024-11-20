@@ -1,11 +1,11 @@
 /* Popup.css */
 .alert {
   position: fixed;
-  bottom: 20px; /* מרחק מהחלק התחתון של המסך */
-  left: 50%; /* מרכז את הפופאפ לרוחב המסך */
   transform: translateX(-50%); /* מסדר את המיקום המדויק במרכז */
   z-index: 1000;
   transition: opacity 0.5s ease; /* אפקט מעבר חלק */
+  width: 400px; /* רוחב המלבן */
+
 }
 
   
@@ -17,7 +17,7 @@
   
   .fade-out {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(0);
   }
   
   /* כאן אפשר לשנות את המראה של ההתראה בהתאם לצורך */

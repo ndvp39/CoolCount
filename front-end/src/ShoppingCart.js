@@ -24,7 +24,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                     item.quantity -= 1;
                     // אם הכמות שווה ל-0, נמחק את הפריט מהעגלה
                     if (item.quantity === 0) {
-                        showPopup("Item has been removed from cart", "success");
+                        showPopup("Item has been removed from cart", "success","popup");
                         return null; // מחזיר null כדי להיפטר מהפריט
 
                     }
@@ -42,11 +42,11 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
         try {
             await apiService.sendEmail(cart, user_email);
             setLoading(false); // סיימנו את שליחת המייל
-            showPopup('cart sent to email!', 'success');
+            showPopup('cart sent to email!', 'success','popup');
         } catch (error) {
             console.error("Error sending email", error);
             setLoading(false); // אם קרתה טעות, מסיימים את מצב הטעינה
-            showPopup('Error sending cart to email!', 'danger');
+            showPopup('Error sending cart to email!', 'danger','popup');
         }
     };
 
@@ -54,7 +54,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
     const handleAddNewProduct = () => {
         const newProduct = {
             id: cart.length + 1, // יצירת מזהה ייחודי חדש
-            name: `New Product ${cart.length + 1}`, // שם זמני למוצר החדש
+            name: `New Product`, // שם זמני למוצר החדש
             quantity: 1
         };
         setCart([...cart, newProduct]); // הוספת המוצר החדש לעגלת הקניות

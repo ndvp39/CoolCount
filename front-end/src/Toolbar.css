@@ -1,79 +1,65 @@
-.toolbar-container {
-    position: fixed; /* Fix position to the right side */
-    top: 50%; /* Center vertically */
-    right: 10px; /* Space from the right edge */
-    z-index: 1000; /* Ensure it stays above other elements */
-    display: flex; /* Use flex to align items */
-    flex-direction: column; /* Stack items vertically */
-  }
-  
-  .toolbar {
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    background-color: #b0e0e6; /* Light turquoise background for the toolbar */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px; /* Padding for the toolbar */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  }
-  
-  .toggle-button {
-    
-    background-color: #10b2c7; /* Turquoise button color */
-    color: black; /* Text color */
-    padding: 10px; /* Button padding */
-    font-size: 20px; /* Font size */
-    border: none; /* No border */
-    border-radius: 50%; /* Round button */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    z-index: 1000; /* Ensure it stays above other elements */
-  }
-  
-  .toggle-button:hover {
-    background-color: #008b8b; /* Darker turquoise on hover */
-   
-    transform: scale(1.05); /* Slightly increase button size */
-  }
-  
-  .toolbar-button {
-    display: flex;
-    align-items: center; /* Center icons and text vertically */
-    padding: 10px 15px;
-    cursor: pointer;
-    background-color: #10b2c7; /* Primary button color in turquoise */
-    color: black; /* Button text color */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Rounded corners */
-    margin: 5px 0; /* Space between buttons */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  }
-  
-  .toolbar-button i {
-    margin-right: 10px; /* Space between icon and text */
-  }
-  
-  .toolbar-button:hover {
-    background-color: #008b8b; /* Darker turquoise on hover */
-    
-    transform: scale(1.05); /* Slightly increase button size */
-  }
-  
-  .toolbar-button:active {
-    transform: scale(0.95); /* Pressed effect */
-  }
-  
-  .delete-button {
-    background-color: red; /* Red background */
-    color: white; /* White text */
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px; /* Space between save and delete buttons */
-  }
-  
-  .delete-button:hover {
-    background-color: darkred; /* Darker red on hover */
-  }
-  
+.hamburger-toolbar-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
 
+.hamburger-menu-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.hamburger-menu-button:hover {
+  background-color: #0056b3;
+}
+
+.hamburger-menu-content {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 200px;
+  z-index: 1000;
+}
+
+.toolbar-button {
+  background-color: transparent;
+  color: #333;
+  border: none;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toolbar-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.toolbar-button i {
+  margin-right: 8px;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

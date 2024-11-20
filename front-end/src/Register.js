@@ -32,6 +32,10 @@ function Register() {
     }
   }
 
+  const handleBackToLogin = () => {
+    navigate('/'); // הפניה חזרה לעמוד ההתחברות
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
   
@@ -104,6 +108,13 @@ function Register() {
                   Register
                 </button>
               </form>
+              <button 
+                onClick={handleBackToLogin} 
+                className="btn btn-outline-cyan w-100" 
+                style={{ color: 'cyan', borderColor: 'cyan' }}
+              >
+                Back to Login
+              </button>
             </div>
           </div>
         </div>
