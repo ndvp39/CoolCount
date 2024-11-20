@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import './EditDrawerModal.css'; 
+import './Modal.css'; 
 import { FaTimes,FaCalculator  } from 'react-icons/fa'; // Import the close icon
 
 const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , onDelete}) => {

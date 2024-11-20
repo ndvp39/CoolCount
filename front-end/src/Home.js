@@ -21,6 +21,7 @@ import {foodIcons, getFoodIcon} from './FoodIcons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { usePopup } from './PopupContext';
+import SettingsModal from './SettingsModal';
 
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -47,6 +48,7 @@ function Home() {
     const [arduinoCode, setArduinoCode] = useState("");
     const { showPopup } = usePopup();
     const [isRefresh, setIsRefresh] = useState(false);
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     
 
     
@@ -129,7 +131,9 @@ function Home() {
         fetchDrawers();
     }, [selectedFridgeId, isRefresh]);
     
-    
+    const toggleSettingsModal = () => {
+        setIsSettingsModalOpen(!isSettingsModalOpen);
+    };
 
     useEffect(() => {
         console.log("Drawers updated:", drawers);
@@ -289,68 +293,9 @@ function Home() {
     return (
         
         <div className="container-fluid d-flex flex-column justify-content-center align-items-center text-white text-center p-3">
-         
-         <div className="container mt-4">
-        <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'transparent', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
-            <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" 
-            aria-expanded="false" 
-            aria-label="Toggle navigation"
-            style={{ border: 'none' }}
-            >
-            <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                <div className="d-flex align-items-center">
-                    <input
-                    type="text"
-                    placeholder="Arduino MAC"
-                    value={arduinoCode}
-                    onChange={(e) => setArduinoCode(e.target.value)}
-                    className="form-control rounded-pill border-0 shadow-sm"
-                    style={{ width: '150px', marginRight: '10px', padding: '8px' }}
-                    />
-                    <button 
-                    onClick={handleSendArduinoCode} 
-                    className="toggle-btn rounded-pill shadow-sm" 
-                    style={{ width: '60px', marginLeft: '10px', padding: '8px' }}
-                    >
-                    Link
-                    </button>
-                </div>
-                </li>
-                <li className="nav-item">
-                <button 
-                    onClick={handleLogout} 
-                    className="btn btn-danger rounded-pill shadow-sm" 
-                    style={{ padding: '8px' }}
-                >
-                    <i className="fas fa-sign-out-alt"></i>
-                </button>
-                </li>
-                {/* כפתור לפתיחת רשימת המקררים */}  
-                <li className="nav-item mt-2">
-                    <select 
-                    onChange={handleSelectFridge} 
-                    className="form-control rounded-pill"
-                    style={{ width: '200px', fontSize: '14px' }}
-                    >
-                    {fridgesList.map(id => (
-                        <option key={id} value={id}>Fridge {id}</option>
-                    ))}
-                    </select>
-                </li>
 
+        <div className="container mt-4">
 
-            </ul>
-            </div>
-        </nav>
         </div>        
             <br></br>
             <Toolbar
@@ -364,6 +309,7 @@ function Home() {
                 isSaveDisabled={!hasUnsavedChanges || isLoading}
                 isLoading={isLoading}
                 isRefresh={refreshDrawers}
+                onSettings={toggleSettingsModal}
             />
             <div className={`fridge open`}>
                 <div className="fridge-header" id="popup">
@@ -508,9 +454,26 @@ function Home() {
                     onDelete={deleteDrawer}
                 />
             )}
+            {isSettingsModalOpen && (
+            <SettingsModal
+                isSettingsModalOpen={isSettingsModalOpen}
+                toggleSettingsModal={toggleSettingsModal}
+                arduinoCode={arduinoCode}
+                setArduinoCode={setArduinoCode}
+                handleSendArduinoCode={handleSendArduinoCode}
+                fridgesList={fridgesList}
+                handleSelectFridge={handleSelectFridge}
+                handleLogout={handleLogout}
+            />
+            )}
+
+            
         </div>
+
+       
          
     );
+    
 }
 
 

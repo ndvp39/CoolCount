@@ -12,7 +12,8 @@ const Toolbar = ({
     isSaveDisabled,
     isLoading,
     onSearchRecipes,
-    isRefresh, // פונקציה חדשה שמוגדרת עבור הכפתור הנוסף
+    isRefresh,
+    onSettings
 }) => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -63,7 +64,7 @@ const Toolbar = ({
                         <i className="fa fa-sync"></i>
                         Refresh
                     </button>
-                    <button className="toolbar-button">
+                    <button className="toolbar-button" onClick={onSettings}>
                         <i className="fa fa-cogs"></i>
                         Settings
                     </button>
