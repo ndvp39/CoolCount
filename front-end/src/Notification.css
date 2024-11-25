@@ -136,3 +136,27 @@ h3 {
 
 }
 
+.statistics-item {
+    font-size: 16px;
+    color: #4A4A4A;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #ffffff; /* רקע לבן לקריאות טובה יותר */
+    border: 1px solid #ddd; /* הוספת גבול קל מסביב */
+    border-radius: 8px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* הצללה קלילה */
+    list-style: none;
+    display: flex; /* עיצוב בשורה אחת */
+    justify-content: space-between; /* פיזור בין שם ותאריך */
+    align-items: center; /* מרכז אנכי */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* אנימציה לשינוי */
+  }
+  
+  
+  .drawer-date {
+    color: #4A4A4A; /* צבע אפור כהה */
+    font-size: 14px; /* גודל טקסט קטן יותר */
+    font-style: italic; /* עיצוב נטוי */
+    margin-left: 10px; /* רווח קטן מהשם */
+}
+

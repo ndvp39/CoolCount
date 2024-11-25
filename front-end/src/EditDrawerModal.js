@@ -97,8 +97,11 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             id="lastAddedDate"
                             type="date"
                             value={drawerDetails.lastAddedDate}
-                            onChange={(e) => setDrawerDetails({ ...drawerDetails, lastAddedDate: e.target.value })}
-                            
+                            onChange={(e) => {
+                                const dateParts = e.target.value.split("-"); // מפריד את השנה, החודש והיום
+                                const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; // מסדר לפורמט DD.MM.YYYY
+                                setDrawerDetails({ ...drawerDetails, lastAddedDate: formattedDate }); // מעדכן את הפורמט במצב
+                            }}
                         />
                     </div>
                     <div className="form-group">

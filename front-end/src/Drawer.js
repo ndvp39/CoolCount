@@ -25,7 +25,13 @@ class Drawer {
     }
     
     getQuantity(){
-        return Math.floor(this.weight / this.weightperitem);
+        const q = Math.floor(this.weight / this.weightperitem);
+        if(q < 0){
+            return 0;
+        }
+        else{
+            return q;
+        }
     }
     
 

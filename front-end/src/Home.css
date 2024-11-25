@@ -152,12 +152,11 @@
 /* Fridge leg styling */
 .fridge-leg {
   position: absolute;
-  bottom: -31px; /* ממקם את הרגליים מתחת למקרר */
+  bottom: -25px; /* ממקם את הרגליים מתחת למקרר */
   width: 30px; /* רוחב הרגל */
   height: 15px; /* גובה הרגל */
   background-color: #333; /* צבע כהה יותר לרגל */
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(195, 11, 11, 0.5); /* הוספת צל */
 }
 
 .fridge-leg:first-child {
@@ -400,4 +399,6 @@
 .email-fab:hover {
   background-color: #0056b3; /* צבע כהה יותר לריחוף */
 }
+
+
 

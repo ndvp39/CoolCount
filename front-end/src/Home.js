@@ -419,7 +419,7 @@ function Home() {
                             <i className="fa fa-bell"></i> {/* אייקון של התראה */}
                         </div>
                         <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
-                            <i className="fa fa-chart-bar"></i> {/* אייקון של סטטיסטיקה */}
+                            <i className="fa fa-clock"></i> {/* אייקון של סטטיסטיקה */}
                         </div>
                         <div className={`tab ${activeTab === 'cart' ? 'active' : ''}`} onClick={() => setActiveTab('cart')}>
                             <i className="fa fa-shopping-cart "></i> {/* אייקון של עגלת קניות */}
@@ -427,10 +427,25 @@ function Home() {
                     </div>
 
                     <div className="tab-content">
-                        {activeTab === 'statistics' ? (
-                            <div>
-                                Statistics ...
-                            </div>
+                         {activeTab === 'statistics' ? (
+                    <div className="tabletin-container">
+                        <h3>Last Updated</h3>
+                        {drawers.length > 0 ? (
+                            <ul className="tabletin-list">
+                                {drawers.map((drawer) => (
+                                    <li key={drawer.id} className="tabletin-item statistics-item">
+                                        <div className="drawer-info">
+                                            <span className="drawer-name">{drawer.name + "'s drawer \n"}</span>
+                                            <span className="drawer-date"> {drawer.lastAddedDate}</span>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="no-tabletin">No drawers</p>
+                        )}
+                    </div>
+                
                         ) : activeTab === 'notifications' ? (
                             <Notification drawers={drawers} addToCart={addToCart} />
                         ) : activeTab === 'cart' ? (
