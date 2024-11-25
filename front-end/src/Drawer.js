@@ -1,6 +1,6 @@
 class Drawer {
     constructor(id, name, weightperitem, weight, lastAddedDate, x = 0, y = 0, width = 100, height = 100, alertLimit = 0) {
-        this.id = id; // הוספת שדה ID
+        this.id = id; 
         this.name = name;
         this.weightperitem = weightperitem;
         this.weight = weight;
@@ -26,11 +26,11 @@ class Drawer {
     
     getQuantity(){
         const q = Math.floor(this.weight / this.weightperitem);
-        if(q < 0){
-            return 0;
+        if(q >= 0){
+            return q;
         }
         else{
-            return q;
+            return 0;
         }
     }
     

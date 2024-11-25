@@ -1,34 +1,35 @@
 // FoodIcons.js
-import { Apple, BananaIcon, Cake, Milk,Fish,Carrot,Egg} from 'lucide-react';
 
-// אובייקט שמכיל את השמות בעברית (ולמעלה גם באנגלית)
+// Importing food icons from the 'lucide-react' library
+import { Apple, BananaIcon, Cake, Milk, Fish, Carrot, Egg } from 'lucide-react';
+
+// Object containing food icons mapped by their English names
 const foodIcons = {
-    "apple": <Apple style={{ color: 'red', width: '50px', height: '50px' }} />,
-    "cake": <Cake style={{ color: 'pink', width: '50px', height: '50px' }} />,
-    "milk": <Milk style={{ color: 'white', width: '50px', height: '50px' }} />,
-    "banana": <BananaIcon style={{ color: 'yellow', width: '50px', height: '50px' }} />,
-    "fish": <Fish style={{ color: 'blue', width: '50px', height: '50px' }} />,
-    "carrot": <Carrot style={{ color: 'orange', width: '50px', height: '50px' }} />,
-    "egg": <Egg style={{ color: 'white', width: '50px', height: '50px' }} />,
-
+    "apple": <Apple style={{ color: 'red', width: '50px', height: '50px' }} />, // Icon for an apple
+    "cake": <Cake style={{ color: 'pink', width: '50px', height: '50px' }} />, // Icon for a cake
+    "milk": <Milk style={{ color: 'white', width: '50px', height: '50px' }} />, // Icon for milk
+    "banana": <BananaIcon style={{ color: 'yellow', width: '50px', height: '50px' }} />, // Icon for a banana
+    "fish": <Fish style={{ color: 'blue', width: '50px', height: '50px' }} />, // Icon for a fish
+    "carrot": <Carrot style={{ color: 'orange', width: '50px', height: '50px' }} />, // Icon for a carrot
+    "egg": <Egg style={{ color: 'white', width: '50px', height: '50px' }} />, // Icon for an egg
 };
 
-// אובייקט לתרגום לשמות באנגלית
+// Object for translating Hebrew names into English names
 const translations = {
-    "תפוח": "apple",
-    "עוגה": "cake",
-    "חלב": "milk",
-    "בננה": "banana",
-    "דג": "fish",
-    "גזר": "carrot",
-    "ביצה": "egg"
-
+    "תפוח": "apple", // Hebrew for apple
+    "עוגה": "cake", // Hebrew for cake
+    "חלב": "milk", // Hebrew for milk
+    "בננה": "banana", // Hebrew for banana
+    "דג": "fish", // Hebrew for fish
+    "גזר": "carrot", // Hebrew for carrot
+    "ביצה": "egg", // Hebrew for egg
 };
 
-// פונקציה לשליפת האייקון לפי שם המגירה
+// Function to retrieve the food icon by drawer name
 const getFoodIcon = (name) => {
-    const lowercaseName = name.toLowerCase(); // המרת השם לאותיות קטנות
-    return foodIcons[lowercaseName] || foodIcons[translations[lowercaseName]]; // שליפת האייקון
+    const lowercaseName = name.toLowerCase(); // Converts the name to lowercase
+    return foodIcons[lowercaseName] || foodIcons[translations[lowercaseName]]; // Retrieves the icon by English or translated name
 };
 
+// Exporting the food icons and the retrieval function for use in other components
 export { foodIcons, getFoodIcon };

@@ -1,46 +1,51 @@
+// Toolbar Component
+// A responsive toolbar with a hamburger menu to manage drawer actions and app settings.
+
 import React, { useState } from 'react';
 import './Toolbar.css';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
 const Toolbar = ({
-    onEditToggle,
-    isEditing,
-    onMoveToggle,
-    isMoving,
-    onAddDrawer,
-    onSaveChanges,
-    isSaveDisabled,
-    isLoading,
-    onSearchRecipes,
-    isRefresh,
-    onSettings
+    onEditToggle, // Toggles editing mode
+    isEditing, // Indicates if editing mode is active
+    onMoveToggle, // Toggles moving mode
+    isMoving, // Indicates if moving mode is active
+    onAddDrawer, // Adds a new drawer
+    onSaveChanges, // Saves changes
+    isSaveDisabled, // Indicates if save button is disabled
+    isLoading, // Indicates if save action is loading
+    onSearchRecipes, // Initiates recipe search
+    isRefresh, // Refreshes the data
+    onSettings // Opens settings modal
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false); // Tracks visibility of the hamburger menu
 
+    // Toggles the hamburger menu visibility
     const handleToggle = () => {
-        setIsVisible(!isVisible); // פתיחה/סגירה של התפריט
+        setIsVisible(!isVisible);
     };
 
+    // Executes the passed action and closes the menu
     const handleButtonClick = (action) => {
-        action(); // קריאה לפונקציה שהועברה כפרופ
-        setIsVisible(false); // סגירת התפריט
+        action();
+        setIsVisible(false);
     };
 
     return (
         <div className="hamburger-toolbar-container">
-            {/* כפתור תפריט 3 פסים */}
+            {/* Hamburger menu button */}
             <button className="hamburger-menu-button" onClick={handleToggle}>
                 <i className={`fa ${isVisible ? 'fa-times' : 'fa-bars'}`}></i>
             </button>
 
-            {/* תוכן התפריט */}
+            {/* Menu content */}
             {isVisible && (
                 <div className="hamburger-menu-content">
                     <button className="toolbar-button" onClick={() => handleButtonClick(onEditToggle)}>
                         <i className={`fa ${isEditing ? 'fa-stop' : 'fa-pencil'}`}></i>
                         {isEditing ? ' Stop Editing' : ' Edit Drawer'}
                     </button>
-                    <button className="toolbar-button"  onClick={() => handleButtonClick(onMoveToggle)}>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onMoveToggle)}>
                         <i className={`fa ${isMoving ? 'fa-lock' : 'fa-arrows-alt'}`}></i>
                         {isMoving ? ' Disable Moving' : ' Enable Moving'}
                     </button>
@@ -58,13 +63,12 @@ const Toolbar = ({
                         disabled={isSaveDisabled}
                     >
                         {isLoading ? (
-                            <i className="fa fa-spinner fa-spin"></i> // עיגול טעינה
+                            <i className="fa fa-spinner fa-spin"></i> // Loading spinner
                         ) : (
                             <i className="fa fa-save"></i>
                         )}
                         {isLoading ? ' Saving...' : ' Save changes'}
                     </button>
-                    {/* הכפתור החדש */}
                     <button className="toolbar-button" onClick={() => handleButtonClick(isRefresh)}>
                         <i className="fa fa-sync"></i>
                         Refresh

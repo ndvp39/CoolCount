@@ -15,9 +15,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from 'react-router-dom'; // תצטרך גם לייבא את useNavigate
-import 'bootstrap/dist/css/bootstrap.min.css'; // ייבוא עיצובים של בוטסטראפ
-import {foodIcons, getFoodIcon} from './FoodIcons';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {getFoodIcon} from './FoodIcons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { usePopup } from './PopupContext';
@@ -26,8 +26,6 @@ import RecipesList from './Recipes';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
-
-const fridgeId = '1';
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
@@ -38,79 +36,73 @@ function Home() {
     const [isEditing, setIsEditing] = useState(false); 
     const [isMoving, setIsMoving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const [isLoading, setIsLoading] = useState(false); // מצב טעינה
-    const [activeTab, setActiveTab] = useState('notifications'); // הטאב הפעיל
-    const [cart, setCart] = useState([]); // ניהול מצב עגלת הקניות
-    const [showHandleAndTablet, setShowHandleAndTablet] = useState(true); // בקרה על הצגת הידית והטאבלט
-    const [recipes, setRecipes] = useState([]); // מצב לאחסון המתכונים שנמצאו
+    const [isLoading, setIsLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState('notifications');
+    const [cart, setCart] = useState([]);
+    const [showHandleAndTablet, setShowHandleAndTablet] = useState(true);
+    const [recipes, setRecipes] = useState([]);
     const location = useLocation();
-    const { uid, user_email } = location.state || {}; // קבלת ה-user מתוך ה-state
+    const { uid, user_email } = location.state || {};
     const [arduinoCode, setArduinoCode] = useState("");
     const { showPopup } = usePopup();
     const [isRefresh, setIsRefresh] = useState(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     const [isRecipesModalOpen, setIsRecipesModalOpen] = useState(false);
-
-
     
-    // הוספת סטייטים עבור רשימת האיידי של המקררים
     const [fridgesList, setFridgesList] = useState([]); 
     const [selectedFridgeId, setSelectedFridgeId] = useState(null);
-    const [isListVisible, setListVisible] = useState(false);
 
     const navigate = useNavigate();
-
-
+    
+    // Logs out the user and redirects to the login page
     const handleLogout = async () => {
         const auth = getAuth();
         try {
             await signOut(auth);
-            console.log("User signed out successfully");
-            localStorage.removeItem('uid-coolcount'); // מחק את ה-uid מהlocalStorage
-            navigate('/'); // הנח את המשתמש למסך הלוגין
+            localStorage.removeItem('uid-coolcount');
+            navigate('/');
         } catch (error) {
-            console.error("Error signing out: ", error);
+            showPopup("Error signing out", "danger","popup");
         }
     };
 
+    // Sends Arduino code to the server
     const handleSendArduinoCode = async () => {
-        console.log("Arduino Code:", arduinoCode);
         try {
-            const arduinoCodeResult = await apiService.sendArduinoCode(uid, arduinoCode); // גישה לפונקציה דרך apiService
+            const arduinoCodeResult = await apiService.sendArduinoCode(uid, arduinoCode);
             showPopup("Arduino linked successfully", "success","popup");
             
         } catch (error) {
-            console.error("Error send Arduino Code:", error);
             showPopup("Arduino linked error, check the arduino code again", "danger","popup");
         }
     };
+
+    // Fetches list of fridges when the component is mounted
     useEffect(() => {
         const fetchFridges = async () => {
             try {
+                showPopup("loading Fridges, please wait", "success","popup");
                 const fridgesId = await apiService.getFridgesId(uid);
                 setFridgesList(fridgesId);
                 if (fridgesId.length > 0) {
-                    setSelectedFridgeId(fridgesId[0]); // בוחר את המקרר הראשון כדי להציג את המגירות שלו
+                    setSelectedFridgeId(fridgesId[0]);
                 }
             } catch (error) {
-                console.error('Failed to load Fridges:', error);
+                showPopup("Failed to load Fridges", "danger","popup");
             }
         };
         fetchFridges();
     }, []);
-    
+
+    // Fetches drawers whenever the selected fridge changes or refresh flag is toggled
     useEffect(() => {
         const fetchDrawers = async () => {
-            // בדיקה אם selectedFridgeId תקין
             if (!selectedFridgeId) {
                 return;
             }
     
             try {
-                console.log(selectedFridgeId); // לוג למטרת דיבוג
                 const data = await apiService.getDrawers(uid, selectedFridgeId);
-    
-                // המרה של כל אובייקט למופע של המחלקה Drawer
                 const drawerInstances = data.map(drawer => new Drawer(
                     drawer.id, 
                     drawer.name, 
@@ -124,65 +116,62 @@ function Home() {
                     drawer.alertLimit,
                 ));
                 setDrawers(drawerInstances);
+                showPopup("refreshed succesfuly!", "success","popup");
             } catch (error) {
-                console.error('Failed to load drawers:', error);
+                showPopup("Failed to load drawers, please refresh", "danger","popup");
             }
         };
     
         fetchDrawers();
     }, [selectedFridgeId, isRefresh]);
     
+    // Toggles the settings modal
     const toggleSettingsModal = () => {
         setIsSettingsModalOpen(!isSettingsModalOpen);
     };
 
     useEffect(() => {
-        console.log("Drawers updated:", drawers);
         setHasUnsavedChanges(true);
     }, [drawers]);
 
-    // פונקציה להציג או להסתיר את רשימת המקררים
-    const toggleList = () => {
-        setListVisible(!isListVisible);
-    };
-
-    // פונקציה לעדכון האיידי שנבחר
     const handleSelectFridge = (event) => {
         setSelectedFridgeId(event.target.value);
     };
 
+    // Saves changes to the drawers
     const saveChanges = async () => {
-        setIsLoading(true); // התחלת טעינה
+        showPopup("saving changes...", "success","popup");
+        setIsLoading(true);
         try {
             const data = await apiService.saveDrawers(uid, selectedFridgeId, drawers);
-            console.log("Changes saved successfully:", data);
             showPopup("Changes saved successfully", "success","popup");
             setHasUnsavedChanges(false);
         } catch (error) {
-            console.error('Failed to save drawers:', error);
             showPopup("Failed to save drawers, try again.", "danger","popup");
         }
-        setIsLoading(false); // סיום טעינה
+        setIsLoading(false);
     };
 
+    // Toggles the fridge open/close state
     const toggleFridge = () => {
         setIsOpen(!isOpen);
 
-        // הפעלת ההופעה של הידית והטאבלט לאחר שנייה
         if (isOpen) {
             setTimeout(() => {
                 setShowHandleAndTablet(true);
-            }, 700); // 1000 מילישניות = שנייה אחת
+            }, 700);
         } else {
-            setShowHandleAndTablet(false); // הסתרת הידית והטאבלט כשהמקרר נפתח מחדש
+            setShowHandleAndTablet(false);
         }
     };
 
+    // Refreshes the drawer data
     const refreshDrawers = () => {
-        setIsRefresh((prev) => !prev); // משנה את הערך של isRefresh
+        setIsRefresh((prev) => !prev);
+        showPopup("refreshing...", "success","popup");
     };
     
-
+    // Opens the modal to edit a specific drawer
     const editDrawer = (drawerId) => {
         const drawer = drawers.find(d => d.id === drawerId);
         setDrawerDetails({
@@ -196,6 +185,7 @@ function Home() {
         setIsModalOpen(true); 
     };
 
+    // Submits edits to the drawer
     const handleEditSubmit = (event) => {
         event.preventDefault();
         const updatedDrawers = drawers.map(drawer => 
@@ -219,12 +209,12 @@ function Home() {
         setEditingDrawerId(null);
     };
     
-
+    // Deletes a drawer
     const deleteDrawer = () => {
         if (editingDrawerId !== null) {
             const updatedDrawers = drawers
-                .filter(drawer => drawer.id !== editingDrawerId) // מסנן את המגירה לפי ה-ID שלה
-                .map(drawer => new Drawer( // יוצרים מחדש את כל המגירות הנותרות
+                .filter(drawer => drawer.id !== editingDrawerId)
+                .map(drawer => new Drawer(
                     drawer.id, 
                     drawer.name, 
                     drawer.weightperitem, 
@@ -240,6 +230,7 @@ function Home() {
             setIsModalOpen(false);
             setEditingDrawerId(null);
             setDrawerDetails({ name: '' });
+            showPopup("Drawer deleted successfully", "success","popup");
         }
     };
     
@@ -252,11 +243,13 @@ function Home() {
         setIsMoving(!isMoving);
     };
 
+    // Adds a new drawer
     const addDrawer = () => {
-        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 100, 0, new Date().toLocaleDateString(), 50, 50, 100, 100,0); 
+        const newDrawer = new Drawer(generateUniqueId(), `New Drawer`, 0, 0, new Date().toLocaleDateString(), 50, 50, 100, 100,0); 
         setDrawers([...drawers, newDrawer]);
     };
-
+    
+    // Searches for recipes based on drawer contents
     const onSearchRecipes = async () => {
         const ingredients = drawers
             .filter(drawer => drawer.getQuantity() > 0)
@@ -266,24 +259,22 @@ function Home() {
     
         try {
             const recipesData = await apiService.fetchRecipes(ingredients);
-            setRecipes(recipesData); // שמירת המתכונים
-            setIsRecipesModalOpen(true); // פתיחת המודל
+            setRecipes(recipesData);
+            setIsRecipesModalOpen(true);
         } catch (error) {
-            console.error("Error fetching recipes:", error);
+            showPopup("Error fetching recipes", "danger","popup");
         }
     };
     
-    
+    // Adds a drawer item to the shopping cart    
     const addToCart = (drawer) => {
         const existingDrawer = cart.find(item => item.id === drawer.id);
         if (existingDrawer) {
-            // אם המגירה כבר קיימת בעגלה, עדכון הכמות
             const updatedCart = cart.map(item => 
                 item.id === drawer.id ? { ...item, quantity: item.quantity + 1 } : item
             );
             setCart(updatedCart);
         } else {
-            // אם המגירה לא קיימת בעגלה, הוספה עם כמות 1
             setCart([...cart, { ...drawer, quantity: 1 }]);
         }
     };
@@ -345,19 +336,19 @@ function Home() {
                     {drawers.map((drawer) => (
                         <Draggable
                             key={drawer.id}
-                            defaultPosition={{ x: drawer.x, y: drawer.y }} // הגדרת מיקום ראשוני
+                            defaultPosition={{ x: drawer.x, y: drawer.y }}
                             disabled={!isMoving}
                             bounds=".fridge-interior"
                             onStop={(e, data) => {
                                 const updatedDrawers = drawers.map(d => 
                                     d.id === drawer.id 
-                                        ? new Drawer( // יצירת מופע חדש של Drawer
+                                        ? new Drawer(
                                             d.id, 
                                             d.name, 
                                             d.weightperitem, 
                                             d.weight, 
                                             d.lastAddedDate, 
-                                            data.x, // עדכון המיקום החדש
+                                            data.x,
                                             data.y, 
                                             d.width, 
                                             d.height,
@@ -373,15 +364,15 @@ function Home() {
                             <ResizableBox
                                 onClick={() => isEditing && editDrawer(drawer.id)}
                                 style={{ position: 'absolute' }}
-                                width={drawer.width} // הוספת width מהדאטה
-                                height={drawer.height} // הוספת height מהדאטה
+                                width={drawer.width}
+                                height={drawer.height}
                                 minConstraints={[100, 50]}
                                 maxConstraints={[470, 640]}
                                 className="drawer"
                                 onResizeStop={(e, { size }) => {
                                     const updatedDrawers = drawers.map(d => 
                                         d.id === drawer.id 
-                                            ? new Drawer( // יצירת מופע חדש של Drawer
+                                            ? new Drawer(
                                                 d.id, 
                                                 d.name, 
                                                 d.weightperitem, 
@@ -389,8 +380,8 @@ function Home() {
                                                 d.lastAddedDate, 
                                                 d.x, 
                                                 d.y, 
-                                                size.width, // עדכון הרוחב החדש
-                                                size.height, // עדכון הגובה החדש
+                                                size.width,
+                                                size.height,
                                                 d.alertLimit
                                             ) 
                                             : d
@@ -416,13 +407,13 @@ function Home() {
                 <div className="tablet-screen">
                     <div className="tab-container d-flex justify-content-around position-sticky">
                         <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>
-                            <i className="fa fa-bell"></i> {/* אייקון של התראה */}
+                            <i className="fa fa-bell"></i>
                         </div>
                         <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
-                            <i className="fa fa-clock"></i> {/* אייקון של סטטיסטיקה */}
+                            <i className="fa fa-clock"></i>
                         </div>
                         <div className={`tab ${activeTab === 'cart' ? 'active' : ''}`} onClick={() => setActiveTab('cart')}>
-                            <i className="fa fa-shopping-cart "></i> {/* אייקון של עגלת קניות */}
+                            <i className="fa fa-shopping-cart "></i>
                         </div>
                     </div>
 
@@ -497,6 +488,5 @@ function Home() {
     );
     
 }
-
 
 export default Home;

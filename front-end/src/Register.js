@@ -1,68 +1,75 @@
+// Register Component
+// Handles user registration using Firebase Authentication and sends user details to the server.
+
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { auth } from './firebaseConfig'; // יבוא של הגדרת Firebase
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap for styling
+import { auth } from './firebaseConfig'; // Firebase configuration
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase registration method
+import { useNavigate } from 'react-router-dom'; // Navigation hook
 
 function Register() {
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState(''); // Tracks the first name input
+  const [email, setEmail] = useState(''); // Tracks the email input
+  const [password, setPassword] = useState(''); // Tracks the password input
+  const [error, setError] = useState(''); // Tracks any registration errors
+  const navigate = useNavigate(); // Navigation hook for redirecting
 
+  // Sends the registered user data (UID and email) to the server
   async function registerUser(uid, email) {
     try {
-      const response = await fetch('http://localhost:3000/api/users', {
-        method: 'POST', // שיטת הבקשה
+      const response = await fetch('/api/users', {
+        method: 'POST', // HTTP POST request
         headers: {
-          'Content-Type': 'application/json', // סוג התוכן
+          'Content-Type': 'application/json', // JSON content type
         },
-        body: JSON.stringify({ uid, email }), // המרת הנתונים ל-JSON
+        body: JSON.stringify({ uid, email }), // User details sent to the server
       });
   
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok'); // Throws an error for unsuccessful responses
       }
   
       const data = await response.json();
-      console.log(data.message); // הדפסת הודעת הצלחה
+      console.log(data.message); // Logs the server response
     } catch (error) {
-      console.error('Error registering user:', error);
+      console.error('Error registering user:', error); // Logs errors during the server call
     }
   }
 
+  // Redirects the user back to the login page
   const handleBackToLogin = () => {
-    navigate('/'); // הפניה חזרה לעמוד ההתחברות
+    navigate('/'); // Redirects to the root login route
   };
 
+  // Handles the registration process
   const handleRegister = async (e) => {
-    e.preventDefault();
-  
-    // בדיקה פשוטה: לוודא שכל השדות מלאים
-    if (firstName && email && password) {
-      setError('');
+    e.preventDefault(); // Prevents form submission reload
+
+    if (firstName && email && password) { // Checks if all fields are filled
+      setError(''); // Clears any previous error messages
       try {
-        // הרשמת המשתמש ב-Firebase
+        // Registers the user using Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const uid = userCredential.user.uid; // קבלת ה-UID של המשתמש
-        await registerUser(uid, email); // שליחת UID ומייל לשרת
+        const uid = userCredential.user.uid; // Retrieves the UID from the registered user
+        await registerUser(uid, email); // Sends UID and email to the server
         alert('Registration successful!');
-        navigate('/'); // הפניה לדף ההרשמה
+        navigate('/'); // Redirects to the login page
       } catch (registrationError) {
-        setError(registrationError.message); // הצגת שגיאת הרשמה
+        setError(registrationError.message); // Sets the registration error message
       }
     } else {
-      setError('Please fill in all fields');
+      setError('Please fill in all fields'); // Prompts the user to fill all fields
     }
   };
-  
 
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card p-4 shadow-lg bg-dark text-white" style={{ borderRadius: '15px', border: '2px solid cyan' }}>
+          <div
+            className="card p-4 shadow-lg bg-dark text-white"
+            style={{ borderRadius: '15px', border: '2px solid cyan' }}
+          >
             <div className="card-body">
               <h1 className="text-center mb-4" style={{ color: 'cyan' }}>Register</h1>
               <form onSubmit={handleRegister}>
@@ -77,7 +84,7 @@ function Register() {
                     required
                   />
                 </div>
-  
+
                 <div className="form-group mb-3">
                   <label htmlFor="email" className="text-light">Email</label>
                   <input
@@ -89,7 +96,7 @@ function Register() {
                     required
                   />
                 </div>
-  
+
                 <div className="form-group mb-3">
                   <label htmlFor="password" className="text-light">Password</label>
                   <input
@@ -101,16 +108,20 @@ function Register() {
                     required
                   />
                 </div>
-  
+
                 {error && <p className="text-danger text-center mb-3">{error}</p>}
-  
-                <button type="submit" className="btn btn-outline-cyan w-100" style={{ color: 'cyan', borderColor: 'cyan' }}>
+
+                <button
+                  type="submit"
+                  className="btn btn-outline-cyan w-100"
+                  style={{ color: 'cyan', borderColor: 'cyan' }}
+                >
                   Register
                 </button>
               </form>
-              <button 
-                onClick={handleBackToLogin} 
-                className="btn btn-outline-cyan w-100" 
+              <button
+                onClick={handleBackToLogin}
+                className="btn btn-outline-cyan w-100"
                 style={{ color: 'cyan', borderColor: 'cyan' }}
               >
                 Back to Login

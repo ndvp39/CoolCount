@@ -1,4 +1,4 @@
-/* כותרת */
+
 h3 {
     color: #000000;
     font-size: 1.2rem;
@@ -7,7 +7,6 @@ h3 {
     font-weight: 500;
 }
 
-/* רשימת הפריטים */
 .tabletin-list {
     list-style-type: none;
     padding: 0;
@@ -18,10 +17,9 @@ h3 {
     max-height: 300px;
     overflow-y: auto;
     padding: 12px;
-    background-color: #f0f0f0; /* צבע רקע עדין */
+    background-color: #f0f0f0;
 }
 
-/* פריט בודד */
 .tabletin-item {
     justify-content: space-between;
     align-items: center;
@@ -38,20 +36,17 @@ h3 {
     display: flex;
 }
 
-/* שם המגירה */
 .drawer-name {
     font-weight: bold;
-    margin-bottom: 4px; /* מרווח קטן מתחת לשם המגירה */
-    color: #1c1c1e; /* צבע טקסט כהה יותר */
+    margin-bottom: 4px;
+    color: #1c1c1e;
 }
 
-/* כמות המוצרים במגירה */
 .drawer-quantity {
     color: #e63946;
     font-weight: 500;
 }
 
-/* הודעה ריקה */
 .no-tabletin {
     color: #8e8e93;
     font-style: italic;
@@ -59,22 +54,20 @@ h3 {
     text-align: center;
 }
 
-/* כפתור להוספה לעגלה */
 .add-to-cart-btn {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    color: #10b2c7; /* צבע כחול כמו באפל */
+    color: #10b2c7;
     font-size: 22px;
     transition: color 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
-    color: #008b8b; /* צבע כחול כהה יותר */
+    color: #008b8b;
 }
 
-/* עיצוב מותאם אישית לגלילה כמו באפל */
 .tabletin-container::-webkit-scrollbar {
     width: 6px;
 }
@@ -89,7 +82,6 @@ h3 {
     border-radius: 10px;
 }
 
-/* התאמה למסכים קטנים */
 @media (max-width: 600px) {
     .tabletin-container {
         max-width: 100%;
@@ -106,14 +98,13 @@ h3 {
 }
 
 
-/* כמות המוצרים בעגלת הקניות */
 .quantity-controls {
     display: flex;
     align-items: center;
 }
 
 .quantity-btn {
-    background-color: #10b2c7; /* ירוק כהה עם גוון כחלחל */
+    background-color: #10b2c7;
     color: #ffffff;
     border: none;
     border-radius: 20px;
@@ -127,9 +118,9 @@ h3 {
     background-color: #008b8b;
 }
 .btn.btn-primary {
-    background-color: transparent; /* אין רקע */
-    border: none; /* אין גבול */
-    color: black; /* צבע טקסט יירש מההורה */
+    background-color: transparent;
+    border: none;
+    color: black;
 }
 .btn.btn-primary:hover {
     background-color: transparent;
@@ -141,22 +132,20 @@ h3 {
     color: #4A4A4A;
     margin-bottom: 10px;
     padding: 10px;
-    background: #ffffff; /* רקע לבן לקריאות טובה יותר */
-    border: 1px solid #ddd; /* הוספת גבול קל מסביב */
+    background: #ffffff;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* הצללה קלילה */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
     list-style: none;
-    display: flex; /* עיצוב בשורה אחת */
-    justify-content: space-between; /* פיזור בין שם ותאריך */
-    align-items: center; /* מרכז אנכי */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* אנימציה לשינוי */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
   
-  
   .drawer-date {
-    color: #4A4A4A; /* צבע אפור כהה */
-    font-size: 14px; /* גודל טקסט קטן יותר */
-    font-style: italic; /* עיצוב נטוי */
-    margin-left: 10px; /* רווח קטן מהשם */
+    color: #4A4A4A;
+    font-size: 14px;
+    font-style: italic;
+    margin-left: 10px;
 }
-

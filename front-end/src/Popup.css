@@ -1,24 +1,21 @@
 /* Popup.css */
 .alert {
   position: fixed;
-  transform: translateX(-50%); /* מסדר את המיקום המדויק במרכז */
+  transform: translateX(-50%);
   z-index: 1000;
-  transition: opacity 0.5s ease; /* אפקט מעבר חלק */
-  width: 400px; /* רוחב המלבן */
+  transition: opacity 0.5s ease;
+  width: 400px;
 
 }
-
   
-  .fade-in {
-    opacity: 1;
-    transform: translateY(0);
-    z-index: 5000;
-  }
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 5000;
+}
   
-  .fade-out {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  
-  /* כאן אפשר לשנות את המראה של ההתראה בהתאם לצורך */
+.fade-out {
+  opacity: 0;
+  transform: translateY(0);
+}
   

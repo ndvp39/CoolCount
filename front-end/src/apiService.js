@@ -1,75 +1,65 @@
-// apiService.js
+// API Service for managing fridge and drawer-related operations
 
-const APP_ID = '35b35351';
-const APP_KEY = 'dd40ed22e00202893a0c9e4c37a3685d';
-const BASE_URL = "https://api.edamam.com/search";
+const APP_ID = '35b35351'; // Application ID for the Edamam API
+const APP_KEY = 'dd40ed22e00202893a0c9e4c37a3685d'; // Application Key for the Edamam API
+const BASE_URL = "https://api.edamam.com/search"; // Base URL for the Edamam API
 
-
-//https://api.edamam.com/search?q=egg,בננה&app_id=35b35351&app_key=dd40ed22e00202893a0c9e4c37a3685d
-console.log('APP_ID:', APP_ID);
-console.log('APP_KEY:', APP_KEY);
-
-
-// פונקציה לחיפוש מתכונים על בסיס רשימת מוצרים
+// Function to fetch recipes based on a list of ingredients
 const fetchRecipes = async (ingredients) => {
-    const query = ingredients.join(",");
+    const query = ingredients.join(","); // Joins ingredients into a comma-separated string
     const url = `${BASE_URL}?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
-
+    console.log(APP_ID);
     try {
-        const response = await fetch(url);
+        const response = await fetch(url); // Sends GET request to the Edamam API
         if (!response.ok) throw new Error("Failed to fetch recipes");
 
-        const data = await response.json();
-        console.log('Items: ',data)
+        const data = await response.json(); // Parses response data
 
-        return data.hits; // מחזיר את רשימת המתכונים
-
+        return data.hits; // Returns list of recipes
     } catch (error) {
         console.error("Error fetching recipes:", error);
-        throw error;
+        throw error; // Re-throws the error for handling in the caller
     }
-
 };
 
-
+// Function to save drawer data for a user and fridge
 const saveDrawers = async (userId, fridgeId, drawers) => {
     try {
-        const response = await fetch(`/api/users/savedrawers`, { // הנתיב הנכון
+        const response = await fetch(`/api/users/savedrawers`, { // Sends POST request to save drawers
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // חשוב לציין שזה JSON
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 userId: userId,
                 fridgeId: fridgeId,
                 drawers: drawers
-            }),
+            }), // Sends user ID, fridge ID, and drawer data
         });
 
         if (response.ok) {
             const data = await response.json();
-            return data;
+            return data; // Returns server response
         } else {
             const errorMessage = await response.text();
             throw new Error(`Failed to save drawers: ${errorMessage}`);
         }
     } catch (error) {
         console.error("Error saving drawers:", error);
-        throw error;
+        throw error; // Re-throws the error
     }
 };
 
-
-// פונקציה לשליחת מייל דרך השרת
+// Function to send an email with cart details to the user
 const sendEmail = async (cart, email) => {
     const emailData = {
-        to: email, // כתובת הנמען
-        subject: "Order Details",
-        text: `Order summary: ${cart.map(item => `${item.name} x ${item.quantity}`).join("\n")}`
+        to: email, // Recipient email address
+        subject: "Order Details", // Email subject
+        text: `Order summary: ${cart.map(item => `${item.name} x ${item.quantity}`).join("\n")}` // Email content
     };
 
     try {
-        const response = await fetch("send-email", {
+        const response = await fetch("send-email", { // Sends POST request to send email
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -79,16 +69,14 @@ const sendEmail = async (cart, email) => {
 
     } catch (error) {
         console.error("Error sending email:", error);
-        alert("Error sending email.");
+        alert("Error sending email."); // Alerts the user if email fails
     }
 };
 
-
-
-// פונקציה לקבלת המגירות של המשתמש ממקרר מסוים
+// Function to fetch drawers for a specific user and fridge
 const getDrawers = async (userId, fridgeId) => {
     try {
-        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, {
+        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,63 +85,63 @@ const getDrawers = async (userId, fridgeId) => {
 
         if (response.ok) {
             const data = await response.json();
-            return data;
+            return data; // Returns drawer data
         } else {
             throw new Error('Failed to fetch drawers: ' + response.statusText);
         }
     } catch (error) {
         console.error("Error fetching drawers:", error);
-        throw error;
+        throw error; // Re-throws the error
     }
 };
 
+// Function to fetch fridge IDs for a specific user
 const getFridgesId = async (userId) => {
     try {
-        const response = await fetch(`/api/users/getfridgesid`, {
+        const response = await fetch(`/api/users/getfridgesid`, { // Sends POST request for fridge IDs
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId }), // שולח את userId בגוף הבקשה
+            body: JSON.stringify({ userId }), // Sends user ID in the request body
         });
 
         if (response.ok) {
             const data = await response.json();
-            return data;
+            return data; // Returns fridge IDs
         } else {
             throw new Error('Failed to fetch fridges: ' + response.statusText);
         }
     } catch (error) {
         console.error("Error fetching fridges:", error);
-        throw error;
+        throw error; // Re-throws the error
     }
 };
 
-
-// שליחת קוד הארדוינו לשרת לאימות, הפונקציה תחזיר אם אומת ותקשר בדטבייס בין המשתמש למקרר (קוד הארדוינו, ותשנה את האיידי של המקרר (את שםהאיידי של הקולקשן לקוד הארדיונ שזה המקרר))
+// Function to send Arduino code to the server for validation
 const sendArduinoCode = async (userId, arduinoCode) => {
     try {
-        const response = await fetch(`api/savearduinocode`, {
+        const response = await fetch(`api/savearduinocode`, { // Sends POST request to validate Arduino code
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({userId, arduinoCode}),
+            body: JSON.stringify({ userId, arduinoCode }), // Sends user ID and Arduino code
         });
 
         if (response.ok) {
             const data = await response.json();
-            return data;
+            return data; // Returns server response
         } else {
-            throw new Error('Failed : ' + response.statusText);
+            throw new Error('Failed: ' + response.statusText);
         }
     } catch (error) {
-        console.error("Error saving arduino code:", error);
-        throw error;
+        console.error("Error saving Arduino code:", error);
+        throw error; // Re-throws the error
     }
 };
 
-
+// Exporting all functions for use in other files
 export default {
     saveDrawers,
     getDrawers,

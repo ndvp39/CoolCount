@@ -1,42 +1,41 @@
-/* עיצוב כללי עבור כרטיסי מתכונים */
+
 .recipe-card {
-    background: #ffffff; /* רקע לבן */
-    border-radius: 10px; /* פינות מעוגלות */
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* צל למראה מודרני */
-    padding: 20px; /* מרווח פנימי */
-    margin-bottom: 20px; /* מרווח בין כרטיסים */
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .recipe-card:hover {
-    transform: translateY(-5px); /* אפקט ריחוף */
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* צל חזק יותר בריחוף */
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .recipe-card img {
-    width: 100%; /* גודל תמונה מלא */
+    width: 100%;
     height: auto;
-    border-radius: 8px; /* פינות מעוגלות לתמונה */
-    margin-bottom: 15px; /* רווח תחתון */
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .recipe-card h5 {
-    color: #333333; /* כותרת בצבע כהה */
+    color: #333333;
     font-size: 20px;
-    margin-bottom: 10px; /* מרווח תחתון */
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
 .recipe-card p {
-    color: #555555; /* טקסט בצבע אפור כהה */
+    color: #555555;
     font-size: 14px;
     margin-bottom: 10px;
-    line-height: 1.5; /* גובה שורה */
+    line-height: 1.5;
 }
 
-/* כפתורים בתוך כרטיסי המתכונים */
 .recipe-card .btn {
-    background: linear-gradient(135deg, #009688, #35a79c); /* גרדיאנט ירוק */
+    background: linear-gradient(135deg, #009688, #35a79c);
     color: white;
     border: none;
     padding: 10px 15px;
@@ -48,49 +47,46 @@
 }
 
 .recipe-card .btn:hover {
-    background: #00796b; /* גוון כהה יותר בריחוף */
-    transform: scale(1.05); /* הגדלה קלה */
+    background: #00796b;
+    transform: scale(1.05);
 }
 
-/* עיצוב עבור רשימת מרכיבים */
 .recipe-card ul {
-    padding-left: 20px; /* מרווח פנימי לשמאל */
+    padding-left: 20px;
     margin: 10px 0;
 }
 
 .recipe-card ul li {
-    color: #666666; /* טקסט בגוון אפור בינוני */
+    color: #666666;
     font-size: 14px;
-    margin-bottom: 5px; /* רווח בין פריטים */
+    margin-bottom: 5px;
 }
 
-/* גלילה אנכית למתכונים */
 .recipes-list {
-    max-height: 70vh; /* גובה מקסימלי */
-    overflow-y: auto; /* גלילה אנכית */
-    overflow-x: hidden; /* מניעת גלילה אופקית */
-    padding-right: 10px; /* מרווח פנימי לגלילה */
-    scrollbar-width: thin; /* גלילה צרה */
-    scrollbar-color: #009688 transparent; /* צבע מותאם */
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #009688 transparent;
 }
 
 .recipes-list::-webkit-scrollbar {
-    width: 8px; /* רוחב הגלילה */
+    width: 8px;
 }
 
 .recipes-list::-webkit-scrollbar-thumb {
-    background-color: #009688; /* צבע מותאם */
-    border-radius: 10px; /* פינות מעוגלות */
+    background-color: #009688;
+    border-radius: 10px;
     border: 2px solid transparent;
 }
 
 .recipes-list::-webkit-scrollbar-track {
-    background: transparent; /* רקע שקוף */
+    background: transparent;
 }
 
-/* התאמה לעיצובים עבור כפתורי סגירה */
 .close-button {
-    background: #ff6b6b; /* צבע אדום */
+    background: #ff6b6b;
     color: white;
     border: none;
     border-radius: 50%;
@@ -109,5 +105,5 @@
 
 .close-button:hover {
     background: #ff5252;
-    transform: scale(1.1); /* הגדלה קלה בריחוף */
+    transform: scale(1.1);
 }

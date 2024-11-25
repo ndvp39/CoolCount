@@ -1,13 +1,17 @@
+// RecipesList Component
+// Displays a list of recipes with details and options to show ingredients or view the full recipe.
+
 import React, { useState } from 'react';
-import './Recipes.css'; 
+import './Recipes.css';
 
-function RecipesList({ recipes }) { // קבלת recipes כ-props
-    const [showIngredients, setShowIngredients] = useState(Array(recipes.length).fill(false));
+function RecipesList({ recipes }) { // Receives the recipes as props
+    const [showIngredients, setShowIngredients] = useState(Array(recipes.length).fill(false)); // Tracks visibility of ingredients for each recipe
 
+    // Toggles the visibility of ingredients for a specific recipe
     const toggleIngredients = (index) => {
-        const updatedShowIngredients = [...showIngredients];
-        updatedShowIngredients[index] = !updatedShowIngredients[index];
-        setShowIngredients(updatedShowIngredients);
+        const updatedShowIngredients = [...showIngredients]; // Creates a copy of the visibility array
+        updatedShowIngredients[index] = !updatedShowIngredients[index]; // Toggles the value for the specific index
+        setShowIngredients(updatedShowIngredients); // Updates the state
     };
 
     return (
@@ -16,7 +20,7 @@ function RecipesList({ recipes }) { // קבלת recipes כ-props
                 {recipes.map((item, index) => (
                     <div className="mb-4" key={index}>
                         <div className="recipe-card shadow-sm">
-                            {item.recipe.image && (
+                            {item.recipe.image && ( // Displays the recipe image if available
                                 <img
                                     src={item.recipe.image}
                                     alt={item.recipe.label}
@@ -24,15 +28,17 @@ function RecipesList({ recipes }) { // קבלת recipes כ-props
                                 />
                             )}
                             <div className="card-body">
-                                <h5 className="card-title">{item.recipe.label || 'Recipe Without Name'}</h5>
-                                {/* כפתור להציג/להסתיר את המרכיבים */}
+                                <h5 className="card-title">
+                                    {item.recipe.label || 'Recipe Without Name'} {/* Displays the recipe name or a default */}
+                                </h5>
+                                {/* Button to toggle ingredients visibility */}
                                 <button
                                     className="btn mb-2"
                                     onClick={() => toggleIngredients(index)}
                                 >
                                     {showIngredients[index] ? 'Hide Ingredients' : 'Show Ingredients'}
                                 </button>
-                                {showIngredients[index] && (
+                                {showIngredients[index] && ( // Displays ingredients if toggled
                                     <div className="ingredients-list">
                                         <strong>Ingredients:</strong>
                                         <ul>
@@ -56,6 +62,7 @@ function RecipesList({ recipes }) { // קבלת recipes כ-props
                                         ? `${item.recipe.totalTime} minutes`
                                         : 'Not Specified'}
                                 </p>
+                                {/* Button to view the full recipe */}
                                 <button
                                     className="btn"
                                     onClick={() => window.open(item.recipe.shareAs, '_blank')}
@@ -69,7 +76,6 @@ function RecipesList({ recipes }) { // קבלת recipes כ-props
             </div>
         </div>
     );
-    
 }
 
 export default RecipesList;

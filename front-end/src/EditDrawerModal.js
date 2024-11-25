@@ -1,37 +1,39 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import './Modal.css'; 
-import { FaTimes,FaCalculator  } from 'react-icons/fa'; // Import the close icon
+import { FaTimes, FaCalculator } from 'react-icons/fa'; // Import the close and calculator icons
 
-const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , onDelete}) => {
+// Modal component for editing drawer details
+const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onDelete }) => {
     
-    const [showCalculatorPopup, setShowCalculatorPopup] = useState(false);
-    const [amount, setAmount] = useState(0);
-    const [calculatedWeight, setCalculatedWeight] = useState(null);
+    const [showCalculatorPopup, setShowCalculatorPopup] = useState(false); // Tracks if the calculator popup is visible
+    const [amount, setAmount] = useState(0); // Amount of items to calculate weight per item
+    const [calculatedWeight, setCalculatedWeight] = useState(null); // Stores the calculated weight per item
 
+    // Handles the deletion of the drawer
     const handleDelete = () => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this drawer?");
+        const confirmDelete = window.confirm("Are you sure you want to delete this drawer?"); // Asks for confirmation
         if (confirmDelete) {
-            onDelete(); // Call the delete function passed as a prop
+            onDelete(); // Calls the delete function passed as a prop
         }
     };
-    // פונקציית חישוב המשקל פר פריט
-    useEffect(() => {
-        if (amount > 0 && drawerDetails.weight > 0) {  // בדיקה שהערכים תקינים
-            const result = drawerDetails.weight / amount;
-            setCalculatedWeight(result);
-        } else {
-            setCalculatedWeight(0);  // ננקה את התוצאה אם הערכים לא תקינים
-        }
-    }, [amount, drawerDetails.weight]); // הפעולה תתבצע כאשר amount או weight משתנים
 
+    // Calculates weight per item whenever `amount` or `drawerDetails.weight` changes
+    useEffect(() => {
+        if (amount > 0 && drawerDetails.weight > 0) {  // Ensures both values are valid
+            const result = drawerDetails.weight / amount; // Calculates weight per item
+            setCalculatedWeight(result); // Updates the state with the result
+        } else {
+            setCalculatedWeight(0);  // Resets the result if values are invalid
+        }
+    }, [amount, drawerDetails.weight]); // Dependencies that trigger the calculation
 
 
     return (
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>
-                    <FaTimes className="close-icon" /> {/* Close icon */}
+                    <FaTimes className="close-icon" /> 
                 </button>
                 <form onSubmit={onSave}>
                     <div className="form-group">
@@ -50,7 +52,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             Weight Per Item (kg):
                             <button
                                 onClick={(e) => {
-                                    e.preventDefault(); // מניעת השליחה של הטופס
+                                    e.preventDefault(); 
                                     setShowCalculatorPopup(true);
                                 }}
                                 style={{
@@ -98,9 +100,9 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                             type="date"
                             value={drawerDetails.lastAddedDate}
                             onChange={(e) => {
-                                const dateParts = e.target.value.split("-"); // מפריד את השנה, החודש והיום
-                                const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; // מסדר לפורמט DD.MM.YYYY
-                                setDrawerDetails({ ...drawerDetails, lastAddedDate: formattedDate }); // מעדכן את הפורמט במצב
+                                const dateParts = e.target.value.split("-"); 
+                                const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; 
+                                setDrawerDetails({ ...drawerDetails, lastAddedDate: formattedDate }); 
                             }}
                         />
                     </div>
@@ -146,7 +148,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose , on
                     <label>Drawer Weight (kg):</label>  
                         <input
                             type="number"
-                            value={drawerDetails.weight} // ערך שמוגדר כבר
+                            value={drawerDetails.weight} 
                             readOnly
                         />
                     </div>
