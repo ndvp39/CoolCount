@@ -80,16 +80,17 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                         <input
                             id="weight"
                             type="number"
-                            value={drawerDetails.weight}
+                            value={drawerDetails.weight < 0 ? 0 : drawerDetails.weight} 
                             readOnly
                         />
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="quantity">Quantity:</label>
                         <input
                             id="quantity"
                             type="number"
-                            value={Math.floor(drawerDetails.weight / drawerDetails.weightperitem)}
+                            value={drawerDetails.weight <= 0 || drawerDetails.weightperitem <= 0 ? 0 : Math.floor(drawerDetails.weight / drawerDetails.weightperitem)}
                             readOnly
                         />
                     </div>
