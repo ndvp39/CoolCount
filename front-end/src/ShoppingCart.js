@@ -81,7 +81,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                     <ul className="tabletin-list">
                         {cart.map(drawer => (
                             <li key={drawer.id} className="tabletin-item">
-                                <div className="drawer-name">
+                                <div className="drawer-nameN">
                                     {editingName === drawer.id ? (
                                         <input
                                             type="text"
@@ -109,7 +109,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
                                     >
                                         -
                                     </button>
-                                    <span className="drawer-name mx-3">{drawer.quantity}</span>
+                                    <span className="drawer-nameN mx-3">{drawer.quantity}</span>
                                     <button
                                         className="quantity-btn"
                                         onClick={() => handleQuantityChange(drawer, 'increase')}

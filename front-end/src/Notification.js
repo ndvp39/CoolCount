@@ -11,9 +11,18 @@ const Notification = ({ drawers, addToCart }) => {
   
     // Filters drawers to find those with quantities below or equal to the alert limit
     const getLowWeightDrawers = () => {
-        return drawers.filter(drawer => drawer.getQuantity() <= drawer.alertLimit);
+        return drawers.filter(drawer => {
+            const quantityFromWeight = drawer.getQuantity();
+            
+            //  getQuantity < limit
+            if (quantityFromWeight > 0) {
+                return quantityFromWeight <= drawer.alertLimit;
+            }
+            
+            // if manual qunatity
+            return drawer.quantity <= drawer.alertLimit;
+        });    
     };
-
     // Handles adding a drawer item to the shopping cart and shows a popup
     const handleAddToCart = (drawer) => {
         addToCart(drawer); // Adds the drawer to the cart
@@ -28,8 +37,8 @@ const Notification = ({ drawers, addToCart }) => {
                     <ul className="tabletin-list">
                         {getLowWeightDrawers().map(drawer => ( // Iterates through low stock drawers
                             <li key={drawer.id} className="tabletin-item noti-item">
-                                <span className="drawer-name">{drawer.name}</span> {/* Drawer name */}
-                                <span className="drawer-quantity">{drawer.getQuantity()}</span> {/* Drawer quantity */}
+                                <span className="drawer-nameN">{drawer.name}</span> {/* Drawer name */}
+                                <span className="drawer-quantityN">{(drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}</span> {/* Drawer quantity */}
                                 <button 
                                     className="add-to-cart-btn" 
                                     onClick={() => handleAddToCart(drawer)} // Adds item to cart

@@ -114,6 +114,7 @@ function Home() {
                     drawer.width, 
                     drawer.height,
                     drawer.alertLimit,
+                    drawer.quantity
                 ));
                 setDrawers(drawerInstances);
                 showPopup("refreshed succesfuly!", "success","popup");
@@ -180,6 +181,7 @@ function Home() {
             weight: drawer.weight,
             lastAddedDate: drawer.lastAddedDate,
             alertLimit:drawer.alertLimit,
+            quantity:drawer.quantity
         });
         setEditingDrawerId(drawerId);
         setIsModalOpen(true); 
@@ -200,7 +202,8 @@ function Home() {
                     drawer.y, 
                     drawer.width, 
                     drawer.height,
-                    drawerDetails.alertLimit
+                    drawerDetails.alertLimit,
+                    drawerDetails.quantity
                 ) 
                 : drawer
         );
@@ -224,7 +227,8 @@ function Home() {
                     drawer.y, 
                     drawer.width, 
                     drawer.height,
-                    drawer.alertLimit
+                    drawer.alertLimit,
+                    drawer.quantity
                 ));
             setDrawers(updatedDrawers);
             setIsModalOpen(false);
@@ -252,7 +256,7 @@ function Home() {
     // Searches for recipes based on drawer contents
     const onSearchRecipes = async () => {
         const ingredients = drawers
-            .filter(drawer => drawer.getQuantity() > 0)
+            .filter(drawer => drawer.getQuantity() > 0 || drawer.quantity > 0)
             .map(drawer => drawer.name);
     
         if (ingredients.length === 0) return;
@@ -352,7 +356,8 @@ function Home() {
                                             data.y, 
                                             d.width, 
                                             d.height,
-                                            d.alertLimit
+                                            d.alertLimit,
+                                            d.quantity
                                         ) 
                                         : d
                                 );
@@ -382,7 +387,8 @@ function Home() {
                                                 d.y, 
                                                 size.width,
                                                 size.height,
-                                                d.alertLimit
+                                                d.alertLimit,
+                                                d.quantity
                                             ) 
                                             : d
                                     );
@@ -391,12 +397,15 @@ function Home() {
                                 }}
                             >
                                 
-                         <div>
-                            {getFoodIcon(drawer.name)} {}
-                            {drawer.name}
-                            <br />
-                            {"amount: " + drawer.getQuantity()}
-                        </div>
+                                <div>
+                                <span className="drawer-name">
+                                    {getFoodIcon(drawer.name)} {drawer.name}
+                                </span>
+                                <br />
+                                <span className="drawer-quantity">
+                                    {"X "+ (drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}
+                                </span>
+                            </div>
                             </ResizableBox>
                         </Draggable>
                     ))}
@@ -426,7 +435,7 @@ function Home() {
                                 {drawers.map((drawer) => (
                                     <li key={drawer.id} className="tabletin-item statistics-item">
                                         <div className="drawer-info">
-                                            <span className="drawer-name">{drawer.name + "'s drawer \n"}</span>
+                                            <span className="drawer-nameN">{drawer.name + "'s drawer \n"}</span>
                                             <span className="drawer-date"> {drawer.lastAddedDate}</span>
                                         </div>
                                     </li>

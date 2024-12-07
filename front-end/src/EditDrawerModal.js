@@ -90,8 +90,18 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                         <input
                             id="quantity"
                             type="number"
-                            value={drawerDetails.weight <= 0 || drawerDetails.weightperitem <= 0 ? 0 : Math.floor(drawerDetails.weight / drawerDetails.weightperitem)}
-                            readOnly
+                            placeholder="Enter quantity"
+                            value={
+                                drawerDetails.weight > 0 && drawerDetails.weightperitem > 0
+                                    ? Math.floor(drawerDetails.weight / drawerDetails.weightperitem)
+                                    : drawerDetails.quantity // השתמש בערך מהמשתמש אם המשקל הוא 0
+                            }
+                            onChange={(e) => {
+                                if (drawerDetails.weight <= 0 || drawerDetails.weightperitem <= 0) {
+                                    setDrawerDetails({ ...drawerDetails, quantity: parseInt(e.target.value) });
+                                }
+                            }}
+                            readOnly={drawerDetails.weight > 0 && drawerDetails.weightperitem > 0} 
                         />
                     </div>
                     <div className="form-group">

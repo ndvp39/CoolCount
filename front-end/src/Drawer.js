@@ -1,5 +1,5 @@
 class Drawer {
-    constructor(id, name, weightperitem, weight, lastAddedDate, x = 0, y = 0, width = 100, height = 100, alertLimit = 0) {
+    constructor(id, name, weightperitem, weight, lastAddedDate, x = 0, y = 0, width = 100, height = 100, alertLimit = 0,quantity = 0) {
         this.id = id; 
         this.name = name;
         this.weightperitem = weightperitem;
@@ -10,9 +10,10 @@ class Drawer {
         this.width = width;
         this.height = height;
         this.alertLimit=alertLimit;
+        this.quantity = quantity;
     }
 
-    updateDetails(name, weightperitem, weight, lastAddedDate, x, y, width, height, alertLimit) {
+    updateDetails(name, weightperitem, weight, lastAddedDate, x, y, width, height, alertLimit,quantity) {
         this.name = name;
         this.weightperitem = weightperitem;
         this.weight = weight;
@@ -22,6 +23,7 @@ class Drawer {
         this.width = width;
         this.height = height;
         this.alertLimit=alertLimit;
+        this.quantity = quantity;
     }
     
     getQuantity(){

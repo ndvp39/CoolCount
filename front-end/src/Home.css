@@ -271,6 +271,17 @@
   position: absolute;
 }
 
+.drawer-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.drawer-quantity {
+    font-size: 1rem;
+    color: #26c6da; /* כתום בהיר */
+}
 /* Interior of the drawer */
 .drawer .drawer-interior {
   width: 100%;
