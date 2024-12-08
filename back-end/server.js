@@ -261,8 +261,8 @@ app.post("/send-email", (req, res) => {
 });
 
 // Health check route
-app.get('/api/message', (req, res) => {
-    res.json({ message: 'Hello from the server!' });
+app.get('/', (req, res) => {
+    res.json({ message: 'CoolCount - server is running...' });
 });
 
 // Start the server
