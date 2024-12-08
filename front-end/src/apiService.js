@@ -2,12 +2,14 @@
 
 const APP_ID = '35b35351'; // Application ID for the Edamam API
 const APP_KEY = 'dd40ed22e00202893a0c9e4c37a3685d'; // Application Key for the Edamam API
-const BASE_URL = "https://api.edamam.com/search"; // Base URL for the Edamam API
+const BASE_URL_R = "https://api.edamam.com/search"; // Base URL for the Edamam API
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 // Function to fetch recipes based on a list of ingredients
 const fetchRecipes = async (ingredients) => {
     const query = ingredients.join(","); // Joins ingredients into a comma-separated string
-    const url = `${BASE_URL}?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
+    const url = `${BASE_URL_R}?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
     console.log(APP_ID);
     try {
         const response = await fetch(url); // Sends GET request to the Edamam API
@@ -25,7 +27,7 @@ const fetchRecipes = async (ingredients) => {
 // Function to save drawer data for a user and fridge
 const saveDrawers = async (userId, fridgeId, drawers) => {
     try {
-        const response = await fetch(`/api/users/savedrawers`, { // Sends POST request to save drawers
+        const response = await fetch(`${BASE_URL}/api/users/savedrawers`, { // Sends POST request to save drawers
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +78,7 @@ const sendEmail = async (cart, email) => {
 // Function to fetch drawers for a specific user and fridge
 const getDrawers = async (userId, fridgeId) => {
     try {
-        const response = await fetch(`/api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
+        const response = await fetch(`${BASE_URL}/api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ const getDrawers = async (userId, fridgeId) => {
 // Function to fetch fridge IDs for a specific user
 const getFridgesId = async (userId) => {
     try {
-        const response = await fetch(`/api/users/getfridgesid`, { // Sends POST request for fridge IDs
+        const response = await fetch(`${BASE_URL}/api/users/getfridgesid`, { // Sends POST request for fridge IDs
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +123,7 @@ const getFridgesId = async (userId) => {
 // Function to send Arduino code to the server for validation
 const sendArduinoCode = async (userId, arduinoCode) => {
     try {
-        const response = await fetch(`/api/savearduinocode`, { // Sends POST request to validate Arduino code
+        const response = await fetch(`${BASE_URL}/api/savearduinocode`, { // Sends POST request to validate Arduino code
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
