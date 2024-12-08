@@ -21,7 +21,7 @@ const serviceAccount = {
 // Initialize the Express app
 const app = express();
 
-// Middleware setup
+// Middleware setup 
 app.use(cors()); // Allow cross-origin requests
 app.use(express.json()); // Parse incoming JSON payloads
 
