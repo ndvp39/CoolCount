@@ -76,7 +76,7 @@ const sendEmail = async (cart, email) => {
 // Function to fetch drawers for a specific user and fridge
 const getDrawers = async (userId, fridgeId) => {
     try {
-        const response = await fetch(`api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
+        const response = await fetch(`/api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const getFridgesId = async (userId) => {
 // Function to send Arduino code to the server for validation
 const sendArduinoCode = async (userId, arduinoCode) => {
     try {
-        const response = await fetch(`api/savearduinocode`, { // Sends POST request to validate Arduino code
+        const response = await fetch(`/api/savearduinocode`, { // Sends POST request to validate Arduino code
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
