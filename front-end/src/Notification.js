@@ -1,56 +1,62 @@
-// Notification Component
-// Displays drawers with low stock and allows adding them to the shopping cart.
-
-import React from 'react';
-import './Notification.css'; 
-import { FaShoppingCart } from 'react-icons/fa'; // Shopping cart icon
-import { usePopup } from './PopupContext'; // Popup notification context
+import React, { useState } from 'react';
+import './Notification.css';
+import './Modal.css'; // Import Modal styles
+import { FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
+import { usePopup } from './PopupContext';
+import Help from "./Help";
 
 const Notification = ({ drawers, addToCart }) => {
-    const { showPopup } = usePopup(); // Accesses the popup function from context
-  
-    // Filters drawers to find those with quantities below or equal to the alert limit
+    const { showPopup } = usePopup();
+    const [isHelpVisible, setIsHelpVisible] = useState(false);
+
+    // Filters drawers with low stock
     const getLowWeightDrawers = () => {
         return drawers.filter(drawer => {
             const quantityFromWeight = drawer.getQuantity();
-            
-            //  getQuantity < limit
             if (quantityFromWeight > 0) {
                 return quantityFromWeight <= drawer.alertLimit;
             }
-            
-            // if manual qunatity
             return drawer.quantity <= drawer.alertLimit;
-        });    
+        });
     };
-    // Handles adding a drawer item to the shopping cart and shows a popup
+
+    // Handles adding an item to the cart
     const handleAddToCart = (drawer) => {
-        addToCart(drawer); // Adds the drawer to the cart
-        showPopup("Item has been added to cart", "success", "popup"); // Shows a success popup
+        addToCart(drawer);
+        showPopup("Item has been added to cart", "success", "popup");
     };
-    
+
+    // Toggles the visibility of the help modal
+    const toggleHelp = () => {
+        setIsHelpVisible(!isHelpVisible);
+    };
+
     return (
         <div className="tabletin-container">
-            {getLowWeightDrawers().length > 0 ? ( // Checks if there are low stock drawers
+        <div className="help-header d-flex justify-content-between align-items-center">
+                <h3>Low Stock</h3>
+                <Help section="LowStock" />
+            </div>    
+         
+            {getLowWeightDrawers().length > 0 ? (
                 <div>
-                    <h3>Low Stock</h3>
                     <ul className="tabletin-list">
-                        {getLowWeightDrawers().map(drawer => ( // Iterates through low stock drawers
+                        {getLowWeightDrawers().map(drawer => (
                             <li key={drawer.id} className="tabletin-item noti-item">
-                                <span className="drawer-nameN">{drawer.name}</span> {/* Drawer name */}
-                                <span className="drawer-quantityN">{(drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}</span> {/* Drawer quantity */}
-                                <button 
-                                    className="add-to-cart-btn" 
-                                    onClick={() => handleAddToCart(drawer)} // Adds item to cart
+                                <span className="drawer-nameN">{drawer.name}</span>
+                                <span className="drawer-quantityN">{(drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}</span>
+                                <button
+                                    className="add-to-cart-btn"
+                                    onClick={() => handleAddToCart(drawer)}
                                 >
-                                    <FaShoppingCart /> {/* Shopping cart icon */}
+                                    <FaShoppingCart />
                                 </button>
                             </li>
                         ))}
                     </ul>
                 </div>
             ) : (
-                <p className="no-tabletin">No Notifications</p> // Message if no low stock drawers
+                <p className="no-tabletin">No Low-Stock</p>
             )}
         </div>
     );

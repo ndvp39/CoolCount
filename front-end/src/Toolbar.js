@@ -16,7 +16,8 @@ const Toolbar = ({
     isLoading, // Indicates if save action is loading
     onSearchRecipes, // Initiates recipe search
     isRefresh, // Refreshes the data
-    onSettings // Opens settings modal
+    onSettings, // Opens settings modal
+    onAbout
 }) => {
     const [isVisible, setIsVisible] = useState(false); // Tracks visibility of the hamburger menu
 
@@ -76,6 +77,10 @@ const Toolbar = ({
                     <button className="toolbar-button" onClick={() => handleButtonClick(onSettings)}>
                         <i className="fa fa-cogs"></i>
                         Settings
+                    </button>
+                    <button className="toolbar-button" onClick={() => handleButtonClick(onAbout)}>
+                        <i className="fa fa-info-circle"></i>
+                        About
                     </button>
                 </div>
             )}

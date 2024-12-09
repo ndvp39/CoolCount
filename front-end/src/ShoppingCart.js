@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import './Notification'; // Notification-related styling (if applicable)
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styling
 import apiService from './apiService'; // API service for email sending
-import { FaEnvelope, FaPlus } from 'react-icons/fa'; // Icons for email and adding items
+import { FaEnvelope, FaPlus,FaQuestionCircle  } from 'react-icons/fa'; // Icons for email and adding items
 import { usePopup } from './PopupContext'; // Popup notifications
+import Help from "./Help";
 
 const ShoppingCart = ({ cart, setCart, user_email }) => {
     const [loading, setLoading] = useState(false); // Loading state for email sending
@@ -72,10 +73,14 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
         setEditingName(null); // Exits edit mode
         setNewName(''); // Resets the new name input
     };
-
+   
     return (
         <div className="tabletin-container">
-            <h3>Shopping Cart</h3>
+            <div className="help-header d-flex justify-content-between align-items-center">
+                <h3>Shopping Cart</h3>
+                <Help section="shoppingCart" />
+            </div>    
+
             {cart.length > 0 ? (
                 <div>
                     <ul className="tabletin-list">

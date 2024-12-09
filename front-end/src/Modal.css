@@ -139,3 +139,13 @@ input:focus {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 90000;
 }
+.help-icon {
+    font-size: 1rem; /* Adjust icon size */
+    color: #007bff; /* Bootstrap primary color */
+    cursor: pointer; /* Pointer on hover */
+  }
+  
+  .help-icon:hover {
+    color: #0056b3; /* Darker color on hover */
+  }
+  

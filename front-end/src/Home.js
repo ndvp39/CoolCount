@@ -9,6 +9,7 @@ import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css';
 import apiService from './apiService';
 import Notification from './Notification';
+import LastUpdated from './LastUpdated';
 import ShoppingCart from './ShoppingCart';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -23,6 +24,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { usePopup } from './PopupContext';
 import SettingsModal from './SettingsModal';
 import RecipesList from './Recipes';
+import AboutModal from './AboutModal';
 
 const generateUniqueId = () => '_' + Math.random().toString(36).substr(2, 9);
 
@@ -48,7 +50,8 @@ function Home() {
     const [isRefresh, setIsRefresh] = useState(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     const [isRecipesModalOpen, setIsRecipesModalOpen] = useState(false);
-    
+    const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
     const [fridgesList, setFridgesList] = useState([]); 
     const [selectedFridgeId, setSelectedFridgeId] = useState(null);
 
@@ -131,6 +134,11 @@ function Home() {
         setIsSettingsModalOpen(!isSettingsModalOpen);
     };
 
+     // Function to toggle the About popup
+     const toggleAboutModal = () => {
+        setIsAboutModalOpen(!isAboutModalOpen);
+    };
+    
     useEffect(() => {
         setHasUnsavedChanges(true);
     }, [drawers]);
@@ -303,6 +311,7 @@ function Home() {
                 isLoading={isLoading}
                 isRefresh={refreshDrawers}
                 onSettings={toggleSettingsModal}
+                onAbout={toggleAboutModal} 
             />
             <div className={`fridge open`}>
                 <div className="fridge-header" id="popup">
@@ -418,38 +427,20 @@ function Home() {
                         <div className={`tab ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>
                             <i className="fa fa-bell"></i>
                         </div>
-                        <div className={`tab ${activeTab === 'statistics' ? 'active' : ''}`} onClick={() => setActiveTab('statistics')}>
+                        <div className={`tab ${activeTab === 'lastupdate' ? 'active' : ''}`} onClick={() => setActiveTab('lastupdate')}>
                             <i className="fa fa-clock"></i>
                         </div>
                         <div className={`tab ${activeTab === 'cart' ? 'active' : ''}`} onClick={() => setActiveTab('cart')}>
                             <i className="fa fa-shopping-cart "></i>
                         </div>
                     </div>
-
                     <div className="tab-content">
-                         {activeTab === 'statistics' ? (
-                    <div className="tabletin-container">
-                        <h3>Last Updated</h3>
-                        {drawers.length > 0 ? (
-                            <ul className="tabletin-list">
-                                {drawers.map((drawer) => (
-                                    <li key={drawer.id} className="tabletin-item statistics-item">
-                                        <div className="drawer-info">
-                                            <span className="drawer-nameN">{drawer.name + "'s drawer \n"}</span>
-                                            <span className="drawer-date"> {drawer.lastAddedDate}</span>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="no-tabletin">No drawers</p>
-                        )}
-                    </div>
-                
+                        {activeTab === 'lastupdate' ? (
+                            <LastUpdated drawers={drawers} /> 
                         ) : activeTab === 'notifications' ? (
                             <Notification drawers={drawers} addToCart={addToCart} />
                         ) : activeTab === 'cart' ? (
-                            <ShoppingCart cart={cart} setCart={setCart} user_email={user_email}/>
+                            <ShoppingCart cart={cart} setCart={setCart} user_email={user_email} />
                         ) : null}
                     </div>
                 </div>
@@ -457,7 +448,7 @@ function Home() {
                 </>
             )}
             </div>
-                
+
             {isModalOpen && (
                 <EditDrawerModal
                     drawerDetails={drawerDetails}
@@ -478,6 +469,12 @@ function Home() {
                 handleSelectFridge={handleSelectFridge}
                 handleLogout={handleLogout}
             />
+            )}
+             {isAboutModalOpen && (
+                <AboutModal
+                    isOpen={() => setIsAboutModalOpen(true)}
+                    onClose={() => setIsAboutModalOpen(false)}
+                />
             )}
             {isRecipesModalOpen && (
                 <div className="modal-overlay">
