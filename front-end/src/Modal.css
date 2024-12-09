@@ -143,9 +143,14 @@ input:focus {
     font-size: 1rem; /* Adjust icon size */
     color: #007bff; /* Bootstrap primary color */
     cursor: pointer; /* Pointer on hover */
+    margin-left: 8px; /* רווח של 8 פיקסלים */
+
   }
   
   .help-icon:hover {
     color: #0056b3; /* Darker color on hover */
   }
-  
+  .custom-date-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}

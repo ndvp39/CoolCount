@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import './Modal.css'; 
 import { FaTimes, FaCalculator } from 'react-icons/fa'; // Import the close and calculator icons
+import Help from "./Help";
 
 // Modal component for editing drawer details
 const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onDelete }) => {
@@ -37,7 +38,9 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                 </button>
                 <form onSubmit={onSave}>
                     <div className="form-group">
-                        <label htmlFor="drawerName">Drawer Name:</label>
+                        <label htmlFor="drawerName">Drawer Name: 
+                        <Help section="drawerName"  />
+                        </label>
                         <input
                             id="drawerName"
                             type="text"
@@ -48,8 +51,9 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="weightperitem" style={{ display: 'flex', alignItems: 'center' }}>
+                        <label htmlFor="weightperitem">
                             Weight Per Item (kg):
+                            <Help section="weightPerItem" />
                             <button
                                 onClick={(e) => {
                                     e.preventDefault(); 
@@ -76,7 +80,9 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="weight">Weight:</label>
+                        <label htmlFor="weight">Weight:
+                        <Help section="weight" />
+                        </label>
                         <input
                             id="weight"
                             type="number"
@@ -86,7 +92,9 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="quantity">Quantity:</label>
+                        <label htmlFor="quantity">Quantity:
+                        <Help section="quantity" />
+                        </label>
                         <input
                             id="quantity"
                             type="number"
@@ -105,20 +113,32 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="lastAddedDate">Date of Last Added Item:</label>
+                        <label htmlFor="lastAddedDate">Date of Last Added Item:
+                            <Help section="lastAddedDate" />
+                        </label>
                         <input
+                            className="custom-date-input"
                             id="lastAddedDate"
                             type="date"
-                            value={drawerDetails.lastAddedDate}
+                            value={(() => {
+                                if (drawerDetails.lastAddedDate.includes(".")) {
+                                    const [day, month, year] = drawerDetails.lastAddedDate.split(".");
+                                    return `${year}-${month}-${day}`;
+                                }
+                                return drawerDetails.lastAddedDate;
+                            })()}
                             onChange={(e) => {
-                                const dateParts = e.target.value.split("-"); 
-                                const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; 
-                                setDrawerDetails({ ...drawerDetails, lastAddedDate: formattedDate }); 
+                                const [year, month, day] = e.target.value.split("-");
+                                const formattedDate = `${day}.${month}.${year}`;
+                                setDrawerDetails({ ...drawerDetails, lastAddedDate: formattedDate });
                             }}
                         />
                     </div>
+
                     <div className="form-group">
-                        <label htmlFor="alertLimit">Set Alert</label>
+                        <label htmlFor="alertLimit">Set Limit
+                        <Help section="alertLimit" />
+                        </label>
                         <input
                             id="alertLimit"
                             type="number"

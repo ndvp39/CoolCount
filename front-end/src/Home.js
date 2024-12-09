@@ -374,7 +374,6 @@ function Home() {
                                 
                             }}
                         >
-                        
                             <ResizableBox
                                 onClick={() => isEditing && editDrawer(drawer.id)}
                                 style={{ position: 'absolute' }}

@@ -8,6 +8,12 @@ const helpTexts = {
     shoppingCart: "This tab allows you to manage your cart. You can increase/decrease quantities, add new items, or email your cart.",
     lastUpdated: "This tab shows the last update for each drawer in your fridge, including the date of the most recent change.",
     LowStock: "This tab shows items in your fridge that are running low. You can add them to your shopping list.",
+    drawerName: "Enter the name of the drawer. This helps identify it in your fridge.",
+    weightPerItem: "Enter the average weight of a single item in this drawer. You can use the calculator to compute this value if needed.",
+    weight: "The current total weight of items in the drawer (read-only).",
+    quantity: "The estimated number of items based on the weight and weight per item.",
+    lastAddedDate: "The date when the most recent item was added to this drawer.",
+    alertLimit: "Set a limit to get notified when the quantity falls below this number.",
     default: "No explanation available for this section.",
 };
 
@@ -36,7 +42,6 @@ const Help = ({ section }) => {
                         <button className="close-button" onClick={toggleHelp}>
                             &times;
                         </button>
-                        <h4>About {section}</h4>
                         <p>{helpText}</p>
                     </div>
                 </div>

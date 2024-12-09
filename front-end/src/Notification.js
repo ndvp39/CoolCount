@@ -7,7 +7,6 @@ import Help from "./Help";
 
 const Notification = ({ drawers, addToCart }) => {
     const { showPopup } = usePopup();
-    const [isHelpVisible, setIsHelpVisible] = useState(false);
 
     // Filters drawers with low stock
     const getLowWeightDrawers = () => {
@@ -26,14 +25,9 @@ const Notification = ({ drawers, addToCart }) => {
         showPopup("Item has been added to cart", "success", "popup");
     };
 
-    // Toggles the visibility of the help modal
-    const toggleHelp = () => {
-        setIsHelpVisible(!isHelpVisible);
-    };
-
     return (
         <div className="tabletin-container">
-        <div className="help-header d-flex justify-content-between align-items-center">
+            <div className="help-header d-flex justify-content-between align-items-center">
                 <h3>Low Stock</h3>
                 <Help section="LowStock" />
             </div>    
