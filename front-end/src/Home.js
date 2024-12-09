@@ -85,7 +85,7 @@ function Home() {
                 const fridgesId = await apiService.getFridgesId(uid);
                 setFridgesList(fridgesId);
                 if (fridgesId.length > 0) {
-                    setSelectedFridgeId(fridgesId[0]);
+                    setSelectedFridgeId(fridgesId[fridgesId.length - 1]); // take last added fridge
                 }
             } catch (error) {
                 showPopup("Failed to load Fridges", "danger","popup");
