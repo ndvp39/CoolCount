@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap for styling
 import { auth } from './firebaseConfig'; // Firebase configuration
 import { createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase registration method
 import { useNavigate } from 'react-router-dom'; // Navigation hook
+import apiService from './apiService';
 
 function Register() {
   const [firstName, setFirstName] = useState(''); // Tracks the first name input
@@ -13,28 +14,6 @@ function Register() {
   const [password, setPassword] = useState(''); // Tracks the password input
   const [error, setError] = useState(''); // Tracks any registration errors
   const navigate = useNavigate(); // Navigation hook for redirecting
-
-  // Sends the registered user data (UID and email) to the server
-  async function registerUser(uid, email) {
-    try {
-      const response = await fetch('/api/users', {
-        method: 'POST', // HTTP POST request
-        headers: {
-          'Content-Type': 'application/json', // JSON content type
-        },
-        body: JSON.stringify({ uid, email }), // User details sent to the server
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok'); // Throws an error for unsuccessful responses
-      }
-  
-      const data = await response.json();
-      console.log(data.message); // Logs the server response
-    } catch (error) {
-      console.error('Error registering user:', error); // Logs errors during the server call
-    }
-  }
 
   // Redirects the user back to the login page
   const handleBackToLogin = () => {
@@ -51,7 +30,7 @@ function Register() {
         // Registers the user using Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid; // Retrieves the UID from the registered user
-        await registerUser(uid, email); // Sends UID and email to the server
+        await apiService.registerUser(uid, email); // Sends UID and email to the server
         alert('Registration successful!');
         navigate('/'); // Redirects to the login page
       } catch (registrationError) {

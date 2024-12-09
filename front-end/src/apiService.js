@@ -78,11 +78,12 @@ const sendEmail = async (cart, email) => {
 // Function to fetch drawers for a specific user and fridge
 const getDrawers = async (userId, fridgeId) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/users/${userId}/fridges/${fridgeId}`, { // Sends GET request for drawer data
-            method: 'GET',
+        const response = await fetch(`${BASE_URL}/api/users/drawers`, { // Sends POST request for drawer data
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ userId, fridgeId }), // Pass userId and fridgeId in the request body
         });
 
         if (response.ok) {
@@ -96,6 +97,28 @@ const getDrawers = async (userId, fridgeId) => {
         throw error; // Re-throws the error
     }
 };
+
+// Sends the registered user data (UID and email) to the server
+const registerUser = async (uid, email) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/users`, {
+        method: 'POST', // HTTP POST request
+        headers: {
+            'Content-Type': 'application/json', // JSON content type
+        },
+        body: JSON.stringify({ uid, email }), // User details sent to the server
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok'); // Throws an error for unsuccessful responses
+      }
+  
+      const data = await response.json();
+      console.log(data.message); // Logs the server response
+    } catch (error) {
+      console.error('Error registering user:', error); // Logs errors during the server call
+    }
+  }
 
 // Function to fetch fridge IDs for a specific user
 const getFridgesId = async (userId) => {
@@ -150,5 +173,6 @@ export default {
     fetchRecipes,
     sendArduinoCode,
     getFridgesId,
-    sendEmail
+    sendEmail,
+    registerUser
 };

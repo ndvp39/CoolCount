@@ -4,6 +4,7 @@ const { initializeApp, cert } = require('firebase-admin/app'); // Firebase Admin
 const { getFirestore } = require('firebase-admin/firestore'); // Firestore database service
 const SerialPort = require('serialport'); // Serial port for Arduino communication
 const nodemailer = require('nodemailer'); // For sending emails
+require('dotenv').config();
 
 const serviceAccount = {
     type: process.env.FIREBASE_TYPE,
@@ -17,6 +18,7 @@ const serviceAccount = {
     auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
     client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL
   };
+
 
 // Initialize the Express app
 const app = express();
@@ -81,8 +83,8 @@ app.post('/api/weight', async (req, res) => {
 });
 
 // Route to fetch drawers from a fridge
-app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
-    const { userId, fridgeId } = req.params;
+app.post('/api/users/drawers', async (req, res) => {
+    const { userId, fridgeId } = req.body; // Retrieve userId and fridgeId from request body
 
     try {
         const userDoc = await db.collection('Users').doc(userId).get(); // Fetch user document
@@ -104,6 +106,7 @@ app.get('/api/users/:userId/fridges/:fridgeId', async (req, res) => {
         res.status(500).json({ message: 'Error retrieving drawers data' });
     }
 });
+
 
 // Route to save updated drawers
 app.post('/api/users/savedrawers', async (req, res) => {
@@ -148,7 +151,7 @@ app.post('/api/users', async (req, res) => {
     try {
         await db.collection('Users').doc(uid).set({
             details: email,
-            fridges: {},
+            fridges: {'Default': {}},
         });
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
