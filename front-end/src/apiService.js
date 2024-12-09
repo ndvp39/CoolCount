@@ -102,23 +102,23 @@ const getDrawers = async (userId, fridgeId) => {
 const registerUser = async (uid, email) => {
     try {
         const response = await fetch(`${BASE_URL}/api/users`, {
-        method: 'POST', // HTTP POST request
-        headers: {
-            'Content-Type': 'application/json', // JSON content type
-        },
-        body: JSON.stringify({ uid, email }), // User details sent to the server
-      });
+            method: 'POST', // HTTP POST request
+            headers: {
+                'Content-Type': 'application/json', // JSON content type
+            },
+            body: JSON.stringify({ uid, email }), // User details sent to the server
+        });
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok'); // Throws an error for unsuccessful responses
-      }
+        if (!response.ok) {
+            throw new Error('Network response was not ok'); // Throws an error for unsuccessful responses
+        }
   
-      const data = await response.json();
-      console.log(data.message); // Logs the server response
+        const data = await response.json();
+        console.log(data.message); // Logs the server response
     } catch (error) {
-      console.error('Error registering user:', error); // Logs errors during the server call
+        console.error('Error registering user:', error); // Logs errors during the server call
     }
-  }
+};
 
 // Function to fetch fridge IDs for a specific user
 const getFridgesId = async (userId) => {
