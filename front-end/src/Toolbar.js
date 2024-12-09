@@ -6,8 +6,6 @@ import './Toolbar.css';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
 const Toolbar = ({
-    onEditToggle, // Toggles editing mode
-    isEditing, // Indicates if editing mode is active
     onMoveToggle, // Toggles moving mode
     isMoving, // Indicates if moving mode is active
     onAddDrawer, // Adds a new drawer
@@ -42,10 +40,6 @@ const Toolbar = ({
             {/* Menu content */}
             {isVisible && (
                 <div className="hamburger-menu-content">
-                    <button className="toolbar-button" onClick={() => handleButtonClick(onEditToggle)}>
-                        <i className={`fa ${isEditing ? 'fa-stop' : 'fa-pencil'}`}></i>
-                        {isEditing ? ' Stop Editing' : ' Edit Drawer'}
-                    </button>
                     <button className="toolbar-button" onClick={() => handleButtonClick(onMoveToggle)}>
                         <i className={`fa ${isMoving ? 'fa-lock' : 'fa-arrows-alt'}`}></i>
                         {isMoving ? ' Disable Moving' : ' Enable Moving'}

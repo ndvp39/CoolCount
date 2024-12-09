@@ -35,7 +35,6 @@ function Home() {
     const [editingDrawerId, setEditingDrawerId] = useState(null);
     const [drawerDetails, setDrawerDetails] = useState({ name: '', weightperitem: 0, weight: 0, lastAddedDate: '', alertLimit: ''});
     const [isModalOpen, setIsModalOpen] = useState(false); 
-    const [isEditing, setIsEditing] = useState(false); 
     const [isMoving, setIsMoving] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +119,12 @@ function Home() {
                     drawer.quantity
                 ));
                 setDrawers(drawerInstances);
-                showPopup("refreshed succesfuly!", "success","popup");
+                if(drawerInstances.length > 0){ // setDrawers() async func so using drawerInstances and not drawers
+                    showPopup("refreshed succesfuly!", "success","popup");
+                }
+                else{
+                    showPopup("No drawers to fetch", "danger","popup");
+                }
             } catch (error) {
                 showPopup("Failed to load drawers, please refresh", "danger","popup");
             }
@@ -247,10 +251,6 @@ function Home() {
     };
     
 
-    const toggleEditing = () => {
-        setIsEditing(!isEditing);
-    };
-
     const toggleMoving = () => {
         setIsMoving(!isMoving);
     };
@@ -300,9 +300,7 @@ function Home() {
         </div>        
             <br></br>
             <Toolbar
-                onEditToggle={toggleEditing}
                 onMoveToggle={toggleMoving}
-                isEditing={isEditing}
                 isMoving={isMoving}
                 onAddDrawer={addDrawer}
                 onSearchRecipes={onSearchRecipes}
@@ -353,69 +351,77 @@ function Home() {
                             disabled={!isMoving}
                             bounds=".fridge-interior"
                             onStop={(e, data) => {
-                                const updatedDrawers = drawers.map(d => 
-                                    d.id === drawer.id 
+                                const updatedDrawers = drawers.map(d =>
+                                    d.id === drawer.id
                                         ? new Drawer(
-                                            d.id, 
-                                            d.name, 
-                                            d.weightperitem, 
-                                            d.weight, 
-                                            d.lastAddedDate, 
+                                            d.id,
+                                            d.name,
+                                            d.weightperitem,
+                                            d.weight,
+                                            d.lastAddedDate,
                                             data.x,
-                                            data.y, 
-                                            d.width, 
+                                            data.y,
+                                            d.width,
                                             d.height,
                                             d.alertLimit,
                                             d.quantity
-                                        ) 
+                                        )
                                         : d
                                 );
                                 setDrawers(updatedDrawers);
-                                
                             }}
                         >
                             <ResizableBox
-                                onClick={() => isEditing && editDrawer(drawer.id)}
-                                style={{ position: 'absolute' }}
+                                style={{ position: "absolute" }}
                                 width={drawer.width}
                                 height={drawer.height}
                                 minConstraints={[100, 50]}
                                 maxConstraints={[470, 640]}
                                 className="drawer"
                                 onResizeStop={(e, { size }) => {
-                                    const updatedDrawers = drawers.map(d => 
-                                        d.id === drawer.id 
+                                    const updatedDrawers = drawers.map(d =>
+                                        d.id === drawer.id
                                             ? new Drawer(
-                                                d.id, 
-                                                d.name, 
-                                                d.weightperitem, 
-                                                d.weight, 
-                                                d.lastAddedDate, 
-                                                d.x, 
-                                                d.y, 
+                                                d.id,
+                                                d.name,
+                                                d.weightperitem,
+                                                d.weight,
+                                                d.lastAddedDate,
+                                                d.x,
+                                                d.y,
                                                 size.width,
                                                 size.height,
                                                 d.alertLimit,
                                                 d.quantity
-                                            ) 
+                                            )
                                             : d
                                     );
                                     setDrawers(updatedDrawers);
-                                    
                                 }}
                             >
-                                
-                                <div>
-                                <span className="drawer-name">
-                                    {getFoodIcon(drawer.name)} {drawer.name}
-                                </span>
-                                <br />
-                                <span className="drawer-quantity">
-                                    {"X "+ (drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}
-                                </span>
-                            </div>
+                                <div className="drawer-wrapper">
+  {/* אייקון מאפיינים */}
+  <div className="drawer-settings-icon" onClick={() => editDrawer(drawer.id)}>
+    <i className="fas fa-pen" style={{ color: "white" }}></i>
+  </div>
+
+  {/* תוכן המגירה */}
+  <div className="drawer-content">
+    {/* כותרת המגירה */}
+    <div className="drawer-name">
+      {getFoodIcon(drawer.name)} {drawer.name}
+    </div>
+
+    {/* כמות */}
+    <div className="drawer-quantity">
+      {"X " + (drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}
+    </div>
+  </div>
+</div>
+
                             </ResizableBox>
                         </Draggable>
+
                     ))}
                 </div>
                 {!isOpen && showHandleAndTablet && (

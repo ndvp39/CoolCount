@@ -144,7 +144,6 @@ input:focus {
     color: #007bff; /* Bootstrap primary color */
     cursor: pointer; /* Pointer on hover */
     margin-left: 8px; /* רווח של 8 פיקסלים */
-
   }
   
   .help-icon:hover {

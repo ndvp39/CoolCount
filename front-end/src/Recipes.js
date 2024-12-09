@@ -16,6 +16,11 @@ function RecipesList({ recipes }) { // Receives the recipes as props
 
     return (
         <div className="recipes-list container mt-4">
+              {recipes.length === 0 ? ( // if no recipes
+                <div className="text-center">
+                    <h5>No Recipes Found</h5>
+                </div>
+            ) : (
             <div className="row">
                 {recipes.map((item, index) => (
                     <div className="mb-4" key={index}>
@@ -74,6 +79,7 @@ function RecipesList({ recipes }) { // Receives the recipes as props
                     </div>
                 ))}
             </div>
+             )}
         </div>
     );
 }

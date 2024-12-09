@@ -193,7 +193,7 @@ const EditDrawerModal = ({ drawerDetails, setDrawerDetails, onSave, onClose, onD
                             onClick={() => setDrawerDetails({ ...drawerDetails, weightperitem: parseFloat(calculatedWeight.toFixed(2)) })} 
                             className="save-button"
                         >
-                            Set changes
+                            Set
                         </button>
                     </div>
 

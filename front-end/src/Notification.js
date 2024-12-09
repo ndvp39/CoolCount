@@ -27,10 +27,18 @@ const Notification = ({ drawers, addToCart }) => {
 
     return (
         <div className="tabletin-container">
-            <div className="help-header d-flex justify-content-between align-items-center">
-                <h3>Low Stock</h3>
+
+
+        <div className="help-header d-flex justify-content-start align-items-center">
+            <div className="help-title-container d-flex align-items-center">
+                <h3 className="help-title">Low Stock</h3>
                 <Help section="LowStock" />
-            </div>    
+            </div>
+        </div>
+
+
+
+  
          
             {getLowWeightDrawers().length > 0 ? (
                 <div>
@@ -38,7 +46,7 @@ const Notification = ({ drawers, addToCart }) => {
                         {getLowWeightDrawers().map(drawer => (
                             <li key={drawer.id} className="tabletin-item noti-item">
                                 <span className="drawer-nameN">{drawer.name}</span>
-                                <span className="drawer-quantityN">{(drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}</span>
+                                <span className="drawer-quantityN mx-2">{(drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}</span>
                                 <button
                                     className="add-to-cart-btn"
                                     onClick={() => handleAddToCart(drawer)}

@@ -43,7 +43,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
         try {
             await apiService.sendEmail(cart, user_email); // Sends email via API
             setLoading(false); // Ends loading
-            showPopup('Cart sent to email!', 'success', 'popup');
+            showPopup('Cart sent to your email!', 'success', 'popup');
         } catch (error) {
             console.error("Error sending email", error);
             setLoading(false); // Ends loading on error
@@ -76,80 +76,86 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
    
     return (
         <div className="tabletin-container">
-            <div className="help-header d-flex justify-content-between align-items-center">
-                <h3>Shopping Cart</h3>
-                <Help section="shoppingCart" />
-            </div>    
 
-            {cart.length > 0 ? (
-                <div>
-                    <ul className="tabletin-list">
-                        {cart.map(drawer => (
-                            <li key={drawer.id} className="tabletin-item">
-                                <div className="drawer-nameN">
-                                    {editingName === drawer.id ? (
-                                        <input
-                                            type="text"
-                                            value={newName}
-                                            onChange={(e) => setNewName(e.target.value)}
-                                            onBlur={() => handleNameChange(drawer.id)}
-                                            onKeyDown={(e) => e.key === 'Enter' && handleNameChange(drawer.id)}
-                                            autoFocus
-                                        />
-                                    ) : (
-                                        <span
-                                            onClick={() => {
-                                                setEditingName(drawer.id); 
-                                                setNewName(drawer.name); 
-                                            }}
-                                        >
-                                            {drawer.name}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="quantity-controls mx-2">
-                                    <button
-                                        className="quantity-btn"
-                                        onClick={() => handleQuantityChange(drawer, 'decrease')}
-                                    >
-                                        -
-                                    </button>
-                                    <span className="drawer-nameN mx-3">{drawer.quantity}</span>
-                                    <button
-                                        className="quantity-btn"
-                                        onClick={() => handleQuantityChange(drawer, 'increase')}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                    {/* Email send button or loading spinner */}
-                    <button
-                        onClick={handleSendEmail}
-                        className="btn btn-primary mx-2 my-2"
-                        disabled={loading} // Disables button during loading
-                    >
-                        {loading ? (
-                            <div className="spinner-border spinner-border-sm" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        ) : (
-                            <FaEnvelope size={20} />
-                        )}
-                    </button>
-                    {/* Add new product button */}
-                    <button 
-                        onClick={handleAddNewProduct} 
-                        className="btn btn-primary mx-2"
-                    >
-                        <FaPlus size={20} />
-                    </button>
+            <div className="help-header d-flex justify-content-start align-items-center">
+                <div className="help-title-container d-flex align-items-center">
+                    <h3 className="help-title">Shopping Cart</h3>
+                    <Help section="shoppingCart" />
                 </div>
-            ) : (
-                <p className="no-tabletin">Your cart is empty.</p> // Message if cart is empty
-            )}
+            </div>
+            {cart.length > 0 ? (
+            <div>
+                <ul className="tabletin-list">
+                    {cart.map(drawer => (
+                        <li key={drawer.id} className="tabletin-item">
+                            <div className="drawer-nameN">
+                                {editingName === drawer.id ? (
+                                    <input
+                                        type="text"
+                                        value={newName}
+                                        onChange={(e) => setNewName(e.target.value)}
+                                        onBlur={() => handleNameChange(drawer.id)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleNameChange(drawer.id)}
+                                        autoFocus
+                                    />
+                                ) : (
+                                    <span
+                                        className="editable-text"
+                                        onClick={() => {
+                                            setEditingName(drawer.id);
+                                            setNewName(drawer.name);
+                                        }}
+                                    >
+                                        {drawer.name}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="quantity-controls mx-2">
+                                <button
+                                    className="quantity-btn"
+                                    onClick={() => handleQuantityChange(drawer, 'decrease')}
+                                >
+                                    -
+                                </button>
+                                <span className="drawer-nameN mx-3">{drawer.quantity}</span>
+                                <button
+                                    className="quantity-btn"
+                                    onClick={() => handleQuantityChange(drawer, 'increase')}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ) : (
+            <p className="no-tabletin">Your cart is empty.</p>
+        )}
+
+
+            {/* Email send button or loading spinner */}
+            <button
+                onClick={handleSendEmail}
+                className="btn btn-primary mx-2 my-2"
+                disabled={loading} // Disables button during loading
+            >
+                {loading ? (
+                    <div className="spinner-border spinner-border-sm" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                ) : (
+                    <FaEnvelope size={20} />
+                )}
+            </button>
+            {/* Add new product button */}
+            <button 
+                onClick={handleAddNewProduct} 
+                className="btn btn-primary mx-2"
+            >
+                <FaPlus size={20} />
+            </button>
+
         </div>
     );
 };

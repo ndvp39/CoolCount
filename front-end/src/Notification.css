@@ -36,11 +36,27 @@ h3 {
     display: flex;
 }
 
+.drawer-info {
+    display: flex;
+    flex-direction: column; 
+    width: 100%; 
+}
+
+
 .drawer-nameN {
-    font-weight: bold;
+    min-width: 20px; 
     margin-bottom: 4px;
     color: #1c1c1e;
+    font-weight: bold;
+    white-space: break-spaces;
+    overflow-wrap: break-word;
+    overflow: hidden; 
+    text-align: center; 
+    font-size: 1rem; 
+    line-height: 1.4; 
+    max-width: 100%; 
 }
+
 
 .drawer-quantityN {
     color: #e63946;
@@ -99,8 +115,10 @@ h3 {
 
 
 .quantity-controls {
-    display: flex;
-    align-items: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 2px; 
 }
 
 .quantity-btn {
@@ -148,4 +166,39 @@ h3 {
     font-size: 14px;
     font-style: italic;
     margin-left: 10px;
+}
+
+.help-header h3 {
+    margin-left: 0; 
+    text-align: left; 
+    line-height: 1.4; 
+  }
+  
+  .help-title-container {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+}
+
+.help-title {
+    font-size: 1.2rem; 
+    margin: 0; 
+}
+
+.help-icon {
+    font-size: 1rem; 
+    cursor: pointer; 
+    color: #007bff; 
+}
+
+.editable-text {
+    cursor: pointer;
+    color: black; 
+    padding: 2px 4px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.editable-text:hover {
+    background-color: rgba(10, 10, 10, 0.2); 
 }

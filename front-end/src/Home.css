@@ -271,17 +271,55 @@
   position: absolute;
 }
 
+.drawer-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.drawer-settings-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #007bff;
+  z-index: 10;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .drawer-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #ffffff;
+  white-space: nowrap; /* מונע שבירת שורות */
+  overflow: hidden; /* מסתיר טקסט חורג */
+  text-overflow: ellipsis; /* מציג "..." אם הטקסט ארוך מדי */
+  max-width: 90%; /* מגביל את רוחב הכותרת */
+  font-size: 1rem; /* גודל טקסט */
 }
 
 .drawer-quantity {
-    font-size: 1rem;
-    color: #26c6da; /* כתום בהיר */
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #007bff;
 }
+
+
 /* Interior of the drawer */
 .drawer .drawer-interior {
   width: 100%;
@@ -335,7 +373,11 @@
   transition: background-color 0.3s ease;
   border-radius: 10px;
 }
-
+.tab.active {
+  background-color: #1b263b;
+  font-weight: bold; 
+  transform: scale(1); 
+}
 .tab:hover {
   background-color: #1b263b;
 }
@@ -387,4 +429,16 @@
 
 .email-fab:hover {
   background-color: #0056b3;
+}
+
+.drawer-edit-icon {
+  font-size: 1rem; /* Adjust icon size */
+  color: #007bff; /* Bootstrap primary color */
+  cursor: pointer; /* Pointer on hover */
+  margin-left: 8px; /* רווח של 8 פיקסלים */
+
+}
+
+.drawer-edit-icon:hover {
+  color: #0056b3; /* Darker color on hover */
 }
