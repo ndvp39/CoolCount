@@ -400,24 +400,20 @@ function Home() {
                                 }}
                             >
                                 <div className="drawer-wrapper">
-  {/* אייקון מאפיינים */}
-  <div className="drawer-settings-icon" onClick={() => editDrawer(drawer.id)}>
-    <i className="fas fa-pen" style={{ color: "white" }}></i>
-  </div>
 
-  {/* תוכן המגירה */}
-  <div className="drawer-content">
-    {/* כותרת המגירה */}
-    <div className="drawer-name">
-      {getFoodIcon(drawer.name)} {drawer.name}
-    </div>
+                                <div className="drawer-settings-icon" onClick={() => editDrawer(drawer.id)}>
+                                    <i className="fas fa-pen" style={{ color: "white" }}></i>
+                                </div>
 
-    {/* כמות */}
-    <div className="drawer-quantity">
-      {"X " + (drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}
-    </div>
-  </div>
-</div>
+                                <div className="drawer-content">
+                                    <div className="drawer-name">
+                                    {getFoodIcon(drawer.name)} {drawer.name}
+                                    </div>
+                                    <div className="drawer-quantity">
+                                    {"X " + (drawer.getQuantity() > 0 ? drawer.getQuantity() : drawer.quantity)}
+                                    </div>
+                                </div>
+                                </div>
 
                             </ResizableBox>
                         </Draggable>
