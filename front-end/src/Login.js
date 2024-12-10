@@ -24,10 +24,10 @@ function Login({ setIsAuthenticated }) {
       const user = userCredential.user; // Retrieves user details
       const uid = user.uid; // User ID
       const user_email = user.email; // User email
-
+      
       localStorage.setItem('uid-coolcount', user.uid); // Stores user ID in local storage
+      localStorage.setItem('email-coolcount', user.email); // Stores user ID in local storage
       setIsAuthenticated(true); // Sets the authentication state to true
-      alert('Login successful!');
       
       navigate('/home', { state: { uid, user_email } }); // Navigates to the home page with user details in state
     } catch (error) {

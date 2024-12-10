@@ -62,6 +62,7 @@ function Home() {
         try {
             await signOut(auth);
             localStorage.removeItem('uid-coolcount');
+            localStorage.removeItem('email-coolcount');
             navigate('/');
         } catch (error) {
             showPopup("Error signing out", "danger","popup");

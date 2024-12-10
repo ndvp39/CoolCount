@@ -15,7 +15,8 @@ function App() {
     const uid = localStorage.getItem('uid-coolcount');
     if (uid) {
       setIsAuthenticated(true);
-      navigate('/home', { state: { uid } });
+      const user_email = localStorage.getItem('email-coolcount');
+      navigate('/home', { state: { uid, user_email } });
     }
   }, [navigate]);
 

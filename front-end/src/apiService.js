@@ -61,7 +61,8 @@ const sendEmail = async (cart, email) => {
     };
 
     try {
-        const response = await fetch("send-email", { // Sends POST request to send email
+        console.log(emailData)
+        const response = await fetch(`${BASE_URL}/send-email`, { // Sends POST request to send email
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
