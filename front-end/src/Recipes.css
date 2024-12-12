@@ -107,3 +107,61 @@
     background: #ff5252;
     transform: scale(1.1);
 }
+
+
+.btn-search {
+    background: linear-gradient(135deg, #009688, #35a79c); 
+    color: white; 
+    border: none;
+    padding: 12px 20px; 
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px; 
+    cursor: pointer;
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: background 0.3s ease, transform 0.2s ease; 
+}
+
+.btn-search:hover {
+    background: #00796b; 
+    transform: scale(1.05); 
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); 
+}
+
+
+
+
+.product-item {
+    background: #2c3e50; /* צבע כהה שמתאים לעיצוב המודאל */
+    color: #ecf0f1; /* צבע טקסט לבן */
+    border-radius: 8px; /* פינות מעוגלות */
+    padding: 10px 15px; /* ריווח פנימי */
+    margin-bottom: 10px; /* רווח בין פריטים */
+    display: flex; /* מסדר את האלמנטים בשורה */
+    align-items: center; /* ממרכז את התוכן אנכית */
+    justify-content: space-between; /* רווח בין התוכן */
+    transition: background 0.3s ease, transform 0.2s ease; /* אנימציה */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* צל עדין */
+}
+
+.product-item:hover {
+    background: #34495e; /* צבע כהה יותר כאשר מרחפים */
+    transform: translateY(-3px); /* אפקט "הרמה" */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* יותר צל */
+}
+
+.product-label {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* רווח בין ה-checkbox לטקסט */
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.product-checkbox {
+    transform: scale(1.2); /* הגדלה קלה של ה-checkbox */
+    accent-color: #1abc9c; /* צבע מותאם */
+    cursor: pointer;
+}

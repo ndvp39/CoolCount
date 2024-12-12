@@ -442,3 +442,10 @@
 .drawer-edit-icon:hover {
   color: #0056b3; /* Darker color on hover */
 }
+
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+  accent-color: #1abc9c; /* צבע מותאם לאייקון ה-checkbox */
+}

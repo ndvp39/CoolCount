@@ -13,7 +13,7 @@ import LastUpdated from './LastUpdated';
 import ShoppingCart from './ShoppingCart';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import './Recipes.css';
 import { useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
@@ -50,7 +50,8 @@ function Home() {
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     const [isRecipesModalOpen, setIsRecipesModalOpen] = useState(false);
     const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
-
+    const [isProductSelectionOpen, setIsProductSelectionOpen] = useState(false);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const [fridgesList, setFridgesList] = useState([]); 
     const [selectedFridgeId, setSelectedFridgeId] = useState(null);
 
@@ -264,21 +265,39 @@ function Home() {
     
     // Searches for recipes based on drawer contents
     const onSearchRecipes = async () => {
-        const ingredients = drawers
-            .filter(drawer => drawer.getQuantity() > 0 || drawer.quantity > 0)
-            .map(drawer => drawer.name);
-    
-        if (ingredients.length === 0) return;
-    
+        setIsProductSelectionOpen(false);
+        if (selectedProducts.length === 0) {
+            showPopup("Please select at least one product to search recipes", "danger", "popup");
+            return;
+        }
+        setRecipes([]);
+        console.log("Selected products:", selectedProducts);
+
+
         try {
-            const recipesData = await apiService.fetchRecipes(ingredients);
+            const recipesData = await apiService.fetchRecipes(selectedProducts);
             setRecipes(recipesData);
             setIsRecipesModalOpen(true);
+
         } catch (error) {
-            showPopup("Error fetching recipes", "danger","popup");
+            showPopup("Error fetching recipes", "danger", "popup");
         }
     };
     
+
+    const openProductSelection = () => {
+        setIsProductSelectionOpen(true);
+        setSelectedProducts([]); 
+
+    };
+
+    const handleProductSelection = (product) => {
+        setSelectedProducts((prevSelected) =>
+            prevSelected.includes(product)
+                ? prevSelected.filter((item) => item !== product)
+                : [...prevSelected, product]
+        );
+    };
     // Adds a drawer item to the shopping cart    
     const addToCart = (drawer) => {
         const existingDrawer = cart.find(item => item.id === drawer.id);
@@ -304,7 +323,7 @@ function Home() {
                 onMoveToggle={toggleMoving}
                 isMoving={isMoving}
                 onAddDrawer={addDrawer}
-                onSearchRecipes={onSearchRecipes}
+                onSearchRecipes={openProductSelection}
                 onSaveChanges={saveChanges}
                 isSaveDisabled={!hasUnsavedChanges || isLoading}
                 isLoading={isLoading}
@@ -478,6 +497,39 @@ function Home() {
                     onClose={() => setIsAboutModalOpen(false)}
                 />
             )}
+            {isProductSelectionOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <button className="close-button" onClick={() => setIsProductSelectionOpen(false)}>
+                            &times;
+                        </button>
+                        <h5 className="modal-title">Select Products</h5>
+                        <div className="modal-body">
+                            <ul class="recipes-list container mt-4">
+                                {drawers.map((drawer) => (
+                                    <div key={drawer.id} className="product-item">
+                                        <label htmlFor={drawer.name} className="product-label">
+                                            <input
+                                                type="checkbox"
+                                                id={drawer.name}
+                                                value={drawer.name}
+                                                onChange={() => handleProductSelection(drawer.name)}
+                                                className="product-checkbox"
+                                            />
+                                            {drawer.name}   
+                                        </label>
+                                    </div>
+                                ))}
+                            </ul>
+                        </div>
+                        <button className="btn-search" onClick={onSearchRecipes}>
+                            Search Recipes
+                        </button>
+                    </div>
+                </div>
+            )}
+
+
             {isRecipesModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -488,11 +540,9 @@ function Home() {
                     </div>
                 </div>
             )}
-          
-        </div>
 
-       
-         
+          
+    </div>  
     );
     
 }
