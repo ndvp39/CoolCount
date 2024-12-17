@@ -246,13 +246,14 @@ const transporter = nodemailer.createTransport({
 
 // Route to send email
 app.post("/send-email", (req, res) => {
-    const { to, subject, text } = req.body;
+    const { to, subject, text, html } = req.body;
 
     const mailOptions = {
-        from: "test@gmail.com",
+        from: to,
         to: to,
         subject: subject,
         text: text,
+        html: html
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
