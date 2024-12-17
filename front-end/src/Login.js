@@ -25,8 +25,8 @@ function Login({ setIsAuthenticated }) {
       const uid = user.uid; // User ID
       const user_email = user.email; // User email
       
-      localStorage.setItem('uid-coolcount', user.uid); // Stores user ID in local storage
-      localStorage.setItem('email-coolcount', user.email); // Stores user ID in local storage
+      localStorage.setItem('uid-coolcount', uid); // Stores user ID in local storage
+      localStorage.setItem('email-coolcount', user_email); // Stores user ID in local storage
       setIsAuthenticated(true); // Sets the authentication state to true
       
       navigate('/home', { state: { uid, user_email } }); // Navigates to the home page with user details in state

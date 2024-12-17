@@ -43,7 +43,7 @@ const ShoppingCart = ({ cart, setCart, user_email }) => {
         try {
             await apiService.sendEmail(cart, user_email); // Sends email via API
             setLoading(false); // Ends loading
-            showPopup('Cart sent to your email!', 'success', 'popup');
+            showPopup(`Cart sent to your email!`, 'success', 'popup');
         } catch (error) {
             console.error("Error sending email", error);
             setLoading(false); // Ends loading on error

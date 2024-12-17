@@ -13,9 +13,9 @@ function App() {
 
   useEffect(() => {
     const uid = localStorage.getItem('uid-coolcount');
-    if (uid) {
+    const user_email = localStorage.getItem('email-coolcount');
+    if (uid && user_email) {
       setIsAuthenticated(true);
-      const user_email = localStorage.getItem('email-coolcount');
       navigate('/home', { state: { uid, user_email } });
     }
   }, [navigate]);
