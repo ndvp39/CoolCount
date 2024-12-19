@@ -78,6 +78,6 @@
    - Powers the Arduino and sensors.
 
 ---
-
+## System architecture
 ![image](https://github.com/user-attachments/assets/9396bcc6-7d5a-4243-9c62-e84972153327)
 
