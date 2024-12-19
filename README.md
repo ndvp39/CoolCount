@@ -2,6 +2,7 @@
 
 **CoolCount** is a smart application designed to manage refrigerator inventory visually and efficiently. It allows users to track items in their refrigerator, estimate item quantities based on weight, and maintain better household inventory management.
 
+link to app: https://coolcount-client.vercel.app/
 ---
 
 ## Key Features
