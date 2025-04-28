@@ -83,6 +83,6 @@ link to app: https://coolcount-client.vercel.app/
 ![image](https://github.com/user-attachments/assets/9396bcc6-7d5a-4243-9c62-e84972153327)
 
 ## Images
-![image](https://media.licdn.com/dms/image/v2/D4D22AQFoBZnYjL8aew/feedshare-shrink_1280/B4DZPgIuDBG0Ao-/0/1734632204022?e=1748476800&v=beta&t=a2YScyb8o72UnpFAwypg_k6OiA295_GvoHX5CQkEvVk)
+<img src="https://media.licdn.com/dms/image/v2/D4D22AQFoBZnYjL8aew/feedshare-shrink_1280/B4DZPgIuDBG0Ao-/0/1734632204022?e=1748476800&v=beta&t=a2YScyb8o72UnpFAwypg_k6OiA295_GvoHX5CQkEvVk" width=400>
 
-![image](https://media.licdn.com/dms/image/v2/D4D22AQFmW455VI-4_A/feedshare-shrink_800/B4DZPgIuDDHUAk-/0/1734632203635?e=1748476800&v=beta&t=qd2dhrtbzmhvIsHJHIrCOZUV0UJai0yNcBKTPmbK7nw)
+<img src="https://media.licdn.com/dms/image/v2/D4D22AQFmW455VI-4_A/feedshare-shrink_800/B4DZPgIuDDHUAk-/0/1734632203635?e=1748476800&v=beta&t=qd2dhrtbzmhvIsHJHIrCOZUV0UJai0yNcBKTPmbK7nw" width=400>
