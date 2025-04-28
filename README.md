@@ -1,4 +1,4 @@
-# CoolCount
+![image](https://github.com/user-attachments/assets/288d598c-62f4-42e0-90d1-b726f30fb4b2)![image](https://github.com/user-attachments/assets/1079f13b-7709-4029-b131-10a528b4e3f8)# CoolCount
 
 **CoolCount** is a smart application designed to manage refrigerator inventory visually and efficiently. It allows users to track items in their refrigerator, estimate item quantities based on weight, and maintain better household inventory management.
 
@@ -82,3 +82,7 @@ link to app: https://coolcount-client.vercel.app/
 ## System architecture
 ![image](https://github.com/user-attachments/assets/9396bcc6-7d5a-4243-9c62-e84972153327)
 
+## Images
+![image](https://media.licdn.com/dms/image/v2/D4D22AQFoBZnYjL8aew/feedshare-shrink_1280/B4DZPgIuDBG0Ao-/0/1734632204022?e=1748476800&v=beta&t=a2YScyb8o72UnpFAwypg_k6OiA295_GvoHX5CQkEvVk)
+
+![image](https://media.licdn.com/dms/image/v2/D4D22AQFmW455VI-4_A/feedshare-shrink_800/B4DZPgIuDDHUAk-/0/1734632203635?e=1748476800&v=beta&t=qd2dhrtbzmhvIsHJHIrCOZUV0UJai0yNcBKTPmbK7nw)
